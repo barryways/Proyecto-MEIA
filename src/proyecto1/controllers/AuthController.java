@@ -9,8 +9,8 @@ import java.text.SimpleDateFormat;
 
 public class AuthController {
 
-    private static final String FILE_PATH = "C:\\Users\\jmanc\\OneDrive\\Desktop\\PROYECTOUSUARIOS\\usuario.txt";
-    private static final String DESC_FILE_PATH = "C:\\Users\\jmanc\\OneDrive\\Desktop\\PROYECTOUSUARIOS\\desc_usuario.txt";
+    private static final String FILE_PATH = "C:\\MEIA\\usuario.txt";
+    private static final String DESC_FILE_PATH = "C:\\MEIA\\desc_usuario.txt";
 
 public static usuario authenticate(String username, String password) {
         usuario authenticatedUser = null;
@@ -197,5 +197,56 @@ private static int getIntFromNextLine(BufferedReader reader) throws IOException 
     }
     return 0;
 }
+
+public static boolean checkUserPrivileges(String user) {
+    try {
+        File file = new File(FILE_PATH);
+        if (file.exists()) {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length > 8 && parts[0].equals(user)) {
+                    if (parts[8].equals("0")) {
+                        br.close();
+                        return true;
+                    }
+                }
+            }
+            br.close();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+
+public static String[] getUserData(String user){
+    String[] data = new String[9];
+     try {
+        File file = new File(FILE_PATH);
+        if (file.exists()) {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if(parts.length > 8 && parts[0].equals(user)){
+                    for (int i = 0; i < parts.length; i++) {
+                    data[i]= parts[i];
+                    }
+                     return data;
+                }
+
+            }
+            br.close();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return data;
+}
+
 
 }

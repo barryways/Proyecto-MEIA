@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package proyecto1;
-import proyecto1.views.LoginFrame; 
+//import proyecto1.views.LoginFrame; 
+import proyecto1.views.StartFrame;
 /**
  *
  * @author jmanc
@@ -15,7 +16,7 @@ public class Proyecto1 {
      */
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() ->{
-            new LoginFrame().setVisible(true);
+            new StartFrame().setVisible(true);
         });
     }
     
