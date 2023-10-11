@@ -32,7 +32,7 @@ public static usuario authenticate(String username, String password) {
                         authenticatedUser.setTelefono(Integer.parseInt(parts[6]));
                         authenticatedUser.setPathFotografia(parts[7]);
                         authenticatedUser.setRol(rolStr.Rol.fromCodigo(Byte.parseByte(parts[8])));
-
+                        authenticatedUser.setEstatus(Byte.parseByte("1"));
 
                         break;
                     }
@@ -223,7 +223,7 @@ public static boolean checkUserPrivileges(String user) {
 }
 
 public static String[] getUserData(String user){
-    String[] data = new String[9];
+    String[] data = new String[10];
      try {
         File file = new File(FILE_PATH);
         if (file.exists()) {

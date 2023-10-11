@@ -40,12 +40,15 @@ public class UserDashboard extends javax.swing.JFrame {
         Icon userImage = new ImageIcon(new ImageIcon(datosUsuario[7]).getImage()
             .getScaledInstance(lblImg.getWidth(), lblImg.getHeight(), 0));
         lblImg.setIcon(userImage);
+        if(datosUsuario[8] == "0"){
+            jLblTipoUsuario.setText("Tipo de Usuario: Administrador");
+        } else{
+            jLblTipoUsuario.setText("Tipo de Usuario: Usuario Normal");
+        }
+        
         
         //cargar datos de la pestaña config
-        JTextUser.setText(datosUsuario[0]);
         JPasswordText.setText(datosUsuario[1]);
-        JnombreText.setText(datosUsuario[2]);
-        JApellidoText.setText(datosUsuario[3]);
         JCorreoText.setText(datosUsuario[4]);
         JTelefonoText.setText(datosUsuario[5]);
         JFechaText.setText(datosUsuario[6]);
@@ -69,6 +72,7 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabelFecNac = new javax.swing.JLabel();
         jLabelCorreo = new javax.swing.JLabel();
         jLabelTel = new javax.swing.JLabel();
+        jLblTipoUsuario = new javax.swing.JLabel();
         jPanelEdit = new javax.swing.JPanel();
         JBtnEdit = new javax.swing.JButton();
         JBtnFoto = new javax.swing.JButton();
@@ -80,14 +84,8 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         JCorreoText = new javax.swing.JTextField();
-        JApellidoText = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        JnombreText = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         JPasswordText = new javax.swing.JPasswordField();
-        JTextUser = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,6 +101,8 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jLabelTel.setText("Telefono:");
 
+        jLblTipoUsuario.setText("Tipo Usuario: ");
+
         javax.swing.GroupLayout jPanelGeneralLayout = new javax.swing.GroupLayout(jPanelGeneral);
         jPanelGeneral.setLayout(jPanelGeneralLayout);
         jPanelGeneralLayout.setHorizontalGroup(
@@ -110,21 +110,24 @@ public class UserDashboard extends javax.swing.JFrame {
             .addGroup(jPanelGeneralLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGeneralLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                        .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelGeneralLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
+                        .addComponent(jLblTipoUsuario)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelGeneralLayout.createSequentialGroup()
+                        .addComponent(jLabelTel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelGeneralLayout.createSequentialGroup()
                         .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelCorreo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabelApellido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabelNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelFecNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelFecNac, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                             .addGroup(jPanelGeneralLayout.createSequentialGroup()
-                                .addComponent(jLabelTel)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(77, 77, 77))
+                                .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(77, 77, 77))))
         );
         jPanelGeneralLayout.setVerticalGroup(
             jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,7 +140,7 @@ public class UserDashboard extends javax.swing.JFrame {
                         .addComponent(jLabelNombre)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelApellido)
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabelFecNac)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelCorreo))
@@ -146,7 +149,9 @@ public class UserDashboard extends javax.swing.JFrame {
                         .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelTel)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLblTipoUsuario)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         jPanelUsuario.addTab("General", jPanelGeneral);
@@ -204,22 +209,6 @@ public class UserDashboard extends javax.swing.JFrame {
             }
         });
 
-        JApellidoText.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JApellidoTextMouseClicked(evt);
-            }
-        });
-
-        jLabel6.setText("Apellido");
-
-        JnombreText.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JnombreTextMouseClicked(evt);
-            }
-        });
-
-        jLabel5.setText("Nombre");
-
         jLabel4.setText("Contraseña");
 
         JPasswordText.setText("jPasswordField1");
@@ -234,43 +223,21 @@ public class UserDashboard extends javax.swing.JFrame {
             }
         });
 
-        JTextUser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTextUserMouseClicked(evt);
-            }
-        });
-        JTextUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTextUserActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Usuario");
-
         javax.swing.GroupLayout jPanelEditLayout = new javax.swing.GroupLayout(jPanelEdit);
         jPanelEdit.setLayout(jPanelEditLayout);
         jPanelEditLayout.setHorizontalGroup(
             jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addGroup(jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel5)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel4))
                 .addGap(5, 5, 5)
                 .addGroup(jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JTextUser, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JPasswordText, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelEditLayout.createSequentialGroup()
-                        .addComponent(JnombreText, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(JApellidoText, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(JCorreoText, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(JTelefonoText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
@@ -289,20 +256,10 @@ public class UserDashboard extends javax.swing.JFrame {
         jPanelEditLayout.setVerticalGroup(
             jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEditLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(84, Short.MAX_VALUE)
                 .addGroup(jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(JTextUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(JPasswordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(JnombreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(JApellidoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JPasswordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -406,7 +363,7 @@ private boolean isValidDate(String date) {
             JPathFotoText.setText(rutaSeleccionada);
 
             // Obtén el nombre de usuario ingresado en tu interfaz
-            String nombreUsuario = JTextUser.getText(); // Reemplaza 'JNombreUsuario' con el nombre de tu campo de texto para el nombre de usuario
+            String nombreUsuario = jLabelNombre.getText(); // Reemplaza 'JNombreUsuario' con el nombre de tu campo de texto para el nombre de usuario
 
             // Directorio de destino
             String extension = getFileExtension(archivoSeleccionado);
@@ -448,16 +405,6 @@ private boolean isValidDate(String date) {
         JCorreoText.setText("");
     }//GEN-LAST:event_JCorreoTextMouseClicked
 
-    private void JApellidoTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JApellidoTextMouseClicked
-        // TODO add your handling code here:
-        JApellidoText.setText("");
-    }//GEN-LAST:event_JApellidoTextMouseClicked
-
-    private void JnombreTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JnombreTextMouseClicked
-        // TODO add your handling code here:
-        JnombreText.setText("");
-    }//GEN-LAST:event_JnombreTextMouseClicked
-
     private void JPasswordTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JPasswordTextMouseClicked
         // TODO add your handling code here:
         JPasswordText.setText("");
@@ -466,15 +413,6 @@ private boolean isValidDate(String date) {
     private void JPasswordTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPasswordTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JPasswordTextActionPerformed
-
-    private void JTextUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTextUserMouseClicked
-        // TODO add your handling code here:
-        JTextUser.setText("");
-    }//GEN-LAST:event_JTextUserMouseClicked
-
-    private void JTextUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTextUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -512,7 +450,6 @@ private boolean isValidDate(String date) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField JApellidoText;
     private javax.swing.JButton JBtnEdit;
     private javax.swing.JButton JBtnFoto;
     private javax.swing.JTextField JCorreoText;
@@ -520,13 +457,8 @@ private boolean isValidDate(String date) {
     private javax.swing.JPasswordField JPasswordText;
     private javax.swing.JTextField JPathFotoText;
     private javax.swing.JTextField JTelefonoText;
-    private javax.swing.JTextField JTextUser;
-    private javax.swing.JTextField JnombreText;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -536,6 +468,7 @@ private boolean isValidDate(String date) {
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelTel;
     private javax.swing.JLabel jLabelUsuario;
+    private javax.swing.JLabel jLblTipoUsuario;
     private javax.swing.JPanel jPanelEdit;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JTabbedPane jPanelUsuario;

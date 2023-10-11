@@ -111,7 +111,8 @@ public void setRol(rolStr.Rol rol) {
            correoAlterno + "|" + 
            telefono + "|" + 
            pathFotografia + "|" +
-           this.getRol().getCodigo();
+           this.getRol().getCodigo() + "|"+
+           estatus;
 }
 
 }
