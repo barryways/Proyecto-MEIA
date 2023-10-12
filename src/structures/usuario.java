@@ -3,24 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package structures;
+
 import structures.rolStr;
+
 /**
  *
  * @author jmanc
  */
 public class usuario {
-      private String usuario;
+
+    private String usuario;
     private String nombre;
     private String apellido;
     private String password;
-private rolStr.Rol rol;
+    private rolStr.Rol rol;
     private String fechaNacimiento;
     private String correoAlterno;
     private int telefono;
     private String pathFotografia;
-    private byte estatus;
-    
-     // Getters
+    private int estatus;
+
+    // Getters
     public String getUsuario() {
         return usuario;
     }
@@ -37,7 +40,6 @@ private rolStr.Rol rol;
         return password;
     }
 
-   
     public String getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -54,16 +56,17 @@ private rolStr.Rol rol;
         return pathFotografia;
     }
 
-    public byte getEstatus() {
+    public int getEstatus() {
         return estatus;
     }
-  public rolStr.Rol getRol() {
-    return rol;
-}
-public void setRol(rolStr.Rol rol) {
-    this.rol = rol;
-}
 
+    public rolStr.Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(rolStr.Rol rol) {
+        this.rol = rol;
+    }
 
     // Setters
     public void setUsuario(String usuario) {
@@ -82,7 +85,6 @@ public void setRol(rolStr.Rol rol) {
         this.password = password;
     }
 
-    
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
@@ -99,20 +101,21 @@ public void setRol(rolStr.Rol rol) {
         this.pathFotografia = pathFotografia;
     }
 
-    public void setEstatus(byte estatus) {
+    public void setEstatus(int estatus) {
         this.estatus = estatus;
     }
+
     public String toString() {
-    return usuario + "|" + 
-           password + "|" + 
-           nombre + "|" + 
-           apellido + "|" +
-           fechaNacimiento + "|" + 
-           correoAlterno + "|" + 
-           telefono + "|" + 
-           pathFotografia + "|" +
-           this.getRol().getCodigo() + "|"+
-           estatus;
-}
+        return usuario + "|"
+                + password + "|"
+                + nombre + "|"
+                + apellido + "|"
+                + fechaNacimiento + "|"
+                + correoAlterno + "|"
+                + telefono + "|"
+                + pathFotografia + "|"
+                + this.getRol().getCodigo() + "|"
+                + estatus;
+    }
 
 }

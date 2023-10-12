@@ -1,0 +1,2 @@
+admin|123|Juan|Perez|2000-07-12|ejemplo@correo.com|12345678|C:\MEIA\foto\admin.jpg|0|1
+daniel|1234|Juan|Perez|2001-07-05|ejemplo@correo.com|12345678||1|1

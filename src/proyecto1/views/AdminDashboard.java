@@ -10,11 +10,13 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import proyecto1.controllers.AuthController;
+import proyecto1.controllers.UserController;
 
 /**
  *
@@ -27,38 +29,31 @@ public class AdminDashboard extends javax.swing.JFrame {
      */
     public AdminDashboard() {
         initComponents();
+        DefaultListModel<String> modeloLista = new DefaultListModel<>();
+        jListBuscados.setModel(modeloLista);
+        
     }
     
     
-    public void cargarDatos(String user){
-        String [] datosUsuario =AuthController.getUserData(user);
+    public void cargarDatos(String user) {
+        String[] datosUsuario = AuthController.getUserData(user);
         //cargar datos de la pestaña principal
-        jLabelUsuario.setText("Usuario: "+datosUsuario[0]);
-        jLabelNombre1.setText("Nombre: "+datosUsuario[2]);
-        jLabelApellido1.setText("Apellido: "+datosUsuario[3]);
-        jLabelFecNac1.setText("Fecha de Nacimiento: "+datosUsuario[4]);
-        jLabelCorreo1.setText("Correo: "+datosUsuario[5]);
-        jLabelTel1.setText("Telefono: "+datosUsuario[6]);
+        jLabelUsuario.setText("Usuario: " + datosUsuario[0]);
+        jLabelNombre1.setText("Nombre: " + datosUsuario[2]);
+        jLabelApellido1.setText("Apellido: " + datosUsuario[3]);
+        jLabelFecNac1.setText("Fecha de Nacimiento: " + datosUsuario[4]);
+        jLabelCorreo1.setText("Correo: " + datosUsuario[5]);
+        jLabelTel1.setText("Telefono: " + datosUsuario[6]);
         Icon userImage = new ImageIcon(new ImageIcon(datosUsuario[7]).getImage()
-            .getScaledInstance(lblImg.getWidth(), lblImg.getHeight(), 0));
+                .getScaledInstance(lblImg.getWidth(), lblImg.getHeight(), 0));
         lblImg.setIcon(userImage);
-                if(datosUsuario[8] == "0"){
+        if (AuthController.checkUserPrivileges(datosUsuario[0])) {
             jLblTipoUsuario.setText("Tipo de Usuario: Administrador");
-        } else{
+        } else {
             jLblTipoUsuario.setText("Tipo de Usuario: Usuario Normal");
         }
-        
-        
-        //cargar datos de la pestaña config
-        JPasswordText.setText(datosUsuario[1]);
-        JCorreoText.setText(datosUsuario[4]);
-        JTelefonoText.setText(datosUsuario[5]);
-        JFechaText.setText(datosUsuario[6]);
-        JPathFotoText.setText("C:/MEIA/foto/...");
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,22 +73,17 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabelCorreo1 = new javax.swing.JLabel();
         jLabelTel1 = new javax.swing.JLabel();
         jLblTipoUsuario = new javax.swing.JLabel();
-        jPanelConfig = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        JPasswordText = new javax.swing.JPasswordField();
-        jLabel8 = new javax.swing.JLabel();
-        JCorreoText = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        JTelefonoText = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        JFechaText = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        JPathFotoText = new javax.swing.JTextField();
-        JBtnFoto = new javax.swing.JButton();
-        JBtnEdit = new javax.swing.JButton();
+        jBtnEdit = new javax.swing.JButton();
         jPanelBuscarUsuario = new javax.swing.JPanel();
-        jPanelQuitarUsuario = new javax.swing.JPanel();
-        jPanelIngresoUsuario = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListBuscados = new javax.swing.JList<>();
+        jTxtUserSearch = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jBtnBuscar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jBtnEditar = new javax.swing.JButton();
+        jBtnEliminar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,6 +101,13 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLblTipoUsuario.setText("Tipo de Usuario:");
 
+        jBtnEdit.setText("Editar Usuario o Darse de Baja");
+        jBtnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEditActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelGeneralLayout = new javax.swing.GroupLayout(jPanelGeneral);
         jPanelGeneral.setLayout(jPanelGeneralLayout);
         jPanelGeneralLayout.setHorizontalGroup(
@@ -127,8 +124,9 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabelApellido1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelFecNac1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                         .addComponent(jLabelCorreo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelTel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(160, Short.MAX_VALUE))
+                        .addComponent(jLabelTel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jBtnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanelGeneralLayout.setVerticalGroup(
             jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,177 +149,106 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addComponent(jLabelTel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLblTipoUsuario)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jBtnEdit)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jPanel.addTab("General", jPanelGeneral);
 
-        jLabel4.setText("Contraseña");
-
-        JPasswordText.setText("jPasswordField1");
-        JPasswordText.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JPasswordTextMouseClicked(evt);
-            }
+        jListBuscados.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
-        JPasswordText.addActionListener(new java.awt.event.ActionListener() {
+        jScrollPane1.setViewportView(jListBuscados);
+
+        jTxtUserSearch.setText("Ej: japerez");
+
+        jLabel1.setText("Introduce el nombre del usuario a buscar");
+
+        jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JPasswordTextActionPerformed(evt);
+                jBtnBuscarActionPerformed(evt);
             }
         });
 
-        jLabel8.setText("Correo");
+        jLabel2.setText("Listado de Usuarios, seleccione el que quiere editar o quitar");
 
-        JCorreoText.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JCorreoTextMouseClicked(evt);
-            }
-        });
-
-        jLabel7.setText("Telefono");
-
-        JTelefonoText.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTelefonoTextMouseClicked(evt);
-            }
-        });
-
-        jLabel9.setText("Fecha de Nacimiento");
-
-        JFechaText.setAutoscrolls(false);
-        JFechaText.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JFechaTextMouseClicked(evt);
-            }
-        });
-
-        jLabel10.setText("Fotografia");
-
-        JPathFotoText.setEditable(false);
-        JPathFotoText.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JPathFotoTextMouseClicked(evt);
-            }
-        });
-        JPathFotoText.addActionListener(new java.awt.event.ActionListener() {
+        jBtnEditar.setText("Editar");
+        jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JPathFotoTextActionPerformed(evt);
+                jBtnEditarActionPerformed(evt);
             }
         });
 
-        JBtnFoto.setText("Buscar Fotografia");
-        JBtnFoto.addActionListener(new java.awt.event.ActionListener() {
+        jBtnEliminar.setText("Eliminar");
+        jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBtnFotoActionPerformed(evt);
+                jBtnEliminarActionPerformed(evt);
             }
         });
 
-        JBtnEdit.setText("Editar");
-        JBtnEdit.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Ingresar Nuevo Usuario");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBtnEditActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanelConfigLayout = new javax.swing.GroupLayout(jPanelConfig);
-        jPanelConfig.setLayout(jPanelConfigLayout);
-        jPanelConfigLayout.setHorizontalGroup(
-            jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConfigLayout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel4))
-                .addGap(5, 5, 5)
-                .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JPasswordText, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(JCorreoText, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(JTelefonoText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
-                    .addGroup(jPanelConfigLayout.createSequentialGroup()
-                        .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JPathFotoText, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                            .addComponent(JFechaText))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(JBtnFoto)))
-                .addGap(15, 15, 15))
-            .addGroup(jPanelConfigLayout.createSequentialGroup()
-                .addGap(241, 241, 241)
-                .addComponent(JBtnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelConfigLayout.setVerticalGroup(
-            jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConfigLayout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
-                .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JPasswordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(30, 30, 30)
-                .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(JCorreoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JTelefonoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JFechaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelConfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JBtnFoto)
-                    .addComponent(JPathFotoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(18, 18, 18)
-                .addComponent(JBtnEdit)
-                .addGap(20, 20, 20))
-        );
-
-        jPanel.addTab("Config", jPanelConfig);
 
         javax.swing.GroupLayout jPanelBuscarUsuarioLayout = new javax.swing.GroupLayout(jPanelBuscarUsuario);
         jPanelBuscarUsuario.setLayout(jPanelBuscarUsuarioLayout);
         jPanelBuscarUsuarioLayout.setHorizontalGroup(
             jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
+            .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
+                        .addGroup(jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
+                                .addGroup(jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
+                                        .addComponent(jScrollPane1)
+                                        .addGap(33, 33, 33))
+                                    .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
+                                        .addComponent(jTxtUserSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                                        .addGap(27, 27, 27)))
+                                .addGroup(jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jBtnEditar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jBtnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                                    .addComponent(jBtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(22, 117, Short.MAX_VALUE))))
         );
         jPanelBuscarUsuarioLayout.setVerticalGroup(
             jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 345, Short.MAX_VALUE)
+            .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtUserSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnBuscar))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(5, 5, 5)
+                .addGroup(jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelBuscarUsuarioLayout.createSequentialGroup()
+                        .addComponent(jBtnEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnEliminar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(26, 26, 26))
         );
 
-        jPanel.addTab("Buscar Usuario", jPanelBuscarUsuario);
-
-        javax.swing.GroupLayout jPanelQuitarUsuarioLayout = new javax.swing.GroupLayout(jPanelQuitarUsuario);
-        jPanelQuitarUsuario.setLayout(jPanelQuitarUsuarioLayout);
-        jPanelQuitarUsuarioLayout.setHorizontalGroup(
-            jPanelQuitarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
-        );
-        jPanelQuitarUsuarioLayout.setVerticalGroup(
-            jPanelQuitarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 345, Short.MAX_VALUE)
-        );
-
-        jPanel.addTab("Quitar Usuario", jPanelQuitarUsuario);
-
-        javax.swing.GroupLayout jPanelIngresoUsuarioLayout = new javax.swing.GroupLayout(jPanelIngresoUsuario);
-        jPanelIngresoUsuario.setLayout(jPanelIngresoUsuarioLayout);
-        jPanelIngresoUsuarioLayout.setHorizontalGroup(
-            jPanelIngresoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
-        );
-        jPanelIngresoUsuarioLayout.setVerticalGroup(
-            jPanelIngresoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 345, Short.MAX_VALUE)
-        );
-
-        jPanel.addTab("Ingresar Usuario", jPanelIngresoUsuario);
+        jPanel.addTab("Usuarios", jPanelBuscarUsuario);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -336,118 +263,120 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     private String fotoPath = "";
-    
-    private void JPasswordTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JPasswordTextMouseClicked
-        // TODO add your handling code here:
-        JPasswordText.setText("");
-    }//GEN-LAST:event_JPasswordTextMouseClicked
 
-    private void JPasswordTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPasswordTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JPasswordTextActionPerformed
+    private void jBtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditActionPerformed
+        String textoUsuario = jLabelUsuario.getText();
 
-    private void JCorreoTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JCorreoTextMouseClicked
-        // TODO add your handling code here:
-        JCorreoText.setText("");
-    }//GEN-LAST:event_JCorreoTextMouseClicked
+        // Comprueba si el texto comienza con "Usuario: "
+        if (textoUsuario.startsWith("Usuario: ")) {
+            // Obtiene el nombre de usuario eliminando "Usuario: "
+            String nombreUsuario = textoUsuario.substring("Usuario: ".length());
 
-    private void JTelefonoTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTelefonoTextMouseClicked
-        // TODO add your handling code here:
-        JTelefonoText.setText("");
-    }//GEN-LAST:event_JTelefonoTextMouseClicked
+            // Pasa el nombre de usuario a la ventana de edición
+            EditUser edit = new EditUser();
+            edit.cargarDatos(nombreUsuario);
+            edit.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "El texto no tiene el formato esperado.");
+        }
+    }//GEN-LAST:event_jBtnEditActionPerformed
 
-    private void JFechaTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JFechaTextMouseClicked
-        // TODO add your handling code here:
-        JFechaText.setText("");
-    }//GEN-LAST:event_JFechaTextMouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-    private void JPathFotoTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JPathFotoTextMouseClicked
-        // TODO add your handling code here:
-        JPathFotoText.setText("");
-    }//GEN-LAST:event_JPathFotoTextMouseClicked
+        LoginFrame register = new LoginFrame();
+        register.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void JPathFotoTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPathFotoTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JPathFotoTextActionPerformed
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
 
-          private boolean isValidEmail(String email) {
-    String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(email);
-    return matcher.matches();
-}
+        String datosUsuario = UserController.getDataPlane(jTxtUserSearch.getText());
+        DefaultListModel<String> modeloLista = (DefaultListModel<String>) jListBuscados.getModel();
+        if (datosUsuario != "") {
+            modeloLista.clear();
+            modeloLista.addElement(datosUsuario);
+        } else {
+            modeloLista.addElement("No se encontraron datos");
+        }
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
 
-private boolean isValidPhone(String phone) {
-    String regex = "^\\d{8}$"; 
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(phone);
-    return matcher.matches();
-}
+    private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
+        String seleccionado = jListBuscados.getSelectedValue();
 
-private boolean isValidDate(String date) {
-    String regex = "^\\d{4}-\\d{2}-\\d{2}$"; 
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(date);
-    return matcher.matches();
-}
-        private String getFileExtension(File file) {
-    String extension = "";
-    String fileName = file.getName();
-    int lastIndex = fileName.lastIndexOf(".");
-    if (lastIndex > 0) {
-        extension = fileName.substring(lastIndex + 1).toLowerCase();
-    }
-    return extension;
-    }
-    private void JBtnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnFotoActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        int resultado = fileChooser.showOpenDialog(this); // Puedes usar 'this' si estás dentro de un JFrame
+        if (seleccionado != null) {
+            // Divide la cadena en partes usando el carácter "|"
+            String[] partes = seleccionado.split("\\|");
 
-        if (resultado == JFileChooser.APPROVE_OPTION) {
-            File archivoSeleccionado = fileChooser.getSelectedFile();
-            String rutaSeleccionada = archivoSeleccionado.getAbsolutePath();
-            JPathFotoText.setText(rutaSeleccionada);
+            if (partes.length > 0) {
+                // Obtiene la primera parte, que debería ser el nombre de usuario
+                String nombreUsuario = partes[0].trim();
 
-            // Obtén el nombre de usuario ingresado en tu interfaz
-            String nombreUsuario = jLabelNombre1.getText(); // Reemplaza 'JNombreUsuario' con el nombre de tu campo de texto para el nombre de usuario
-
-            // Directorio de destino
-            String extension = getFileExtension(archivoSeleccionado);
-            String nombreArchivoDestino = nombreUsuario + "." + extension;
-            String directorioDestino = "C:\\MEIA\\foto\\" + nombreArchivoDestino;
-
-            fotoPath = directorioDestino;
-
-            try {
-                Files.copy(archivoSeleccionado.toPath(), new File(directorioDestino).toPath(), StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("Imagen copiada exitosamente a " + directorioDestino);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                // Pasa el nombre de usuario a la ventana de edición
+                EditUser edit = new EditUser();
+                edit.cargarDatos(nombreUsuario);
+                edit.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el nombre de usuario en el elemento seleccionado.");
             }
-        }
-    }//GEN-LAST:event_JBtnFotoActionPerformed
-
-
-    private void JBtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnEditActionPerformed
-        structures.usuario nuevoUsuario = new  structures.usuario();
-        if (!isValidEmail(JCorreoText.getText())) {
-            JOptionPane.showMessageDialog(null, "Campo incorrecto: Correo. Debería tener el formato: ejemplo@dominio.com");
-            return;
+        } else {
+            JOptionPane.showMessageDialog(this, "Ningún elemento seleccionado.");
         }
 
-        if (!isValidPhone(JTelefonoText.getText())) {
-            JOptionPane.showMessageDialog(null, "Campo incorrecto: Teléfono. Debería tener 8 dígitos.");
-            return;
-        }
+    }//GEN-LAST:event_jBtnEditarActionPerformed
 
-        if (!isValidDate(JFechaText.getText())) {
-            JOptionPane.showMessageDialog(null, "Campo incorrecto: Fecha de nacimiento. Debería tener el formato: YYYY-MM-DD.");
-            return;
+    private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
+        String seleccionado = jListBuscados.getSelectedValue();
+        DefaultListModel<String> modeloLista = (DefaultListModel<String>) jListBuscados.getModel();
+        if (seleccionado != null) {
+            // Divide la cadena en partes usando el carácter "|"
+            String[] partes = seleccionado.split("\\|");
+
+            if (partes.length > 0) {
+                // Obtiene la primera parte, que debería ser el nombre de usuario
+                String nombreUsuario = partes[0].trim();
+                UserController.eliminarUsuario(nombreUsuario);
+                JOptionPane.showMessageDialog(this, "Persona eliminada con exito");
+                modeloLista.clear();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el nombre de usuario en el elemento seleccionado.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Ningún elemento seleccionado.");
         }
-        
-        
-    }//GEN-LAST:event_JBtnEditActionPerformed
+    }//GEN-LAST:event_jBtnEliminarActionPerformed
+
+    private boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    private boolean isValidPhone(String phone) {
+        String regex = "^\\d{8}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(phone);
+        return matcher.matches();
+    }
+
+    private boolean isValidDate(String date) {
+        String regex = "^\\d{4}-\\d{2}-\\d{2}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(date);
+        return matcher.matches();
+    }
+
+    private String getFileExtension(File file) {
+        String extension = "";
+        String fileName = file.getName();
+        int lastIndex = fileName.lastIndexOf(".");
+        if (lastIndex > 0) {
+            extension = fileName.substring(lastIndex + 1).toLowerCase();
+        }
+        return extension;
+    }
 
     /**
      * @param args the command line arguments
@@ -459,7 +388,7 @@ private boolean isValidDate(String date) {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            
+
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -476,31 +405,26 @@ private boolean isValidDate(String date) {
             java.util.logging.Logger.getLogger(AdminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AdminDashboard().setVisible(true);
-                
+
             }
-         
+
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBtnEdit;
-    private javax.swing.JButton JBtnFoto;
-    private javax.swing.JTextField JCorreoText;
-    private javax.swing.JTextField JFechaText;
-    private javax.swing.JPasswordField JPasswordText;
-    private javax.swing.JTextField JPathFotoText;
-    private javax.swing.JTextField JTelefonoText;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton jBtnBuscar;
+    private javax.swing.JButton jBtnEdit;
+    private javax.swing.JButton jBtnEditar;
+    private javax.swing.JButton jBtnEliminar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelApellido1;
     private javax.swing.JLabel jLabelCorreo1;
     private javax.swing.JLabel jLabelFecNac1;
@@ -508,12 +432,12 @@ private boolean isValidDate(String date) {
     private javax.swing.JLabel jLabelTel1;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JLabel jLblTipoUsuario;
+    private javax.swing.JList<String> jListBuscados;
     private javax.swing.JTabbedPane jPanel;
     private javax.swing.JPanel jPanelBuscarUsuario;
-    private javax.swing.JPanel jPanelConfig;
     private javax.swing.JPanel jPanelGeneral;
-    private javax.swing.JPanel jPanelIngresoUsuario;
-    private javax.swing.JPanel jPanelQuitarUsuario;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTxtUserSearch;
     private javax.swing.JLabel lblImg;
     // End of variables declaration//GEN-END:variables
 }

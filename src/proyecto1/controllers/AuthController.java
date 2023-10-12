@@ -1,6 +1,6 @@
 package proyecto1.controllers;
 
-import structures.usuario; 
+import structures.usuario;
 import structures.rolStr;
 import java.nio.file.*;
 import java.io.*;
@@ -12,7 +12,7 @@ public class AuthController {
     private static final String FILE_PATH = "C:\\MEIA\\usuario.txt";
     private static final String DESC_FILE_PATH = "C:\\MEIA\\desc_usuario.txt";
 
-public static usuario authenticate(String username, String password) {
+    public static usuario authenticate(String username, String password) {
         usuario authenticatedUser = null;
         try {
             File file = new File(FILE_PATH);
@@ -22,17 +22,17 @@ public static usuario authenticate(String username, String password) {
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("\\|");
                     if (parts[0].equals(username) && parts[1].equals(password)) {
-                        authenticatedUser = new usuario(); 
-                        authenticatedUser.setUsuario(parts[0]); 
-                        authenticatedUser.setPassword(parts[1]); 
-                        authenticatedUser.setNombre(parts[2]); 
-                        authenticatedUser.setApellido(parts[3]);  
+                        authenticatedUser = new usuario();
+                        authenticatedUser.setUsuario(parts[0]);
+                        authenticatedUser.setPassword(parts[1]);
+                        authenticatedUser.setNombre(parts[2]);
+                        authenticatedUser.setApellido(parts[3]);
                         authenticatedUser.setFechaNacimiento(parts[4]);
                         authenticatedUser.setCorreoAlterno(parts[5]);
                         authenticatedUser.setTelefono(Integer.parseInt(parts[6]));
                         authenticatedUser.setPathFotografia(parts[7]);
                         authenticatedUser.setRol(rolStr.Rol.fromCodigo(Byte.parseByte(parts[8])));
-                        authenticatedUser.setEstatus(Byte.parseByte("1"));
+                        authenticatedUser.setEstatus(1);
 
                         break;
                     }
@@ -45,16 +45,16 @@ public static usuario authenticate(String username, String password) {
         return authenticatedUser;
     }
 
- public static boolean register(usuario newUser) {
+    public static boolean register(usuario newUser) {
         try {
             File file = new File(FILE_PATH);
             File descFile = new File(DESC_FILE_PATH);
             boolean isAdminPresent = checkIfAdminExists();
-
+               
             if (!isAdminPresent) {
-                newUser.setRol(rolStr.Rol.ADMINISTRADOR); 
+                newUser.setRol(rolStr.Rol.ADMINISTRADOR);
             } else {
-                newUser.setRol(rolStr.Rol.USUARIO_REGULAR); 
+                newUser.setRol(rolStr.Rol.USUARIO_REGULAR);
             }
             if (!file.exists()) {
                 file.createNewFile();
@@ -78,39 +78,40 @@ public static usuario authenticate(String username, String password) {
             bw.close();
             updateDescriptor(newUser.getUsuario());
             return true;
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
-private static boolean checkIfAdminExists() {
-    try {
-        File file = new File(FILE_PATH);
-        if (file.exists()) {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            
-            String line;
-            while ((line = br.readLine()) != null) {
-                                                System.out.println("=====================");  // <-- Aquí está la impresión del valor de 'line'
 
-                                System.out.println(line);  // <-- Aquí está la impresión del valor de 'line'
-                                                System.out.println("=====================");  // <-- Aquí está la impresión del valor de 'line'
+    public static boolean checkIfAdminExists() {
+        try {
+            File file = new File(FILE_PATH);
+            if (file.exists()) {
+                BufferedReader br = new BufferedReader(new FileReader(file));
 
-                if (Byte.parseByte(line.split("\\|")[8]) == rolStr.Rol.ADMINISTRADOR.getCodigo()) {
-                    br.close();
-                    return true;
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println("=====================");  // <-- Aquí está la impresión del valor de 'line'
+
+                    System.out.println(line);  // <-- Aquí está la impresión del valor de 'line'
+                    System.out.println("=====================");  // <-- Aquí está la impresión del valor de 'line'
+
+                    if (Byte.parseByte(line.split("\\|")[8]) == rolStr.Rol.ADMINISTRADOR.getCodigo()) {
+                        br.close();
+                        return true;
+                    }
                 }
+                br.close();
             }
-            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch(IOException e) {
-        e.printStackTrace();
+        return false;
     }
-    return false;
-}
 
- private static void initializeDescriptor(String user) throws IOException {
-    String fecha_actual = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    private static void initializeDescriptor(String user) throws IOException {
+        String fecha_actual = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DESC_FILE_PATH, false))) {
             writer.write("nombre_simbolico:desc_usuario");
             writer.newLine();
@@ -129,7 +130,8 @@ private static boolean checkIfAdminExists() {
             writer.write("registros_inactivos:0");
             writer.newLine();
         }
-}
+    }
+
     private static void updateDescriptor(String user) throws IOException {
         File descFile = new File(DESC_FILE_PATH);
 
@@ -145,17 +147,17 @@ private static boolean checkIfAdminExists() {
         if (descFile.exists()) {
             BufferedReader reader = new BufferedReader(new FileReader(descFile));
 
-    nombre_simbolico = getNextLineValue(reader);
-    fecha_creacion = getNextLineValue(reader);
-    usuario_creacion = getNextLineValue(reader);
-    fecha_modificacion = getNextLineValue(reader);
-    usuario_modificacion = getNextLineValue(reader);
+            nombre_simbolico = getNextLineValue(reader);
+            fecha_creacion = getNextLineValue(reader);
+            usuario_creacion = getNextLineValue(reader);
+            fecha_modificacion = getNextLineValue(reader);
+            usuario_modificacion = getNextLineValue(reader);
 
-    num_registros = getIntFromNextLine(reader);
-    registros_activos = getIntFromNextLine(reader);
-    registros_inactivos = getIntFromNextLine(reader);
+            num_registros = getIntFromNextLine(reader);
+            registros_activos = getIntFromNextLine(reader);
+            registros_inactivos = getIntFromNextLine(reader);
 
-    reader.close();
+            reader.close();
         }
 
         fecha_modificacion = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -182,71 +184,71 @@ private static boolean checkIfAdminExists() {
         writer.newLine();
         writer.close();
     }
+
     private static String getNextLineValue(BufferedReader reader) throws IOException {
-    String line = reader.readLine();
-    if (line != null) {
-        return line.split(":")[1];
+        String line = reader.readLine();
+        if (line != null) {
+            return line.split(":")[1];
+        }
+        return "";
     }
-    return "";
-}
 
-private static int getIntFromNextLine(BufferedReader reader) throws IOException {
-    String value = getNextLineValue(reader);
-    if (!value.isEmpty()) {
-        return Integer.parseInt(value);
+    private static int getIntFromNextLine(BufferedReader reader) throws IOException {
+        String value = getNextLineValue(reader);
+        if (!value.isEmpty()) {
+            return Integer.parseInt(value);
+        }
+        return 0;
     }
-    return 0;
-}
 
-public static boolean checkUserPrivileges(String user) {
-    try {
-        File file = new File(FILE_PATH);
-        if (file.exists()) {
-            BufferedReader br = new BufferedReader(new FileReader(file));
+    public static boolean checkUserPrivileges(String user) {
+        try {
+            File file = new File(FILE_PATH);
+            if (file.exists()) {
+                BufferedReader br = new BufferedReader(new FileReader(file));
 
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length > 8 && parts[0].equals(user)) {
-                    if (parts[8].equals("0")) {
-                        br.close();
-                        return true;
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length > 8 && parts[0].equals(user)) {
+                        if (parts[8].equals("0")) {
+                            br.close();
+                            return true;
+                        }
                     }
                 }
+                br.close();
             }
-            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+        return false;
     }
-    return false;
-}
 
-public static String[] getUserData(String user){
-    String[] data = new String[10];
-     try {
-        File file = new File(FILE_PATH);
-        if (file.exists()) {
-            BufferedReader br = new BufferedReader(new FileReader(file));
+    public static String[] getUserData(String user) {
+        String[] data = new String[10];
+        try {
+            File file = new File(FILE_PATH);
+            if (file.exists()) {
+                BufferedReader br = new BufferedReader(new FileReader(file));
 
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if(parts.length > 8 && parts[0].equals(user)){
-                    for (int i = 0; i < parts.length; i++) {
-                    data[i]= parts[i];
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length > 8 && parts[0].equals(user)) {
+                        for (int i = 0; i < parts.length; i++) {
+                            data[i] = parts[i];
+                        }
+                        return data;
                     }
-                     return data;
+
                 }
-
+                br.close();
             }
-            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+        return data;
     }
-    return data;
-}
-
 
 }

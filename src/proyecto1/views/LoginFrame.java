@@ -64,7 +64,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        JLogin.setText("Registrarme");
+        JLogin.setText("Registrarse");
         JLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JLoginActionPerformed(evt);
@@ -296,7 +296,8 @@ public class LoginFrame extends javax.swing.JFrame {
         nuevoUsuario.setTelefono(Integer.parseInt(JTelefonoText.getText()));
         nuevoUsuario.setPathFotografia(fotoPath);
         nuevoUsuario.setRol(rolStr.Rol.USUARIO_REGULAR);
-
+        nuevoUsuario.setEstatus(1);
+        
         boolean estaRegistrado = AuthController.register(nuevoUsuario);
         if(estaRegistrado){
             JOptionPane.showMessageDialog(null, "Usuario Registrado exitosamente!");
