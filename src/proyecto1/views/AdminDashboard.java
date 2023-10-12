@@ -291,14 +291,22 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
 
-        String datosUsuario = UserController.getDataPlane(jTxtUserSearch.getText());
-        DefaultListModel<String> modeloLista = (DefaultListModel<String>) jListBuscados.getModel();
-        if (datosUsuario != "") {
+      String datosUsuario = UserController.getDataPlane(jTxtUserSearch.getText());
+    DefaultListModel<String> modeloLista = (DefaultListModel<String>) jListBuscados.getModel();
+
+    if (!datosUsuario.isEmpty()) {
+        String[] datosPartidos = UserController.getAllUser(jTxtUserSearch.getText()).split("\\|"); 
+        if (datosPartidos.length > 8 && !"0".equals(datosPartidos[8])) {
             modeloLista.clear();
             modeloLista.addElement(datosUsuario);
         } else {
+            modeloLista.clear(); 
             modeloLista.addElement("No se encontraron datos");
         }
+    } else {
+        modeloLista.clear(); 
+        modeloLista.addElement("No se encontraron datos");
+    }
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
@@ -326,6 +334,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
+
         String seleccionado = jListBuscados.getSelectedValue();
         DefaultListModel<String> modeloLista = (DefaultListModel<String>) jListBuscados.getModel();
         if (seleccionado != null) {

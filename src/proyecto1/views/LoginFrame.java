@@ -272,7 +272,43 @@ public class LoginFrame extends javax.swing.JFrame {
     
     private void JLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JLoginActionPerformed
     structures.usuario nuevoUsuario = new  structures.usuario();
-     if (!isValidEmail(JCorreoText.getText())) {
+    if (JTextUser.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo Usuario está vacío.");
+        return;
+    }
+
+    if (JnombreText.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo Nombre está vacío.");
+        return;
+    }
+
+    if (JApellidoText.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo Apellido está vacío.");
+        return;
+    }
+
+    if (String.valueOf(JPasswordText.getPassword()).trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo Contraseña está vacío.");
+        return;
+    }
+
+    if (JFechaText.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo Fecha de nacimiento está vacío.");
+        return;
+    }
+
+    if (JCorreoText.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo Correo está vacío.");
+        return;
+    }
+
+    if (JTelefonoText.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "El campo Teléfono está vacío.");
+        return;
+    }
+
+    // Aquí continúan tus validaciones originales:
+    if (!isValidEmail(JCorreoText.getText())) {
         JOptionPane.showMessageDialog(null, "Campo incorrecto: Correo. Debería tener el formato: ejemplo@dominio.com");
         return;
     }
@@ -285,7 +321,7 @@ public class LoginFrame extends javax.swing.JFrame {
     if (!isValidDate(JFechaText.getText())) {
         JOptionPane.showMessageDialog(null, "Campo incorrecto: Fecha de nacimiento. Debería tener el formato: YYYY-MM-DD.");
         return;
-    }    
+    }     
     
     nuevoUsuario.setUsuario(JTextUser.getText());
         nuevoUsuario.setNombre(JnombreText.getText());

@@ -1,2 +1,1 @@
-admin|123|Juan|Perez|2000-07-12|ejemplo@correo.com|12345678|C:\MEIA\foto\admin.jpg|0|1
-daniel|1234|Juan|Perez|2001-07-05|ejemplo@correo.com|12345678||1|1
+jdman|24DEjunio@|Jose|Man|2001-06-06|jdman@correo.url.edu.gt|42110769|C:\MEIA\foto\jdman.jpg|0|1

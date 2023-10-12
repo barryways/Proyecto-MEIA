@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import proyecto1.controllers.AuthController;
+import proyecto1.controllers.UserController;
 
 /**
  *
@@ -263,8 +264,19 @@ public class EditUser extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Campo incorrecto: Fecha de nacimiento. Debería tener el formato: YYYY-MM-DD.");
             return;
         }
-        
-        
+            String[] newData = new String[10];
+            newData[0] = username;
+            newData[1] = JCorreoText.getText();
+            newData[2] = String.valueOf(JPasswordText.getPassword()); 
+            newData[3] = nombre;
+            newData[4] = apellido;
+            newData[5] = JFechaText.getText();
+            newData[6] = JCorreoText.getText();
+            newData[7] = JTelefonoText.getText();
+            newData[8] = JPathFotoText.getText();
+            newData[9] = rol;
+            UserController.EditUser(username,newData);
+
 
     }//GEN-LAST:event_JBtnEditActionPerformed
 

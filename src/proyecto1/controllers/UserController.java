@@ -2,15 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package proyecto1.controllers;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+package proyecto1.controllers;import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+
+
 
 /**
  *
@@ -21,8 +18,43 @@ public class UserController {
     private static final String FILE_PATH = "C:\\MEIA\\usuario.txt";
     private static final String DESC_FILE_PATH = "C:\\MEIA\\desc_usuario.txt";
 
-    public void EditUser() {
+    public static void EditUser(String user, String[] newData) {
+     List<String> lines = new ArrayList<>();
+    boolean userUpdated = false;
 
+    try {
+        File file = new File(FILE_PATH);
+        if (file.exists()) {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts[0].equals(user)) {
+                    line = String.join("|", newData);
+                    userUpdated = true;
+                }
+                lines.add(line);
+            }
+
+            br.close();
+
+            // Si el usuario no fue encontrado, añadimos su registro al archivo.
+            if (!userUpdated) {
+                lines.add(String.join("|", newData));
+            }
+
+            // Escribir nuevamente en el archivo
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            for (String updatedLine : lines) {
+                bw.write(updatedLine);
+                bw.newLine();
+            }
+            bw.close();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
     public static String[] getUserData(String user) {
@@ -56,45 +88,41 @@ public class UserController {
         String[] datos = getUserData(user);
         return (datos[0] + " | " + datos[2] + " | " + datos[3] + " | " + datos[4] + " | " + datos[5] + " | " + datos[6]);
     }
+    public static String getAllUser(String user){
+        String[] datos = getUserData(user);
+                return (datos[0] + " | " + datos[2] + " | " + datos[3] + " | " + datos[4] + " | " + datos[5] + " | " + datos[6] +  " | " + datos[7] + "|" + datos[8] + "|" + datos[9]);
+    }
 
-    public static void eliminarUsuario(String user) {
+      public static void eliminarUsuario(String user) {
+        List<String> lines = new ArrayList<>();
         try {
             File file = new File(FILE_PATH);
-            File tempFile = new File("temp.txt");
             if (file.exists()) {
+                System.out.println("Si existe el archivo");
                 BufferedReader br = new BufferedReader(new FileReader(file));
-                BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
 
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("\\|");
-                    if (parts.length > 8 && parts[0].equals(user)) {
-                        // Omite esta línea (no la escribe en el archivo temporal)
-                    } else {
-                        // Escribe la línea actual en el archivo temporal
-                        bw.write(line);
-                        bw.newLine();
+                    if (parts[0].equals(user)) {
+                        parts[9] = "0";
+                        line = String.join("|", parts);
                     }
+                    lines.add(line);
                 }
 
                 br.close();
-                bw.close();
 
-                // Borra el archivo original
-                if (file.delete()) {
-                    // Reemplaza el archivo original con el archivo temporal
-                    if (tempFile.renameTo(file)) {
-                        JOptionPane.showMessageDialog(null, "Usuario eliminado con éxito.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No se pudo realizar la operación.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo realizar la operación. 2");
+                // Escribir nuevamente en el archivo
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                for (String updatedLine : lines) {
+                    bw.write(updatedLine);
+                    bw.newLine();
                 }
+                bw.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
