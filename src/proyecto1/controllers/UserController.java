@@ -19,7 +19,7 @@ public class UserController {
     private static final String DESC_FILE_PATH = "C:\\MEIA\\desc_usuario.txt";
 
     public static void EditUser(String user, String[] newData) {
-     List<String> lines = new ArrayList<>();
+    List<String> lines = new ArrayList<>();
     boolean userUpdated = false;
 
     try {
@@ -31,9 +31,17 @@ public class UserController {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("\\|");
                 if (parts[0].equals(user)) {
+                    // Modifica los datos sólo si el nuevo dato no está vacío.
+                    for (int i = 0; i < newData.length && i < parts.length; i++) {
+                        if (newData[i] == null || newData[i].isEmpty()) {
+                            newData[i] = parts[i];
+                        }
+                    }
+
                     line = String.join("|", newData);
                     userUpdated = true;
                 }
+
                 lines.add(line);
             }
 
@@ -55,7 +63,7 @@ public class UserController {
     } catch (IOException e) {
         e.printStackTrace();
     }
-    }
+}
 
     public static String[] getUserData(String user) {
         String[] data = new String[10];
@@ -104,7 +112,7 @@ public class UserController {
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("\\|");
-                    if (parts[0].equals(user)) {
+                    if (parts[0].equals(user) && !"0".equals(parts[8])) {
                         parts[9] = "0";
                         line = String.join("|", parts);
                     }

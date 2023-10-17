@@ -81,6 +81,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jBtnEdit = new javax.swing.JButton();
         jButtonBackup = new javax.swing.JButton();
         jTextFieldRutaBackup = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jPanelBuscarUsuario = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListBuscados = new javax.swing.JList<>();
@@ -108,7 +109,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLblTipoUsuario.setText("Tipo de Usuario:");
 
-        jBtnEdit.setText("Editar Usuario o Darse de Baja");
+        jBtnEdit.setText("Editar Usuario");
         jBtnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnEditActionPerformed(evt);
@@ -129,28 +130,40 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Darse de baja");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelGeneralLayout = new javax.swing.GroupLayout(jPanelGeneral);
         jPanelGeneral.setLayout(jPanelGeneralLayout);
         jPanelGeneralLayout.setHorizontalGroup(
             jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGeneralLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblImg, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                        .addComponent(jTextFieldRutaBackup))
-                    .addComponent(jButtonBackup))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLblTipoUsuario)
-                    .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelNombre1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelApellido1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelFecNac1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                        .addComponent(jLabelCorreo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelTel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jBtnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelGeneralLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblImg, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                                .addComponent(jTextFieldRutaBackup))
+                            .addComponent(jButtonBackup))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLblTipoUsuario)
+                            .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelNombre1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelApellido1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelFecNac1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(jLabelCorreo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelTel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jBtnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelGeneralLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton2)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanelGeneralLayout.setVerticalGroup(
@@ -180,7 +193,9 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnEdit)
                     .addComponent(jButtonBackup))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jPanel.addTab("General", jPanelGeneral);
@@ -374,7 +389,6 @@ public class AdminDashboard extends javax.swing.JFrame {
                 // Obtiene la primera parte, que debería ser el nombre de usuario
                 String nombreUsuario = partes[0].trim();
                 UserController.eliminarUsuario(nombreUsuario);
-                JOptionPane.showMessageDialog(this, "Persona eliminada con exito");
                 modeloLista.clear();
 
             } else {
@@ -447,6 +461,30 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void jTextFieldRutaBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRutaBackupActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldRutaBackupActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+   String textoUsuario = jLabelUsuario.getText();
+
+        // Comprueba si el texto comienza con "Usuario: "
+        if (textoUsuario.startsWith("Usuario: ")) {
+            // Obtiene el nombre de usuario eliminando "Usuario: "
+            String nombreUsuario = textoUsuario.substring("Usuario: ".length());
+            UserController.eliminarUsuario(nombreUsuario);
+            JOptionPane.showMessageDialog(this, "Se dio de baja");
+            // Pasa el nombre de usuario a la ventana de edición
+            EditUser edit = new EditUser();
+            edit.cargarDatos(nombreUsuario);
+            edit.setVisible(false); 
+            AdminDashboard admin = new AdminDashboard();
+            admin.setVisible(false);
+             dispose();
+             StartFrame log = new StartFrame();
+             log.setVisible(true); 
+             dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "El texto no tiene el formato esperado.");
+        }        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
@@ -524,6 +562,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonBackup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

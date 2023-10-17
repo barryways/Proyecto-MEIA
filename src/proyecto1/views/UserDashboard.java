@@ -70,6 +70,7 @@ public class UserDashboard extends javax.swing.JFrame {
         jLabelTel = new javax.swing.JLabel();
         jLblTipoUsuario = new javax.swing.JLabel();
         jBtnEdit = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,10 +88,17 @@ public class UserDashboard extends javax.swing.JFrame {
 
         jLblTipoUsuario.setText("Tipo Usuario: ");
 
-        jBtnEdit.setText("Editar Usuario o Darse de Baja");
+        jBtnEdit.setText("Editar Usuario");
         jBtnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnEditActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Darse de baja");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -99,8 +107,13 @@ public class UserDashboard extends javax.swing.JFrame {
         jPanelGeneralLayout.setHorizontalGroup(
             jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGeneralLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelGeneralLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelGeneralLayout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(jButton1)))
                 .addGap(46, 46, 46)
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelGeneralLayout.createSequentialGroup()
@@ -145,7 +158,9 @@ public class UserDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLblTipoUsuario)
                 .addGap(18, 18, 18)
-                .addComponent(jBtnEdit)
+                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnEdit)
+                    .addComponent(jButton1))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -172,10 +187,25 @@ public class UserDashboard extends javax.swing.JFrame {
 
     private void jBtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditActionPerformed
 
-        EditUser edit = new EditUser();
-        edit.cargarDatos(jLabelUsuario.getText());
-        edit.setVisible(true);
+        String textoUsuario = jLabelUsuario.getText();
+
+        // Comprueba si el texto comienza con "Usuario: "
+        if (textoUsuario.startsWith("Usuario: ")) {
+            // Obtiene el nombre de usuario eliminando "Usuario: "
+            String nombreUsuario = textoUsuario.substring("Usuario: ".length());
+
+            // Pasa el nombre de usuario a la ventana de edición
+            EditUser edit = new EditUser();
+            edit.cargarDatos(nombreUsuario);
+            edit.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "El texto no tiene el formato esperado.");
+        }
     }//GEN-LAST:event_jBtnEditActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     private boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
@@ -244,6 +274,7 @@ public class UserDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnEdit;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabelApellido;
     private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JLabel jLabelFecNac;

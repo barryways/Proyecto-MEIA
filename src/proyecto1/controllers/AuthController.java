@@ -21,7 +21,7 @@ public class AuthController {
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("\\|");
-                    if (parts[0].equals(username) && parts[1].equals(password)) {
+                    if (parts[0].equals(username) && parts[1].equals(password) && "1".equals(parts[9])) {
                         authenticatedUser = new usuario();
                         authenticatedUser.setUsuario(parts[0]);
                         authenticatedUser.setPassword(parts[1]);
@@ -32,6 +32,7 @@ public class AuthController {
                         authenticatedUser.setTelefono(Integer.parseInt(parts[6]));
                         authenticatedUser.setPathFotografia(parts[7]);
                         authenticatedUser.setRol(rolStr.Rol.fromCodigo(Byte.parseByte(parts[8])));
+                        
                         authenticatedUser.setEstatus(1);
 
                         break;
@@ -207,7 +208,6 @@ public class AuthController {
             File file = new File(FILE_PATH);
             if (file.exists()) {
                 BufferedReader br = new BufferedReader(new FileReader(file));
-
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("\\|");

@@ -250,33 +250,33 @@ public class EditUser extends javax.swing.JFrame {
 
     private void JBtnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnEditActionPerformed
         structures.usuario nuevoUsuario = new structures.usuario();
-        if (!isValidEmail(JCorreoText.getText())) {
-            JOptionPane.showMessageDialog(null, "Campo incorrecto: Correo. Debería tener el formato: ejemplo@dominio.com");
-            return;
-        }
-
-        if (!isValidPhone(JTelefonoText.getText())) {
-            JOptionPane.showMessageDialog(null, "Campo incorrecto: Teléfono. Debería tener 8 dígitos.");
-            return;
-        }
-
-        if (!isValidDate(JFechaText.getText())) {
-            JOptionPane.showMessageDialog(null, "Campo incorrecto: Fecha de nacimiento. Debería tener el formato: YYYY-MM-DD.");
-            return;
-        }
+        
             String[] newData = new String[10];
+            
             newData[0] = username;
-            newData[1] = JCorreoText.getText();
-            newData[2] = String.valueOf(JPasswordText.getPassword()); 
-            newData[3] = nombre;
-            newData[4] = apellido;
-            newData[5] = JFechaText.getText();
-            newData[6] = JCorreoText.getText();
-            newData[7] = JTelefonoText.getText();
-            newData[8] = JPathFotoText.getText();
-            newData[9] = rol;
+            newData[1] = String.valueOf(JPasswordText.getPassword()); 
+            newData[2] = nombre;
+            newData[3] = apellido;
+            newData[4] = JFechaText.getText();
+            newData[5] = JCorreoText.getText();
+            newData[6] = JTelefonoText.getText();
+            newData[7] = fotoPath;
+            newData[8] = rol;
+            newData[9] = "1";
             UserController.EditUser(username,newData);
-
+            EditUser editar = new EditUser();
+            editar.setVisible(false);
+            dispose();
+            AdminDashboard admin = new AdminDashboard();
+            admin.setVisible(false);
+            dispose();
+            UserDashboard user = new UserDashboard();
+            user.setVisible(false);
+            dispose();
+            StartFrame login = new StartFrame();
+            login.setVisible(true);
+            dispose();
+           
 
     }//GEN-LAST:event_JBtnEditActionPerformed
 

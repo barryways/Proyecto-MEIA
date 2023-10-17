@@ -15,6 +15,9 @@ import proyecto1.controllers.AuthController;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import structures.rolStr;
+import structures.loginModel; 
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 
 
 /**
@@ -133,9 +136,21 @@ public class LoginFrame extends javax.swing.JFrame {
         });
 
         JPasswordText.setText("jPasswordField1");
+        JPasswordText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JPasswordTextFocusLost(evt);
+            }
+        });
         JPasswordText.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JPasswordTextMouseClicked(evt);
+            }
+        });
+        JPasswordText.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                JPasswordTextInputMethodTextChanged(evt);
             }
         });
         JPasswordText.addActionListener(new java.awt.event.ActionListener() {
@@ -323,7 +338,7 @@ public class LoginFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Campo incorrecto: Fecha de nacimiento. Debería tener el formato: YYYY-MM-DD.");
         return;
     }     
-    
+
     nuevoUsuario.setUsuario(JTextUser.getText());
         nuevoUsuario.setNombre(JnombreText.getText());
         nuevoUsuario.setApellido(JApellidoText.getText());
@@ -445,6 +460,18 @@ private boolean isValidDate(String date) {
             }
         }
     }//GEN-LAST:event_JBtnFotoActionPerformed
+
+    private void JPasswordTextInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_JPasswordTextInputMethodTextChanged
+       
+    }//GEN-LAST:event_JPasswordTextInputMethodTextChanged
+private loginModel model = new loginModel();
+
+    private void JPasswordTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JPasswordTextFocusLost
+    String password = new String(JPasswordText.getPassword());
+    String strengthMessage = model.verifyPassword(password);
+    jLabel2.setText(strengthMessage);
+        
+    }//GEN-LAST:event_JPasswordTextFocusLost
     
     // Método para obtener la extensión del archivo
     private String getFileExtension(File file) {

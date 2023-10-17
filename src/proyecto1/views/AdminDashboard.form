@@ -49,27 +49,35 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblImg" pref="166" max="32767" attributes="0"/>
-                              <Component id="jTextFieldRutaBackup" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="lblImg" pref="166" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldRutaBackup" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jButtonBackup" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLblTipoUsuario" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLabelUsuario" alignment="0" min="-2" pref="224" max="-2" attributes="0"/>
+                                      <Component id="jLabelNombre1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabelApellido1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabelFecNac1" pref="232" max="32767" attributes="0"/>
+                                      <Component id="jLabelCorreo1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabelTel1" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jBtnEdit" alignment="0" min="-2" pref="358" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Component id="jButtonBackup" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLblTipoUsuario" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabelUsuario" alignment="0" min="-2" pref="224" max="-2" attributes="0"/>
-                              <Component id="jLabelNombre1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelApellido1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelFecNac1" pref="232" max="32767" attributes="0"/>
-                              <Component id="jLabelCorreo1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelTel1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jBtnEdit" alignment="0" min="-2" pref="358" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="28" max="32767" attributes="0"/>
                   </Group>
@@ -106,7 +114,9 @@
                           <Component id="jBtnEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonBackup" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="37" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="8" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -151,7 +161,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="jBtnEdit">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Editar Usuario o Darse de Baja"/>
+                <Property name="text" type="java.lang.String" value="Editar Usuario"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnEditActionPerformed"/>
@@ -171,6 +181,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldRutaBackupActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Darse de baja"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
