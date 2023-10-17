@@ -290,7 +290,7 @@ public class EditUser extends javax.swing.JFrame {
             JPathFotoText.setText(rutaSeleccionada);
 
             // Obtén el nombre de usuario ingresado en tu interfaz
-            String nombreUsuario = username; // Reemplaza 'JNombreUsuario' con el nombre de tu campo de texto para el nombre de usuario
+            String nombreUsuario = username; 
 
             // Directorio de destino
             String extension = getFileExtension(archivoSeleccionado);

@@ -97,7 +97,8 @@ public class AuthController {
                     System.out.println(line);  // <-- Aquí está la impresión del valor de 'line'
                     System.out.println("=====================");  // <-- Aquí está la impresión del valor de 'line'
 
-                    if (Byte.parseByte(line.split("\\|")[8]) == rolStr.Rol.ADMINISTRADOR.getCodigo()) {
+                    if (line.split("\\|").length > 8 && Byte.parseByte(line.split("\\|")[8]) == rolStr.Rol.ADMINISTRADOR.getCodigo()) {
+
                         br.close();
                         return true;
                     }

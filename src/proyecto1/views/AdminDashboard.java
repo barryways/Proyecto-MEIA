@@ -17,6 +17,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import proyecto1.controllers.AuthController;
 import proyecto1.controllers.UserController;
+import structures.FileUtils;
+import structures.DescriptorManager;
+import structures.BitacoraEntry;
+
+
 
 /**
  *
@@ -74,6 +79,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabelTel1 = new javax.swing.JLabel();
         jLblTipoUsuario = new javax.swing.JLabel();
         jBtnEdit = new javax.swing.JButton();
+        jButtonBackup = new javax.swing.JButton();
+        jTextFieldRutaBackup = new javax.swing.JTextField();
         jPanelBuscarUsuario = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListBuscados = new javax.swing.JList<>();
@@ -108,14 +115,32 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButtonBackup.setText("Backup");
+        jButtonBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBackupActionPerformed(evt);
+            }
+        });
+
+        jTextFieldRutaBackup.setText("Ruta");
+        jTextFieldRutaBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldRutaBackupActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelGeneralLayout = new javax.swing.GroupLayout(jPanelGeneral);
         jPanelGeneral.setLayout(jPanelGeneralLayout);
         jPanelGeneralLayout.setHorizontalGroup(
             jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGeneralLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblImg, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                        .addComponent(jTextFieldRutaBackup))
+                    .addComponent(jButtonBackup))
+                .addGap(18, 18, 18)
                 .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLblTipoUsuario)
                     .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -126,7 +151,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabelCorreo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelTel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jBtnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanelGeneralLayout.setVerticalGroup(
             jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,10 +173,14 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabelTel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLblTipoUsuario)
+                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLblTipoUsuario)
+                    .addComponent(jTextFieldRutaBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jBtnEdit)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGroup(jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnEdit)
+                    .addComponent(jButtonBackup))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jPanel.addTab("General", jPanelGeneral);
@@ -356,6 +385,69 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
+    private void jButtonBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackupActionPerformed
+        
+    
+    // TODO add your handling code here:
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+    int option = fileChooser.showSaveDialog(this);
+
+    if (option == JFileChooser.APPROVE_OPTION) {
+        File selectedDirectory = fileChooser.getSelectedFile();
+        String backupFolderPath = selectedDirectory.getAbsolutePath() + File.separator + "MEIA_Backup";
+
+        File sourceFolder = new File("C:\\MEIA");
+        File destinationFolder = new File(backupFolderPath);
+
+        try {
+            
+            FileUtils.copyFolder(sourceFolder, destinationFolder);
+
+            // Actualizar la interfaz de usuario
+            jTextFieldRutaBackup.setText(backupFolderPath);
+
+            // Obtener el primer usuario de "C:\\MEIA\\usuario.txt"
+            String primerUsuario = FileUtils.usuarioCreacion();
+
+            // Agregar entrada a la bitácora
+            BitacoraEntry entry = new BitacoraEntry(backupFolderPath, primerUsuario);
+            BitacoraEntry.addToBitacora(entry, "C:\\MEIA\\bitacora_backup.txt");
+
+            // Actualizar el archivo descriptor
+            DescriptorManager.updateDescriptor(primerUsuario, "C:\\MEIA\\desc_bitacora_backup.txt");
+
+            // Muestra un mensaje al finalizar
+            JOptionPane.showMessageDialog(this, "Archivos respaldados en la ubicación seleccionada.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al realizar la copia de seguridad.");
+        }
+    }
+    }//GEN-LAST:event_jButtonBackupActionPerformed
+    
+    
+    private void copyFolder(File source, File destination) throws IOException {
+    if (source.isDirectory()) {
+        if (!destination.exists()) {
+            destination.mkdir();
+        }
+
+        String[] files = source.list();
+        for (String file : files) {
+            File srcFile = new File(source, file);
+            File destFile = new File(destination, file);
+            copyFolder(srcFile, destFile);
+        }
+    } else {
+        Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    }
+    }
+    private void jTextFieldRutaBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRutaBackupActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldRutaBackupActionPerformed
+
     private boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
@@ -432,6 +524,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonBackup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelApellido1;
@@ -446,6 +539,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelBuscarUsuario;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextFieldRutaBackup;
     private javax.swing.JTextField jTxtUserSearch;
     private javax.swing.JLabel lblImg;
     // End of variables declaration//GEN-END:variables

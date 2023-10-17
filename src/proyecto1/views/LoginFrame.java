@@ -271,7 +271,8 @@ public class LoginFrame extends javax.swing.JFrame {
     
     
     private void JLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JLoginActionPerformed
-    structures.usuario nuevoUsuario = new  structures.usuario();
+
+        structures.usuario nuevoUsuario = new  structures.usuario();
     if (JTextUser.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(null, "El campo Usuario está vacío.");
         return;
