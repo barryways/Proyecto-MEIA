@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
@@ -21,8 +22,6 @@ import structures.FileUtils;
 import structures.DescriptorManager;
 import structures.BitacoraEntry;
 
-
-
 /**
  *
  * @author carlo
@@ -35,11 +34,12 @@ public class AdminDashboard extends javax.swing.JFrame {
     public AdminDashboard() {
         initComponents();
         DefaultListModel<String> modeloLista = new DefaultListModel<>();
+        DefaultListModel<String> modeloListaContactos = new DefaultListModel<>();
         jListBuscados.setModel(modeloLista);
-        
+        jListContactosBuscados.setModel(modeloListaContactos);
+
     }
-    
-    
+
     public void cargarDatos(String user) {
         String[] datosUsuario = AuthController.getUserData(user);
         //cargar datos de la pestaña principal
@@ -92,6 +92,17 @@ public class AdminDashboard extends javax.swing.JFrame {
         jBtnEditar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txtContactoBusqueda = new javax.swing.JTextField();
+        btnBuscarUsuario = new javax.swing.JButton();
+        btnBuscarNombre = new javax.swing.JButton();
+        btnBuscarApellido = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jListContactosBuscados = new javax.swing.JList<>();
+        btnAgregarContacto = new javax.swing.JButton();
+        btnEditContactos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -294,6 +305,107 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jPanel.addTab("Usuarios", jPanelBuscarUsuario);
 
+        jLabel3.setText("Buscar Contactos");
+
+        txtContactoBusqueda.setText("jTextField1");
+
+        btnBuscarUsuario.setText("Buscar Por Usuario");
+        btnBuscarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarUsuarioActionPerformed(evt);
+            }
+        });
+
+        btnBuscarNombre.setText("Buscar Por Nombre");
+        btnBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarNombreActionPerformed(evt);
+            }
+        });
+
+        btnBuscarApellido.setText("Buscar Por Apellido");
+        btnBuscarApellido.setActionCommand("Buscar Por Apellido");
+        btnBuscarApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarApellidoActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Resultados:");
+
+        jListContactosBuscados.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jListContactosBuscados);
+
+        btnAgregarContacto.setText("Agregar Contacto");
+        btnAgregarContacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarContactoActionPerformed(evt);
+            }
+        });
+
+        btnEditContactos.setText("Editar Mis Contactos");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(250, 250, 250))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtContactoBusqueda)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnBuscarNombre)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                                .addComponent(btnBuscarApellido)
+                                .addGap(44, 44, 44)
+                                .addComponent(btnBuscarUsuario)))
+                        .addGap(58, 58, 58))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEditContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(218, 218, 218)
+                .addComponent(btnAgregarContacto)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtContactoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscarUsuario)
+                    .addComponent(btnBuscarNombre)
+                    .addComponent(btnBuscarApellido))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAgregarContacto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(btnEditContactos)
+                .addGap(23, 23, 23))
+        );
+
+        jPanel.addTab("Contactos", jPanel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -335,22 +447,22 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
 
-      String datosUsuario = UserController.getDataPlane(jTxtUserSearch.getText());
-    DefaultListModel<String> modeloLista = (DefaultListModel<String>) jListBuscados.getModel();
+        String datosUsuario = UserController.getDataPlane(jTxtUserSearch.getText());
+        DefaultListModel<String> modeloLista = (DefaultListModel<String>) jListBuscados.getModel();
 
-    if (!datosUsuario.isEmpty()) {
-        String[] datosPartidos = UserController.getAllUser(jTxtUserSearch.getText()).split("\\|"); 
-        if (datosPartidos.length > 8 && !"0".equals(datosPartidos[8])) {
-            modeloLista.clear();
-            modeloLista.addElement(datosUsuario);
+        if (!datosUsuario.isEmpty()) {
+            String[] datosPartidos = UserController.getAllUser(jTxtUserSearch.getText()).split("\\|");
+            if (datosPartidos.length > 8 && !"0".equals(datosPartidos[8])) {
+                modeloLista.clear();
+                modeloLista.addElement(datosUsuario);
+            } else {
+                modeloLista.clear();
+                modeloLista.addElement("No se encontraron datos");
+            }
         } else {
-            modeloLista.clear(); 
+            modeloLista.clear();
             modeloLista.addElement("No se encontraron datos");
         }
-    } else {
-        modeloLista.clear(); 
-        modeloLista.addElement("No se encontraron datos");
-    }
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
@@ -381,6 +493,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         String seleccionado = jListBuscados.getSelectedValue();
         DefaultListModel<String> modeloLista = (DefaultListModel<String>) jListBuscados.getModel();
+
         if (seleccionado != null) {
             // Divide la cadena en partes usando el carácter "|"
             String[] partes = seleccionado.split("\\|");
@@ -400,70 +513,68 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     private void jButtonBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackupActionPerformed
-        
-    
-    // TODO add your handling code here:
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-    int option = fileChooser.showSaveDialog(this);
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-    if (option == JFileChooser.APPROVE_OPTION) {
-        File selectedDirectory = fileChooser.getSelectedFile();
-        String backupFolderPath = selectedDirectory.getAbsolutePath() + File.separator + "MEIA_Backup";
+        int option = fileChooser.showSaveDialog(this);
 
-        File sourceFolder = new File("C:\\MEIA");
-        File destinationFolder = new File(backupFolderPath);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedDirectory = fileChooser.getSelectedFile();
+            String backupFolderPath = selectedDirectory.getAbsolutePath() + File.separator + "MEIA_Backup";
 
-        try {
-            
-            FileUtils.copyFolder(sourceFolder, destinationFolder);
+            File sourceFolder = new File("C:\\MEIA");
+            File destinationFolder = new File(backupFolderPath);
 
-            // Actualizar la interfaz de usuario
-            jTextFieldRutaBackup.setText(backupFolderPath);
+            try {
 
-            // Obtener el primer usuario de "C:\\MEIA\\usuario.txt"
-            String primerUsuario = FileUtils.usuarioCreacion();
+                FileUtils.copyFolder(sourceFolder, destinationFolder);
 
-            // Agregar entrada a la bitácora
-            BitacoraEntry entry = new BitacoraEntry(backupFolderPath, primerUsuario);
-            BitacoraEntry.addToBitacora(entry, "C:\\MEIA\\bitacora_backup.txt");
+                // Actualizar la interfaz de usuario
+                jTextFieldRutaBackup.setText(backupFolderPath);
 
-            // Actualizar el archivo descriptor
-            DescriptorManager.updateDescriptor(primerUsuario, "C:\\MEIA\\desc_bitacora_backup.txt");
+                // Obtener el primer usuario de "C:\\MEIA\\usuario.txt"
+                String primerUsuario = FileUtils.usuarioCreacion();
 
-            // Muestra un mensaje al finalizar
-            JOptionPane.showMessageDialog(this, "Archivos respaldados en la ubicación seleccionada.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al realizar la copia de seguridad.");
+                // Agregar entrada a la bitácora
+                BitacoraEntry entry = new BitacoraEntry(backupFolderPath, primerUsuario);
+                BitacoraEntry.addToBitacora(entry, "C:\\MEIA\\bitacora_backup.txt");
+
+                // Actualizar el archivo descriptor
+                DescriptorManager.updateDescriptor(primerUsuario, "C:\\MEIA\\desc_bitacora_backup.txt");
+
+                // Muestra un mensaje al finalizar
+                JOptionPane.showMessageDialog(this, "Archivos respaldados en la ubicación seleccionada.");
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al realizar la copia de seguridad.");
+            }
         }
-    }
     }//GEN-LAST:event_jButtonBackupActionPerformed
-    
-    
-    private void copyFolder(File source, File destination) throws IOException {
-    if (source.isDirectory()) {
-        if (!destination.exists()) {
-            destination.mkdir();
-        }
 
-        String[] files = source.list();
-        for (String file : files) {
-            File srcFile = new File(source, file);
-            File destFile = new File(destination, file);
-            copyFolder(srcFile, destFile);
+    private void copyFolder(File source, File destination) throws IOException {
+        if (source.isDirectory()) {
+            if (!destination.exists()) {
+                destination.mkdir();
+            }
+
+            String[] files = source.list();
+            for (String file : files) {
+                File srcFile = new File(source, file);
+                File destFile = new File(destination, file);
+                copyFolder(srcFile, destFile);
+            }
+        } else {
+            Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
-    } else {
-        Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
-    }
     }
     private void jTextFieldRutaBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRutaBackupActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldRutaBackupActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-   String textoUsuario = jLabelUsuario.getText();
+        String textoUsuario = jLabelUsuario.getText();
 
         // Comprueba si el texto comienza con "Usuario: "
         if (textoUsuario.startsWith("Usuario: ")) {
@@ -474,17 +585,101 @@ public class AdminDashboard extends javax.swing.JFrame {
             // Pasa el nombre de usuario a la ventana de edición
             EditUser edit = new EditUser();
             edit.cargarDatos(nombreUsuario);
-            edit.setVisible(false); 
+            edit.setVisible(false);
             AdminDashboard admin = new AdminDashboard();
             admin.setVisible(false);
-             dispose();
-             StartFrame log = new StartFrame();
-             log.setVisible(true); 
-             dispose();
+            dispose();
+            StartFrame log = new StartFrame();
+            log.setVisible(true);
+            dispose();
         } else {
             JOptionPane.showMessageDialog(this, "El texto no tiene el formato esperado.");
-        }        
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnBuscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUsuarioActionPerformed
+        DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
+        if (txtContactoBusqueda.getText() != null) {
+            String Usuario = txtContactoBusqueda.getText();
+            String Information = UserController.getContactoByUser(Usuario);
+            if (Information.length() > 0) {
+                modeloListaContactos.clear();
+                modeloListaContactos.addElement(Information);
+            } else {
+                modeloListaContactos.clear();
+                modeloListaContactos.addElement("No se encontraron datos");
+            }
+        }
+    }//GEN-LAST:event_btnBuscarUsuarioActionPerformed
+
+    private void btnBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNombreActionPerformed
+        DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
+      if (txtContactoBusqueda.getText() != null) {
+            String LastName = txtContactoBusqueda.getText();
+            List<String[]> Information = UserController.getContactoByLastName(LastName);
+            if (!Information.isEmpty()) {
+
+                for (int i = 0; i < Information.size(); i++) {
+                    String[] userData = Information.get(i);
+                    
+                    String user = userData[0];
+                    String name = userData[2];
+                    String lastName = userData[3];
+                    modeloListaContactos.addElement(user+"|"+name+"|"+lastName);
+                }
+
+            } else {
+                modeloListaContactos.clear();
+                modeloListaContactos.addElement("No se encontraron datos");
+            }
+        }
+
+    }//GEN-LAST:event_btnBuscarNombreActionPerformed
+
+    private void btnBuscarApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarApellidoActionPerformed
+        DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
+        if (txtContactoBusqueda.getText() != null) {
+            String nameUser = txtContactoBusqueda.getText();
+            List<String[]> Information = UserController.getContactoByName(nameUser);
+            if (!Information.isEmpty()) {
+
+                for (int i = 0; i < Information.size(); i++) {
+                    String[] userData = Information.get(i);
+                    
+                    String user = userData[0];
+                    String name = userData[2];
+                    String lastName = userData[3];
+                    modeloListaContactos.addElement(user+"|"+name+"|"+lastName);
+                }
+
+            } else {
+                modeloListaContactos.clear();
+                modeloListaContactos.addElement("No se encontraron datos");
+            }
+        }
+    }//GEN-LAST:event_btnBuscarApellidoActionPerformed
+
+    private void btnAgregarContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarContactoActionPerformed
+
+        DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
+        String seleccionado = jListContactosBuscados.getSelectedValue();
+
+        if (seleccionado != null) {
+            // Divide la cadena en partes usando el carácter "|"
+            String[] partes = seleccionado.split("\\|");
+
+            if (partes.length > 0) {
+                // Obtiene la primera parte, que debería ser el nombre de usuario
+                String nombreUsuario = partes[0].trim();
+                //UserController.eliminarUsuario(nombreUsuario);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el nombre de usuario en el elemento seleccionado.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Ningún elemento seleccionado.");
+        }
+    }//GEN-LAST:event_btnAgregarContactoActionPerformed
 
     private boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
@@ -557,6 +752,11 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarContacto;
+    private javax.swing.JButton btnBuscarApellido;
+    private javax.swing.JButton btnBuscarNombre;
+    private javax.swing.JButton btnBuscarUsuario;
+    private javax.swing.JButton btnEditContactos;
     private javax.swing.JButton jBtnBuscar;
     private javax.swing.JButton jBtnEdit;
     private javax.swing.JButton jBtnEditar;
@@ -566,6 +766,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBackup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelApellido1;
     private javax.swing.JLabel jLabelCorreo1;
     private javax.swing.JLabel jLabelFecNac1;
@@ -574,12 +776,16 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JLabel jLblTipoUsuario;
     private javax.swing.JList<String> jListBuscados;
+    private javax.swing.JList<String> jListContactosBuscados;
     private javax.swing.JTabbedPane jPanel;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBuscarUsuario;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextFieldRutaBackup;
     private javax.swing.JTextField jTxtUserSearch;
     private javax.swing.JLabel lblImg;
+    private javax.swing.JTextField txtContactoBusqueda;
     // End of variables declaration//GEN-END:variables
 }
