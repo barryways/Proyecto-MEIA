@@ -343,7 +343,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="JPanelContactos">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Contactos">
@@ -449,7 +449,6 @@
             <Component class="javax.swing.JButton" name="btnBuscarApellido">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar Por Apellido"/>
-                <Property name="actionCommand" type="java.lang.String" value="Buscar Por Apellido"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarApellidoActionPerformed"/>

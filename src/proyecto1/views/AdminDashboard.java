@@ -92,7 +92,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jBtnEditar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        JPanelContactos = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtContactoBusqueda = new javax.swing.JTextField();
         btnBuscarUsuario = new javax.swing.JButton();
@@ -324,7 +324,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
 
         btnBuscarApellido.setText("Buscar Por Apellido");
-        btnBuscarApellido.setActionCommand("Buscar Por Apellido");
         btnBuscarApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarApellidoActionPerformed(evt);
@@ -349,47 +348,47 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         btnEditContactos.setText("Editar Mis Contactos");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout JPanelContactosLayout = new javax.swing.GroupLayout(JPanelContactos);
+        JPanelContactos.setLayout(JPanelContactosLayout);
+        JPanelContactosLayout.setHorizontalGroup(
+            JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPanelContactosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(250, 250, 250))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(JPanelContactosLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPanelContactosLayout.createSequentialGroup()
+                        .addGroup(JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtContactoBusqueda)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(JPanelContactosLayout.createSequentialGroup()
                                 .addComponent(btnBuscarNombre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                                 .addComponent(btnBuscarApellido)
                                 .addGap(44, 44, 44)
                                 .addComponent(btnBuscarUsuario)))
                         .addGap(58, 58, 58))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JPanelContactosLayout.createSequentialGroup()
+                        .addGroup(JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEditContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(JPanelContactosLayout.createSequentialGroup()
                 .addGap(218, 218, 218)
                 .addComponent(btnAgregarContacto)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        JPanelContactosLayout.setVerticalGroup(
+            JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JPanelContactosLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtContactoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscarUsuario)
                     .addComponent(btnBuscarNombre)
                     .addComponent(btnBuscarApellido))
@@ -404,7 +403,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
-        jPanel.addTab("Contactos", jPanel1);
+        jPanel.addTab("Contactos", JPanelContactos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -752,6 +751,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel JPanelContactos;
     private javax.swing.JButton btnAgregarContacto;
     private javax.swing.JButton btnBuscarApellido;
     private javax.swing.JButton btnBuscarNombre;
@@ -778,7 +778,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JList<String> jListBuscados;
     private javax.swing.JList<String> jListContactosBuscados;
     private javax.swing.JTabbedPane jPanel;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBuscarUsuario;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JScrollPane jScrollPane1;
