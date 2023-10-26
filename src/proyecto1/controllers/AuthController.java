@@ -148,7 +148,7 @@ public class AuthController {
 
         if (descFile.exists()) {
             BufferedReader reader = new BufferedReader(new FileReader(descFile));
-
+  
             nombre_simbolico = getNextLineValue(reader);
             fecha_creacion = getNextLineValue(reader);
             usuario_creacion = getNextLineValue(reader);

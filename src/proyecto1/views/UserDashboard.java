@@ -8,13 +8,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import proyecto1.controllers.AuthController;
+import proyecto1.controllers.UserController;
 
 /**
  *
@@ -407,7 +410,19 @@ public class UserDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarContactoActionPerformed
 
     private void btnEditContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditContactosActionPerformed
-        // TODO add your handling code here:
+        String textoUsuario = jLabelUsuario.getText();
+
+        // Comprueba si el texto comienza con "Usuario: "
+        if (textoUsuario.startsWith("Usuario: ")) {
+            // Obtiene el nombre de usuario eliminando "Usuario: "
+            String nombreUsuario = textoUsuario.substring("Usuario: ".length());
+
+            // Pasa el nombre de usuario a la ventana de edición
+            Contacts edit = new Contacts(nombreUsuario);
+            edit.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "El texto no tiene el formato esperado.");
+        }
     }//GEN-LAST:event_btnEditContactosActionPerformed
     private boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
