@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +24,7 @@ import proyecto1.controllers.UserController;
 import structures.FileUtils;
 import structures.DescriptorManager;
 import structures.BitacoraEntry;
+import structures.Contactos;
 
 /**
  *
@@ -307,8 +311,6 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel3.setText("Buscar Contactos");
 
-        txtContactoBusqueda.setText("jTextField1");
-
         btnBuscarUsuario.setText("Buscar Por Usuario");
         btnBuscarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,7 +326,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
 
         btnBuscarApellido.setText("Buscar Por Apellido");
-        btnBuscarApellido.setActionCommand("Buscar Por Apellido");
         btnBuscarApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarApellidoActionPerformed(evt);
@@ -348,15 +349,16 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
 
         btnEditContactos.setText("Editar Mis Contactos");
+        btnEditContactos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditContactosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(250, 250, 250))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,8 +379,13 @@ public class AdminDashboard extends javax.swing.JFrame {
                             .addComponent(btnEditContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(218, 218, 218)
-                .addComponent(btnAgregarContacto)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(218, 218, 218)
+                        .addComponent(btnAgregarContacto))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(232, 232, 232)
+                        .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -614,18 +621,18 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void btnBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNombreActionPerformed
         DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
-      if (txtContactoBusqueda.getText() != null) {
-            String LastName = txtContactoBusqueda.getText();
-            List<String[]> Information = UserController.getContactoByLastName(LastName);
+        if (txtContactoBusqueda.getText() != null) {
+            String Name = txtContactoBusqueda.getText();
+            List<String[]> Information = UserController.getContactoByName(Name);
             if (!Information.isEmpty()) {
 
                 for (int i = 0; i < Information.size(); i++) {
                     String[] userData = Information.get(i);
-                    
+
                     String user = userData[0];
                     String name = userData[2];
                     String lastName = userData[3];
-                    modeloListaContactos.addElement(user+"|"+name+"|"+lastName);
+                    modeloListaContactos.addElement(user + "|" + name + "|" + lastName);
                 }
 
             } else {
@@ -645,11 +652,11 @@ public class AdminDashboard extends javax.swing.JFrame {
 
                 for (int i = 0; i < Information.size(); i++) {
                     String[] userData = Information.get(i);
-                    
+
                     String user = userData[0];
                     String name = userData[2];
                     String lastName = userData[3];
-                    modeloListaContactos.addElement(user+"|"+name+"|"+lastName);
+                    modeloListaContactos.addElement(user + "|" + name + "|" + lastName);
                 }
 
             } else {
@@ -663,16 +670,28 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
         String seleccionado = jListContactosBuscados.getSelectedValue();
-
+        Contactos contacto = new Contactos();
         if (seleccionado != null) {
             // Divide la cadena en partes usando el carácter "|"
             String[] partes = seleccionado.split("\\|");
 
             if (partes.length > 0) {
                 // Obtiene la primera parte, que debería ser el nombre de usuario
-                String nombreUsuario = partes[0].trim();
-                //UserController.eliminarUsuario(nombreUsuario);
+                String nombreContacto = partes[0].trim();
+                String nombreUsuario = jLabelUsuario.getText().substring("Usuario: ".length());
+                LocalDate fechaActual = LocalDate.now();
+                DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String fechaFormateada = fechaActual.format(formato);
+                
+                contacto.setUsuario(nombreUsuario);
+                contacto.setContacto(nombreContacto);
+                contacto.setFechaTransaccion(fechaFormateada);
+                contacto.setUsuarioTransaccion(nombreUsuario);
+                contacto.setStatus(1);
 
+                UserController.registerNewContact(contacto);
+                JOptionPane.showMessageDialog(this, "Se agrego el nuevo contacto "+nombreContacto);
+                
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró el nombre de usuario en el elemento seleccionado.");
             }
@@ -680,6 +699,22 @@ public class AdminDashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ningún elemento seleccionado.");
         }
     }//GEN-LAST:event_btnAgregarContactoActionPerformed
+
+    private void btnEditContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditContactosActionPerformed
+         String textoUsuario = jLabelUsuario.getText();
+
+        // Comprueba si el texto comienza con "Usuario: "
+        if (textoUsuario.startsWith("Usuario: ")) {
+            // Obtiene el nombre de usuario eliminando "Usuario: "
+            String nombreUsuario = textoUsuario.substring("Usuario: ".length());
+
+            // Pasa el nombre de usuario a la ventana de edición
+            Contacts edit = new Contacts(nombreUsuario);
+            edit.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "El texto no tiene el formato esperado.");
+        }
+    }//GEN-LAST:event_btnEditContactosActionPerformed
 
     private boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";

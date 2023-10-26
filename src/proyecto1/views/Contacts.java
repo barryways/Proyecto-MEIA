@@ -4,17 +4,27 @@
  */
 package proyecto1.views;
 
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import proyecto1.controllers.UserController;
+
 /**
  *
  * @author carlo
  */
 public class Contacts extends javax.swing.JFrame {
 
+    private String nombreUsuario;
+
     /**
      * Creates new form Contacts
      */
-    public Contacts() {
+    public Contacts(String username) {
+        this.nombreUsuario = username;
         initComponents();
+        DefaultListModel<String> modeloListaContactos = new DefaultListModel<>();
+        jListContactosBuscados.setModel(modeloListaContactos);
     }
 
     /**
@@ -27,20 +37,17 @@ public class Contacts extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtContactoBusqueda = new javax.swing.JTextField();
         btnBuscarNombre = new javax.swing.JButton();
         btnBuscarApellido = new javax.swing.JButton();
         btnBuscarUsuario = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListContactosBuscados = new javax.swing.JList<>();
         btnEliminarContacto = new javax.swing.JButton();
-        btnModContacto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel3.setText("Buscar Contactos");
-
-        jTextField1.setText("jTextField1");
 
         btnBuscarNombre.setText("Buscar Por Nombre");
         btnBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -63,16 +70,19 @@ public class Contacts extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jListContactosBuscados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(jListContactosBuscados);
 
         btnEliminarContacto.setText("Eliminar Contacto");
-
-        btnModContacto.setText("Modificar Contacto");
+        btnEliminarContacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarContactoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,21 +94,21 @@ public class Contacts extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(251, 251, 251)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnEliminarContacto)
-                            .addGap(87, 87, 87)
-                            .addComponent(btnModContacto))
-                        .addComponent(jTextField1)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(btnBuscarNombre)
-                            .addGap(56, 56, 56)
-                            .addComponent(btnBuscarApellido)
-                            .addGap(79, 79, 79)
-                            .addComponent(btnBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(58, 58, 58))
+                        .addGap(271, 271, 271))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtContactoBusqueda)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnBuscarNombre)
+                                .addGap(56, 56, 56)
+                                .addComponent(btnBuscarApellido)
+                                .addGap(79, 79, 79)
+                                .addComponent(btnBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(208, 208, 208)
+                                .addComponent(btnEliminarContacto)))
+                        .addGap(58, 58, 58))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +116,7 @@ public class Contacts extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel3)
                 .addGap(25, 25, 25)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtContactoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscarApellido)
@@ -114,27 +124,88 @@ public class Contacts extends javax.swing.JFrame {
                     .addComponent(btnBuscarUsuario))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminarContacto)
-                    .addComponent(btnModContacto))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminarContacto)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNombreActionPerformed
-        // TODO add your handling code here:
+       DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
+        if (txtContactoBusqueda.getText() != null) {
+            String Name = txtContactoBusqueda.getText();
+            List<String[]> Information = UserController.getContactoByName(Name);
+            if (!Information.isEmpty()) {
+
+                for (int i = 0; i < Information.size(); i++) {
+                    String[] userData = Information.get(i);
+
+                    String user = userData[0];
+                    String name = userData[2];
+                    String lastName = userData[3];
+                    modeloListaContactos.addElement(user + "|" + name + "|" + lastName);
+                }
+
+            } else {
+                modeloListaContactos.clear();
+                modeloListaContactos.addElement("No se encontraron datos");
+            }
+        }
     }//GEN-LAST:event_btnBuscarNombreActionPerformed
 
     private void btnBuscarApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarApellidoActionPerformed
-        // TODO add your handling code here:
+        DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
+        if (txtContactoBusqueda.getText() != null) {
+            String nameUser = txtContactoBusqueda.getText();
+            List<String[]> Information = UserController.getContactoByName(nameUser);
+            if (!Information.isEmpty()) {
+
+                for (int i = 0; i < Information.size(); i++) {
+                    String[] userData = Information.get(i);
+
+                    String user = userData[0];
+                    String name = userData[2];
+                    String lastName = userData[3];
+                    modeloListaContactos.addElement(user + "|" + name + "|" + lastName);
+                }
+
+            } else {
+                modeloListaContactos.clear();
+                modeloListaContactos.addElement("No se encontraron datos");
+            }
+        }
     }//GEN-LAST:event_btnBuscarApellidoActionPerformed
 
     private void btnBuscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUsuarioActionPerformed
-        // TODO add your handling code here:
+        DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
+        if (txtContactoBusqueda.getText() != null) {
+            String Usuario = txtContactoBusqueda.getText();
+            String Information = UserController.getContactoByUser(Usuario);
+            if (Information.length() > 0) {
+                modeloListaContactos.clear();
+                modeloListaContactos.addElement(Information);
+            } else {
+                modeloListaContactos.clear();
+                modeloListaContactos.addElement("No se encontraron datos");
+            }
+        }
     }//GEN-LAST:event_btnBuscarUsuarioActionPerformed
+
+    private void btnEliminarContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarContactoActionPerformed
+        DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
+        String seleccionado = jListContactosBuscados.getSelectedValue();
+        String[] partes = seleccionado.split("\\|");
+        String nombreUsuarioContacto = partes[0];
+        
+        if(seleccionado != null){
+            UserController.deleteContact(this.nombreUsuario, nombreUsuarioContacto);
+            modeloListaContactos.clear();
+            JOptionPane.showMessageDialog(this, "Se elimino el contacto con exito ");
+        }
+        
+    }//GEN-LAST:event_btnEliminarContactoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,7 +237,8 @@ public class Contacts extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Contacts().setVisible(true);
+                new Contacts("").setVisible(true);
+                
             }
         });
     }
@@ -176,10 +248,9 @@ public class Contacts extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarNombre;
     private javax.swing.JButton btnBuscarUsuario;
     private javax.swing.JButton btnEliminarContacto;
-    private javax.swing.JButton btnModContacto;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jListContactosBuscados;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtContactoBusqueda;
     // End of variables declaration//GEN-END:variables
 }
