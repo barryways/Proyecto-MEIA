@@ -99,6 +99,30 @@ public class UserController {
         }
         return data;
     }
+    
+public static List<String[]> getAllContacts() {
+    List<String[]> contactsList = new ArrayList<>();
+
+    try {
+        File file = new File(FILE_PATH_CONTACT);
+        if (file.exists()) {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                contactsList.add(parts);
+            }
+            br.close();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    return contactsList;
+}
+
+    
 
     public static List<String[]> getAllInformationByParams(String data, int positionInFile) {
         List<String[]> userDataList = new ArrayList<>();

@@ -25,6 +25,7 @@ public class Contacts extends javax.swing.JFrame {
         initComponents();
         DefaultListModel<String> modeloListaContactos = new DefaultListModel<>();
         jListContactosBuscados.setModel(modeloListaContactos);
+        displayAllContacts();
     }
 
     /**
@@ -131,7 +132,23 @@ public class Contacts extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+   
+    private void displayAllContacts() {
+    DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
+    List<String[]> allContacts = UserController.getAllContacts();
 
+    if (!allContacts.isEmpty()) {
+        for (String[] contact : allContacts) {
+            String user = contact[0];
+            String name = contact[2];
+            String lastName = contact[3];
+            modeloListaContactos.addElement(user + "|" + name + "|" + lastName);
+        }
+    } else {
+        modeloListaContactos.clear();
+        modeloListaContactos.addElement("No hay contactos en la lista.");
+    }
+}
     private void btnBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNombreActionPerformed
        DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
         if (txtContactoBusqueda.getText() != null) {

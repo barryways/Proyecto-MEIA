@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -22,9 +23,12 @@ import javax.swing.JOptionPane;
 import proyecto1.controllers.AuthController;
 import proyecto1.controllers.UserController;
 import structures.FileUtils;
+import structures.ListaDistribucion;
+import structures.ListaUsuario;
 import structures.DescriptorManager;
 import structures.BitacoraEntry;
 import structures.Contactos;
+import proyecto1.controllers.ListaController;
 
 /**
  *
@@ -107,6 +111,17 @@ public class AdminDashboard extends javax.swing.JFrame {
         jListContactosBuscados = new javax.swing.JList<>();
         btnAgregarContacto = new javax.swing.JButton();
         btnEditContactos = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        nombreList = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        DescripcionList = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,7 +194,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addGroup(jPanelGeneralLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton2)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanelGeneralLayout.setVerticalGroup(
             jPanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,7 +297,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                                     .addComponent(jBtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
-                        .addGap(22, 117, Short.MAX_VALUE))))
+                        .addGap(22, 118, Short.MAX_VALUE))))
         );
         jPanelBuscarUsuarioLayout.setVerticalGroup(
             jPanelBuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,17 +370,11 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-
         javax.swing.GroupLayout JPanelContactosLayout = new javax.swing.GroupLayout(JPanelContactos);
         JPanelContactos.setLayout(JPanelContactosLayout);
         JPanelContactosLayout.setHorizontalGroup(
             JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPanelContactosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(250, 250, 250))
             .addGroup(JPanelContactosLayout.createSequentialGroup()
-
                 .addGap(34, 34, 34)
                 .addGroup(JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPanelContactosLayout.createSequentialGroup()
@@ -374,22 +383,27 @@ public class AdminDashboard extends javax.swing.JFrame {
                             .addComponent(txtContactoBusqueda)
                             .addGroup(JPanelContactosLayout.createSequentialGroup()
                                 .addComponent(btnBuscarNombre)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                                 .addComponent(btnBuscarApellido)
                                 .addGap(44, 44, 44)
                                 .addComponent(btnBuscarUsuario)))
                         .addGap(58, 58, 58))
                     .addGroup(JPanelContactosLayout.createSequentialGroup()
-                        .addGroup(JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEditContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(473, Short.MAX_VALUE))))
             .addGroup(JPanelContactosLayout.createSequentialGroup()
-                .addGap(218, 218, 218)
-                .addComponent(btnAgregarContacto)
-
+                .addGroup(JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JPanelContactosLayout.createSequentialGroup()
+                        .addGap(218, 218, 218)
+                        .addComponent(btnAgregarContacto))
+                    .addGroup(JPanelContactosLayout.createSequentialGroup()
+                        .addGap(232, 232, 232)
+                        .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(JPanelContactosLayout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(btnEditContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         JPanelContactosLayout.setVerticalGroup(
             JPanelContactosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -409,12 +423,98 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregarContacto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnEditContactos)
-                .addGap(23, 23, 23))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         jPanel.addTab("Contactos", JPanelContactos);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setText("Lista distribución");
+
+        DescripcionList.setColumns(20);
+        DescripcionList.setRows(5);
+        jScrollPane3.setViewportView(DescripcionList);
+
+        jLabel6.setText("Nombre Lista:");
+
+        jLabel7.setText("Descripción:");
+
+        jButton3.setText("Crear Lista");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Actualizar Lista");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Leer lista");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Eliminar Lista");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(224, 224, 224)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nombreList, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4)
+                .addGap(104, 104, 104))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel5)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(nombreList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton6)
+                    .addComponent(jButton5)
+                    .addComponent(jButton4))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        jPanel.addTab("Envio Correo", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -719,6 +819,44 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditContactosActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+           
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+    private void registrarListaDistribucion(String nombreLista, String usuario, String descripcion){
+        String path = "C:/MEIA/lista.txt"; 
+        ListaController listaController = new ListaController();
+        ListaDistribucion lista = new ListaDistribucion();
+        lista.setNombreLista(nombreLista);
+        lista.setUsuario(usuario);
+        lista.setDescripcion(descripcion);
+        lista.setNumeroUsuarios(0);
+        lista.setFechaCreacion(new Date());
+        lista.setEstatus(1);
+        
+        listaController.registrarLista(lista, path);
+        
+        
+    }
+    private void asociarUsuarioALista(String nombreLista, String usuario, String usuarioAsociado){
+        String path = "C:/MEIA/Lista_usuario.txt";
+        ListaUsuario listaUsuario = new ListaUsuario();         ListaController controlador = new ListaController();
+        
+        listaUsuario.setNombre_lista(nombreLista);
+        listaUsuario.setUsuario(usuario);
+        listaUsuario.setUsuario_asociado(usuarioAsociado);
+        listaUsuario.setFecha_creacion(new Date());
+        listaUsuario.setStatus(1);
+        
+        controlador.asociarUsuario(listaUsuario, path);
+    }
     private boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
@@ -790,6 +928,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea DescripcionList;
     private javax.swing.JPanel JPanelContactos;
     private javax.swing.JButton btnAgregarContacto;
     private javax.swing.JButton btnBuscarApellido;
@@ -802,11 +941,18 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonBackup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelApellido1;
     private javax.swing.JLabel jLabelCorreo1;
     private javax.swing.JLabel jLabelFecNac1;
@@ -817,13 +963,16 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JList<String> jListBuscados;
     private javax.swing.JList<String> jListContactosBuscados;
     private javax.swing.JTabbedPane jPanel;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBuscarUsuario;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextFieldRutaBackup;
     private javax.swing.JTextField jTxtUserSearch;
     private javax.swing.JLabel lblImg;
+    private javax.swing.JTextField nombreList;
     private javax.swing.JTextField txtContactoBusqueda;
     // End of variables declaration//GEN-END:variables
 }
