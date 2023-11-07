@@ -10,11 +10,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.List;
 import structures.ListaDistribucion;
 import structures.ListaUsuario;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -35,19 +39,61 @@ public class ListaController {
             return false;
         }
     }
-     public boolean asociarUsuario(ListaUsuario listaUsuario, String path) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(path, true));
-            writer.write("0|0.0|" + listaUsuario.getUsuario() + "|" + listaUsuario.getNombre_lista() 
-                        + "|" + listaUsuario.getUsuario_asociado() + "|-1|" + listaUsuario.getFecha_creacion().toString() + "|1\n");
-            writer.close();
-            incrementarNumeroUsuarios(listaUsuario.getNombre_lista(), listaUsuario.getUsuario());
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    public boolean asociarUsuario(ListaUsuario listaUsuario, String path) {
+       BufferedWriter writer = null;
+       BufferedReader reader = null;
+
+       try {
+           File archivo = new File(path);
+
+           // Inicializa el valor de la segunda posición a 1.0
+           double siguienteNumero = 1.0;
+
+           // Si el archivo existe y tiene contenido, encuentra el siguiente número
+           if (archivo.exists()) {
+               reader = new BufferedReader(new FileReader(archivo));
+               String lastLine = "";
+               String currentLine;
+               while ((currentLine = reader.readLine()) != null && !currentLine.isEmpty()) {
+                   lastLine = currentLine;
+               }
+               if (!lastLine.isEmpty()) {
+                   // Extrae el valor numérico de la segunda posición
+                   String[] partes = lastLine.split("\\|");
+                   if (partes.length > 1) {
+                       try {
+                           siguienteNumero = Double.parseDouble(partes[1]) + 0.1;
+                       } catch (NumberFormatException e) {
+                           e.printStackTrace(); 
+                       }
+                   }
+               }
+           }
+
+           // Escribe el nuevo usuario con el número de bloque actualizado
+           writer = new BufferedWriter(new FileWriter(path, true));
+           writer.write("0|" + String.format("%.1f", siguienteNumero) + "|" + listaUsuario.getUsuario() + "|" + 
+                        listaUsuario.getNombre_lista() + "|" + listaUsuario.getUsuario_asociado() + "|-1|" + 
+                        listaUsuario.getFecha_creacion().toString() + "|1\n");
+
+           incrementarNumeroUsuarios(listaUsuario.getNombre_lista(), listaUsuario.getUsuario());
+           return true;
+       } catch (IOException e) {
+           e.printStackTrace();
+           return false;
+       } finally {
+           try {
+               if (writer != null) {
+                   writer.close();
+               }
+               if (reader != null) {
+                   reader.close();
+               }
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       }
+   }
      private void incrementarNumeroUsuarios(String nombreLista, String usuario) {
         String ruta = "C:/MEIA/lista.txt";
         try {
@@ -132,7 +178,27 @@ public class ListaController {
     }
     
     private final String listaUsuarioFilePath = "C:/MEIA/Lista_usuario.txt";
+public void ordenarArchivoListaUsuarios() {
+        try {
+            List<String> lineas = Files.readAllLines(Paths.get(listaUsuarioFilePath));
 
+            // Filtra las líneas que no cumplen con el formato esperado.
+            List<String> lineasFiltradasYOrdenadas = lineas.stream()
+                    .filter(linea -> linea.matches("^[^|]*\\|[^|]*\\|[^|]*\\|[^|]*\\|.*$")) 
+                    .sorted(Comparator.comparing(linea -> {
+                        String[] partes = linea.split("\\|");
+                        return partes.length > 3 ? partes[3].toLowerCase() : ""; // Usa la cuarta columna si está disponible.
+                    }))
+                    .collect(Collectors.toList());
+
+            Files.write(Paths.get(listaUsuarioFilePath), lineasFiltradasYOrdenadas);
+
+        } catch (IOException e) {
+            System.err.println("Hubo un problema al acceder o escribir en el archivo: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error inesperado: " + e.getMessage());
+        }
+    }
     public List<String> buscarUsuariosAsociados(String usuario) {
     List<String> usuariosAsociados = new ArrayList<>();
 

@@ -135,6 +135,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jListUsuariosListaUsuarios = new javax.swing.JList<>();
         jLabel13 = new javax.swing.JLabel();
         jTextFieldBuscarListaUsuario = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         jPanelListaDistribución = new javax.swing.JPanel();
         jTextFieldNombreLista = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -507,6 +508,13 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel13.setText("Ingresa nombre de lista:");
 
+        jButton3.setText("Ordenar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelListaUsuarioLayout = new javax.swing.GroupLayout(jPanelListaUsuario);
         jPanelListaUsuario.setLayout(jPanelListaUsuarioLayout);
         jPanelListaUsuarioLayout.setHorizontalGroup(
@@ -525,19 +533,22 @@ public class AdminDashboard extends javax.swing.JFrame {
                                 .addComponent(jButtonActualizarListaUsuario)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButtonEliminarListaUsuarios))
-                            .addGroup(jPanelListaUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanelListaUsuarioLayout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addGap(43, 43, 43)
-                                    .addComponent(jTextFieldListaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(40, 40, 40)
-                                    .addComponent(jButtonBuscarListaUsuario)))
+                            .addGroup(jPanelListaUsuarioLayout.createSequentialGroup()
+                                .addGroup(jPanelListaUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelListaUsuarioLayout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(43, 43, 43)
+                                        .addComponent(jTextFieldListaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(jButtonBuscarListaUsuario)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3))
                             .addGroup(jPanelListaUsuarioLayout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextFieldBuscarListaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 113, Short.MAX_VALUE))
+                .addGap(0, 61, Short.MAX_VALUE))
         );
         jPanelListaUsuarioLayout.setVerticalGroup(
             jPanelListaUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -548,7 +559,8 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(jPanelListaUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextFieldListaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBuscarListaUsuario))
+                    .addComponent(jButtonBuscarListaUsuario)
+                    .addComponent(jButton3))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -660,13 +672,13 @@ public class AdminDashboard extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelListaDistribuciónLayout.createSequentialGroup()
                                         .addComponent(jButtonCrearLista)
                                         .addGap(33, 33, 33)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanelListaDistribuciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldNombreLista, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanelListaDistribuciónLayout.createSequentialGroup()
-                                        .addComponent(jTextFieldDistribucion, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
+                                        .addComponent(jTextFieldDistribucion, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButtonAgregarDistribucion))))
                             .addGroup(jPanelListaDistribuciónLayout.createSequentialGroup()
                                 .addGroup(jPanelListaDistribuciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -742,7 +754,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addComponent(jPanel)
                 .addContainerGap())
         );
 
@@ -928,16 +940,19 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void btnBuscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUsuarioActionPerformed
         DefaultListModel<String> modeloListaContactos = (DefaultListModel<String>) jListContactosBuscados.getModel();
-        if (txtContactoBusqueda.getText() != null) {
+        if (!"".equals(txtContactoBusqueda.getText()) && txtContactoBusqueda.getText() != null) {
             String Usuario = txtContactoBusqueda.getText();
             String Information = UserController.getContactoByUser(Usuario);
-            if (Information.length() > 0) {
+            if (Information.length() > 0 && !Information.contains("null")) {
                 modeloListaContactos.clear();
                 modeloListaContactos.addElement(Information);
             } else {
                 modeloListaContactos.clear();
                 modeloListaContactos.addElement("No se encontraron datos");
             }
+        }else{
+             modeloListaContactos.clear();
+             modeloListaContactos.addElement("No se encontraron datos");
         }
     }//GEN-LAST:event_btnBuscarUsuarioActionPerformed
 
@@ -1064,8 +1079,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     // Obtiene el texto de los campos de texto
     String nombreLista = jTextFieldNombreLista.getText();
     String descripcion = DescripcionList.getText();
-    
-    // Llama al método para registrar la lista de distribución y obtener el nombre de usuario
+    if(!"".equals(nombreLista)){
+          // Llama al método para registrar la lista de distribución y obtener el nombre de usuario
     String usuario = asociarUsuarioALista(nombreLista, descripcion);
 
     if (usuario != null) {
@@ -1089,6 +1104,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         // Maneja el caso en el que no se pueda obtener el nombre del usuario
         JOptionPane.showMessageDialog(this, "No se pudo obtener el nombre del usuario.");
     } 
+    }else{
+      JOptionPane.showMessageDialog(this, "Ingrese un nombre para la lista");
+
+    }
+  
     }//GEN-LAST:event_jButtonCrearListaActionPerformed
 
     private void jButtonActualizarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarListaActionPerformed
@@ -1272,29 +1292,47 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     
     private void jButtonAgregarDistribucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarDistribucionActionPerformed
-       // Obtiene el valor ingresado en el jTextFieldNombreList y el jTextFieldDistribucion
-    String nombreLista = jTextFieldNombreLista.getText();
-    String valorDistribucion = jTextFieldDistribucion.getText();
-    
-    // Crea la ruta del archivo correspondiente en "C:\MEIA\ListasDistribucion"
-    String rutaArchivo = "C:/MEIA/ListasDistribucion/" + nombreLista + ".txt";
+String nombreLista = jTextFieldNombreLista.getText().trim();
+String valorDistribucion = jTextFieldDistribucion.getText().trim();
 
-    try {
-        // Agrega el valor de distribución al archivo correspondiente
-        BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true));
+// Validación de la entrada del usuario
+if (nombreLista.isEmpty() || valorDistribucion.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "El nombre de la lista y el valor de distribución no pueden estar vacíos.");
+    return;
+}
+if (nombreLista.matches(".*[\\/:*?\"<>|].*")) {
+    JOptionPane.showMessageDialog(this, "El nombre de la lista contiene caracteres inválidos.");
+    return;
+}
+
+// Crea la ruta del archivo correspondiente en "C:\MEIA\ListasDistribucion"
+String rutaDirectorio = "C:/MEIA/ListasDistribucion";
+String rutaArchivo = rutaDirectorio + "/" + nombreLista + ".txt";
+
+File directorio = new File(rutaDirectorio);
+
+// Verifica si el directorio existe y si no, intenta crearlo
+if (!directorio.exists()) {
+    if (!directorio.mkdirs()) {
+        JOptionPane.showMessageDialog(this, "No se pudo crear el directorio para las listas de distribución.");
+        return;
+    }
+}
+
+try {
+    // Agrega el valor de distribución al archivo correspondiente
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
         writer.write(valorDistribucion);
         writer.newLine();
-        writer.close();
+    } 
 
-        // Actualiza el cuarto valor en el archivo "lista.txt"
-        actualizarValorLista(nombreLista);
-        
-        
-        JOptionPane.showMessageDialog(this, "Usuario agregado con éxito.");
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al agregar el usuario.");
-    }
+    actualizarValorLista(nombreLista);
+
+    JOptionPane.showMessageDialog(this, "Usuario agregado con éxito.");
+} catch (IOException e) {
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this, "Error al agregar el usuario.");
+}
     
     }//GEN-LAST:event_jButtonAgregarDistribucionActionPerformed
 
@@ -1377,6 +1415,26 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     JOptionPane.showMessageDialog(this, "Usuario agregado con éxito.");
     }//GEN-LAST:event_jButtonIngresarUsuariosListaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+// Crea una instancia de ListaController
+    ListaController listaController = new ListaController();
+
+    // Llama al método para ordenar el archivo de lista de usuarios
+    listaController.ordenarArchivoListaUsuarios();
+
+    String usuario = jTextFieldListaUsuario.getText();
+
+    // Llama al método para buscar usuarios asociados al usuario proporcionado
+    List<String> usuariosAsociados = listaController.buscarUsuariosAsociados(usuario);
+
+    // Hace un clear al jListUsuariosListaUsuarios y lo actualiza con la lista ordenada
+    DefaultListModel<String> model = new DefaultListModel<>();
+    for (String usuarioAsociado : usuariosAsociados) {
+        model.addElement(usuarioAsociado);
+    }
+    jListUsuariosListaUsuarios.setModel(model);
+    }//GEN-LAST:event_jButton3ActionPerformed
     
     private final String bloqueFilePath = "C:/MEIA/ListaUsuario/Bloque.txt";
     private final String listaUsuarioFilePath = "C:/MEIA/Lista_usuario.txt";
@@ -1431,13 +1489,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     return actualizado;
     }
-    
-    
-    
-    
-    
-    
-    
+   
     private void actualizarValorLista(String nombreLista) {
     String rutaLista = "C:/MEIA/lista.txt";
     List<String> lineas = new ArrayList<>();
@@ -1489,12 +1541,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         
         
     }
-    private String asociarUsuarioALista(String nombreLista, String descripcion) {
+ private String asociarUsuarioALista(String nombreLista, String descripcion) {
     String path = "C:/MEIA/Lista_usuario.txt";
     ListaUsuario listaUsuario = new ListaUsuario();
     ListaController controlador = new ListaController();
 
-    
     String usuario = obtenerNombreUsuario(); 
     if (usuario != null) {
         listaUsuario.setNombre_lista(nombreLista);
@@ -1507,27 +1558,43 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         // Crea el archivo "Bloque.txt" en la ruta "C:\MEIA\ListaUsuario"
         String rutaBloque = "C:\\MEIA\\ListaUsuario\\Bloque.txt";
+        File archivoBloque = new File(rutaBloque);
+        File directorio = archivoBloque.getParentFile();
+
+        if (!directorio.exists()) {
+            directorio.mkdirs(); 
+        }
+
+        if (!directorio.isDirectory()) {
+            JOptionPane.showMessageDialog(this, "La ruta especificada no es un directorio.");
+            return usuario;
+        }
+
         try {
-            File archivoBloque = new File(rutaBloque);
-            if (archivoBloque.createNewFile()) {
-                // Escribe los datos de listaUsuario en el archivo Bloque.txt
-                FileWriter writer = new FileWriter(archivoBloque);
-                writer.write(listaUsuario.getNombre_lista() + "|" + listaUsuario.getUsuario() + "|" + listaUsuario.getUsuario_asociado() + "|Descripcion|" + listaUsuario.getFecha_creacion().toString() + "|" + listaUsuario.getStatus());
-                writer.close();
+            if (!archivoBloque.exists()) {
+                if (archivoBloque.createNewFile()) {
+                    FileWriter writer = new FileWriter(archivoBloque);
+                    writer.write(listaUsuario.getNombre_lista() + "|" + listaUsuario.getUsuario() + "|" + listaUsuario.getUsuario_asociado() + "|Descripcion|" + descripcion + "|" + listaUsuario.getFecha_creacion().toString() + "|" + listaUsuario.getStatus());
+                    writer.close();
+                } else {
+                    FileWriter writer = new FileWriter(archivoBloque);
+                    writer.write(listaUsuario.getNombre_lista() + "|" + listaUsuario.getUsuario() + "|" + listaUsuario.getUsuario_asociado() + "|Descripcion|" + descripcion + "|" + listaUsuario.getFecha_creacion().toString() + "|" + listaUsuario.getStatus());
+                    writer.close();
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "No se pudo crear el archivo Bloque.txt.");
+                JOptionPane.showMessageDialog(this, "El archivo Bloque.txt ya existe.");
             }
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al crear el archivo Bloque.txt.");
         }
     } else {
-        // Maneja el caso en el que no se pudo asociar el usuario a la lista
         JOptionPane.showMessageDialog(this, "No se pudo asociar el usuario a la lista.");
     }
 
     return usuario;
 }
+
 
     
     public String obtenerNombreUsuario(){
@@ -1707,6 +1774,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonActualizarLista;
     private javax.swing.JButton jButtonActualizarListaUsuario;
     private javax.swing.JButton jButtonAgregarDistribucion;
