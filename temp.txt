@@ -1,1 +1,6 @@
-jdman|24DEjunio@|Jose|Man|2001-06-06|jdman@correo.url.edu.gt|42110769|C:\MEIA\foto\jdman.jpg|0|1
+Lista4|jpperez|jpperez|Descripcion|Mon Nov 06 21:03:04 CST 2023|0|jpperez|jpperez|jpperez|Mon Nov 06 21:59:03 2023|1
+Lista4|jpperez|jpperez|jpperez|Mon Nov 06 22:04:13 2023|0
+Lista4|jpperez|jpperez|jpperez|Mon Nov 06 22:06:46 2023|0
+Lista4|jpperez|jpperez|jpperez|Mon Nov 06 22:13:08 2023|0
+Lista4|jpperez|jpperez|jpperez|Mon Nov 06 22:21:09 2023|0
+Lista4|jpperez|jpperez|Descripcion|2023-11-06|0

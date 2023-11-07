@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import structures.ListaDistribucion;
 import structures.ListaUsuario;
+import java.io.*;
 
 /**
  *
@@ -129,6 +130,27 @@ public class ListaController {
         }
         return null;
     }
+    
+    private final String listaUsuarioFilePath = "C:/MEIA/Lista_usuario.txt";
+
+    public List<String> buscarUsuariosAsociados(String usuario) {
+    List<String> usuariosAsociados = new ArrayList<>();
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(listaUsuarioFilePath))) {
+        String linea;
+        while ((linea = reader.readLine()) != null) {
+            String[] partes = linea.split("\\|");
+            if (partes.length >= 5 && partes[4].equals(usuario)) {
+                usuariosAsociados.add(linea);
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    return usuariosAsociados;
+    }
+
 
     // Método para modificar un usuario en la lista
     public boolean modificarListaUsuario(ListaUsuario listaUsuario) {
@@ -216,6 +238,8 @@ public class ListaController {
     private double calcularPosicion(String usuario, String nombreLista, String usuarioAsociado) {
         return usuario.hashCode() + nombreLista.hashCode() + usuarioAsociado.hashCode();
     }
+    
+    
 
 }
 
