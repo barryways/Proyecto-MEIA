@@ -88,7 +88,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel = new javax.swing.JTabbedPane();
+        jPanelAudio = new javax.swing.JTabbedPane();
         jPanelGeneral = new javax.swing.JPanel();
         lblImg = new javax.swing.JLabel();
         jLabelUsuario = new javax.swing.JLabel();
@@ -157,6 +157,21 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButtonBuscarContactosLista = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jButtonBuscarAudio = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jListCarpetaAudio = new javax.swing.JList<>();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jTextFieldTitulo = new javax.swing.JTextField();
+        jTextFieldAlbum = new javax.swing.JTextField();
+        jButtonBuscarPista = new javax.swing.JButton();
+        jButtonBuscarAlbum = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jListBusquedaAudio = new javax.swing.JList<>();
+        jButtonEscritura = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -261,10 +276,10 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jButtonBackup))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
-        jPanel.addTab("General", jPanelGeneral);
+        jPanelAudio.addTab("General", jPanelGeneral);
 
         jListBuscados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -353,12 +368,12 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jBtnEditar)
                         .addGap(18, 18, 18)
                         .addComponent(jBtnEliminar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(26, 26, 26))
         );
 
-        jPanel.addTab("Usuarios", jPanelBuscarUsuario);
+        jPanelAudio.addTab("Usuarios", jPanelBuscarUsuario);
 
         jLabel3.setText("Buscar Contactos");
 
@@ -461,10 +476,10 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addComponent(btnAgregarContacto)
                 .addGap(18, 18, 18)
                 .addComponent(btnEditContactos)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
-        jPanel.addTab("Contactos", JPanelContactos);
+        jPanelAudio.addTab("Contactos", JPanelContactos);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Lista de Usuarios");
@@ -572,10 +587,10 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jButtonActualizarListaUsuario)
                     .addComponent(jButtonEliminarListaUsuarios)
                     .addComponent(jButtonIngresarUsuariosLista))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(139, Short.MAX_VALUE))
         );
 
-        jPanel.addTab("Lista de Usuarios", jPanelListaUsuario);
+        jPanelAudio.addTab("Lista de Usuarios", jPanelListaUsuario);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Lista distribución");
@@ -736,10 +751,108 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jButtonActualizarLista)
                     .addComponent(jButtonEliminarLista)
                     .addComponent(jButtonBuscarContactosLista))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
-        jPanel.addTab("Envio Correo", jPanelListaDistribución);
+        jPanelAudio.addTab("Envio Correo", jPanelListaDistribución);
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel14.setText("Archivos de Audio");
+
+        jButtonBuscarAudio.setText("Buscar Carpeta");
+
+        jLabel15.setText("Buscar carpeta para mostrar:");
+
+        jListCarpetaAudio.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane7.setViewportView(jListCarpetaAudio);
+
+        jLabel16.setText("Búsqueda por título:");
+
+        jLabel17.setText("Búsqueda por álbum:");
+
+        jButtonBuscarPista.setText("Buscar pista");
+
+        jButtonBuscarAlbum.setText("Buscar álbum");
+
+        jListBusquedaAudio.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane8.setViewportView(jListBusquedaAudio);
+
+        jButtonEscritura.setText("Editar datos");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(jButtonBuscarPista)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonBuscarAlbum)
+                .addGap(171, 171, 171))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(256, 256, 256)
+                        .addComponent(jLabel14))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane7)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonBuscarAudio))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel17)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldAlbum, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(288, 288, 288)
+                        .addComponent(jButtonEscritura)))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel14)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jButtonBuscarAudio))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17)
+                    .addComponent(jTextFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBuscarPista)
+                    .addComponent(jButtonBuscarAlbum))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jButtonEscritura)
+                .addGap(21, 21, 21))
+        );
+
+        jPanelAudio.addTab("Archivos de Audio", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -747,14 +860,14 @@ public class AdminDashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel)
+                .addComponent(jPanelAudio)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel)
+                .addComponent(jPanelAudio)
                 .addContainerGap())
         );
 
@@ -1779,18 +1892,26 @@ try {
     private javax.swing.JButton jButtonActualizarListaUsuario;
     private javax.swing.JButton jButtonAgregarDistribucion;
     private javax.swing.JButton jButtonBackup;
+    private javax.swing.JButton jButtonBuscarAlbum;
+    private javax.swing.JButton jButtonBuscarAudio;
     private javax.swing.JButton jButtonBuscarContactosLista;
     private javax.swing.JButton jButtonBuscarLista;
     private javax.swing.JButton jButtonBuscarListaUsuario;
+    private javax.swing.JButton jButtonBuscarPista;
     private javax.swing.JButton jButtonCrearLista;
     private javax.swing.JButton jButtonEliminarLista;
     private javax.swing.JButton jButtonEliminarListaUsuarios;
+    private javax.swing.JButton jButtonEscritura;
     private javax.swing.JButton jButtonIngresarUsuariosLista;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1807,11 +1928,14 @@ try {
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JLabel jLblTipoUsuario;
     private javax.swing.JList<String> jListBuscados;
+    private javax.swing.JList<String> jListBusquedaAudio;
+    private javax.swing.JList<String> jListCarpetaAudio;
     private javax.swing.JList<String> jListContactosBuscados;
     private javax.swing.JList<String> jListContactosLista;
     private javax.swing.JList<String> jListDistribucion;
     private javax.swing.JList<String> jListUsuariosListaUsuarios;
-    private javax.swing.JTabbedPane jPanel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTabbedPane jPanelAudio;
     private javax.swing.JPanel jPanelBuscarUsuario;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JPanel jPanelListaDistribución;
@@ -1822,11 +1946,15 @@ try {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JTextField jTextFieldAlbum;
     private javax.swing.JTextField jTextFieldBuscarListaUsuario;
     private javax.swing.JTextField jTextFieldDistribucion;
     private javax.swing.JTextField jTextFieldListaUsuario;
     private javax.swing.JTextField jTextFieldNombreLista;
     private javax.swing.JTextField jTextFieldRutaBackup;
+    private javax.swing.JTextField jTextFieldTitulo;
     private javax.swing.JTextField jTxtUserSearch;
     private javax.swing.JLabel lblImg;
     private javax.swing.JTextField txtContactoBusqueda;
