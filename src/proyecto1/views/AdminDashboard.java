@@ -760,6 +760,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel14.setText("Archivos de Audio");
 
         jButtonBuscarAudio.setText("Buscar Carpeta");
+        jButtonBuscarAudio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarAudioActionPerformed(evt);
+            }
+        });
 
         jLabel15.setText("Buscar carpeta para mostrar:");
 
@@ -775,8 +780,18 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel17.setText("Búsqueda por álbum:");
 
         jButtonBuscarPista.setText("Buscar pista");
+        jButtonBuscarPista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarPistaActionPerformed(evt);
+            }
+        });
 
         jButtonBuscarAlbum.setText("Buscar álbum");
+        jButtonBuscarAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarAlbumActionPerformed(evt);
+            }
+        });
 
         jListBusquedaAudio.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -786,6 +801,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jListBusquedaAudio);
 
         jButtonEscritura.setText("Editar datos");
+        jButtonEscritura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEscrituraActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1548,6 +1568,42 @@ try {
     }
     jListUsuariosListaUsuarios.setModel(model);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButtonBuscarAudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarAudioActionPerformed
+        JFileChooser chooser = new JFileChooser();
+    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    int result = chooser.showOpenDialog(this);
+
+    if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFolder = chooser.getSelectedFile();
+        File[] files = selectedFolder.listFiles();
+
+        if (files != null) {
+            DefaultListModel<String> model = new DefaultListModel<>();
+            for (File file : files) {
+                model.addElement(file.getName());
+            }
+            jListCarpetaAudio.setModel(model);
+        } else {
+            JOptionPane.showMessageDialog(this, "La carpeta seleccionada está vacía.");
+        }
+    }
+    }//GEN-LAST:event_jButtonBuscarAudioActionPerformed
+
+    private void jButtonEscrituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscrituraActionPerformed
+            EscrituraAudioFrame escrituraFrame = new EscrituraAudioFrame(); // Crea una instancia del nuevo Frame
+    escrituraFrame.setVisible(true); // Muestra el nuevo Frame
+    dispose(); // Cierra el Frame actual si es necesario, cambia "dispose()" por "setVisible(false)" si no deseas cerrarlo
+
+    }//GEN-LAST:event_jButtonEscrituraActionPerformed
+
+    private void jButtonBuscarPistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPistaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonBuscarPistaActionPerformed
+
+    private void jButtonBuscarAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarAlbumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonBuscarAlbumActionPerformed
     
     private final String bloqueFilePath = "C:/MEIA/ListaUsuario/Bloque.txt";
     private final String listaUsuarioFilePath = "C:/MEIA/Lista_usuario.txt";

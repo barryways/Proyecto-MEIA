@@ -1066,6 +1066,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar Carpeta"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarAudioActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel15">
               <Properties>
@@ -1115,11 +1118,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar pista"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarPistaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonBuscarAlbum">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar &#xe1;lbum"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarAlbumActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane8">
               <AuxValues>
@@ -1150,6 +1159,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Editar datos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEscrituraActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

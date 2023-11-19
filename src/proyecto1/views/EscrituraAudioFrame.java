@@ -50,6 +50,11 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButtonGuardarAudio.setText("Guardar");
+        jButtonGuardarAudio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarAudioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,6 +87,11 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonGuardarAudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarAudioActionPerformed
+       
+        
+    }//GEN-LAST:event_jButtonGuardarAudioActionPerformed
 
     /**
      * @param args the command line arguments
