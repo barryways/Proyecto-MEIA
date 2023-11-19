@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -41,12 +43,15 @@ import java.time.ZonedDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import structures.ArbolBinario; 
 
 /**
  *
  * @author carlo
  */
 public class AdminDashboard extends javax.swing.JFrame {
+        private ArbolBinario arbolBinario;
+
 
     /**
      * Creates new form AdminDashboard
@@ -57,6 +62,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         DefaultListModel<String> modeloListaContactos = new DefaultListModel<>();
         jListBuscados.setModel(modeloLista);
         jListContactosBuscados.setModel(modeloListaContactos);
+        arbolBinario = new ArbolBinario();
+
 
     }
 
@@ -1569,26 +1576,142 @@ try {
     jListUsuariosListaUsuarios.setModel(model);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButtonBuscarAudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarAudioActionPerformed
-        JFileChooser chooser = new JFileChooser();
+    private void jButtonBuscarAudioActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+       JFileChooser chooser = new JFileChooser();
     chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int result = chooser.showOpenDialog(this);
 
     if (result == JFileChooser.APPROVE_OPTION) {
         File selectedFolder = chooser.getSelectedFile();
-        File[] files = selectedFolder.listFiles();
+        File[] files = selectedFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".mp3"));
 
-        if (files != null) {
+        if (files != null && files.length > 0) {
             DefaultListModel<String> model = new DefaultListModel<>();
             for (File file : files) {
-                model.addElement(file.getName());
+                try {
+                    RandomAccessFile raf = new RandomAccessFile(file, "r");
+                    if (raf.length() > 10) { // Verificar si el archivo es lo suficientemente grande
+                        byte[] header = new byte[10];
+                        raf.readFully(header);
+                        String headerTag = new String(header, 0, 3);
+
+                        if (headerTag.equals("ID3")) {
+                            int size = calculateTagSize(header, 6);
+                            int bytesRead = 0;
+                             String title = ""; 
+                                String artist = ""; 
+                                String album = ""; 
+                                String year = "";
+                                String genre = ""; 
+                                String duration = ""; 
+                                String band = ""; 
+                                String legalInformation = ""; 
+                                String imagePath = ""; 
+                                String lyrics = ""; 
+                            while (bytesRead < size) { // Recorre todos los frames hasta alcanzar el tamaño total del tag ID3v2
+        byte[] frameHeader = new byte[10];
+        raf.readFully(frameHeader);
+        bytesRead += 10;
+
+        String frameID = new String(frameHeader, 0, 4);
+        int frameSize = calculateTagSize(frameHeader, 4);
+        bytesRead += frameSize;
+
+        if (bytesRead + frameSize <= size) {
+            byte[] frameData = new byte[frameSize];
+            raf.readFully(frameData);
+              
+               
+            // Título
+            switch (frameID) {
+                case "TIT2" -> {
+                    title = new String(frameData, "ISO-8859-1").trim();
+                    System.out.println("Título: " + title);
+                }
+                case "TPE1" -> {
+                    artist = new String(frameData, "ISO-8859-1").trim();
+                    System.out.println("Artista: " + artist);
+                }
+                case "TALB" -> {
+                    album = new String(frameData, "ISO-8859-1").trim();
+                    System.out.println("Álbum: " + album);
+                }
+                case "TDRC", "TYER" -> {
+                    year = new String(frameData, "ISO-8859-1").trim();
+                    System.out.println("Año: " + year);
+                }
+                case "TCON" -> {
+                    genre = new String(frameData, "ISO-8859-1").trim();
+                    System.out.println("Género: " + genre);
+                }
+                case "TLEN" -> {
+                    duration = new String(frameData, "ISO-8859-1").trim();
+                    System.out.println("Duración: " + duration);
+                }
+                case "TPE2" ->{
+                    band = new String(frameData, "ISO-8859-1");
+                    System.out.println("Banda Album: "+ band); 
+                }
+                case "TCOP" ->{
+                    legalInformation = new String(frameData, "ISO-8859-1");
+                    System.out.println("Información legal: "+ legalInformation); 
+                }
+                case "USLT" -> {
+                String encoding = frameData[0] == 0x01 ? "UTF-16" : "ISO-8859-1"; 
+                String language = new String(frameData, 1, 3);
+                int lyricsStart = 4;
+                 lyrics = new String(frameData, lyricsStart, frameData.length - lyricsStart, encoding).trim();
+                System.out.println("Letra: " + lyrics);
+                }
+                default -> {
+                }
+            }
+           
+        }
+    } 
+                            
+                           if (duration.isEmpty()) {
+                                long bitrate = 128000; 
+                                long audioSize = raf.length() - size; 
+                                long durationInSeconds = (audioSize * 8) / bitrate;
+                                System.out.println("Duración estimada (en segundos): " + durationInSeconds);
+                            }
+                           if(title.isEmpty()){
+                               title = "Desconocido"; 
+                           }
+                           if(artist.isEmpty()){
+                               artist = "Desconocido"; 
+                           }
+                            arbolBinario.insert(file.getPath(), title, artist,band ,legalInformation,album, year, genre, imagePath, duration, lyrics);
+
+                            model.clear();
+                            arbolBinario.inOrderTraversal(node -> {
+                                String displayText = node.getTitle() + " - " + node.getArtist();
+                                model.addElement(displayText);
+                            });
+
+                            jListCarpetaAudio.setModel(model);
+                        }
+                    }
+                    raf.close();
+                } catch (IOException e) {
+                    e.printStackTrace(); // Manejar excepciones
+                }
             }
             jListCarpetaAudio.setModel(model);
         } else {
-            JOptionPane.showMessageDialog(this, "La carpeta seleccionada está vacía.");
+            JOptionPane.showMessageDialog(this, "La carpeta seleccionada está vacía o no contiene archivos MP3.");
         }
     }
-    }//GEN-LAST:event_jButtonBuscarAudioActionPerformed
+}
+
+private int calculateTagSize(byte[] header, int start) {
+    int size = 0;
+    for (int i = start; i < start + 4; i++) {
+        size = (size << 7) + (header[i] & 0x7F);
+    }
+    return size;
+}                                     
 
     private void jButtonEscrituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscrituraActionPerformed
             EscrituraAudioFrame escrituraFrame = new EscrituraAudioFrame(); // Crea una instancia del nuevo Frame
