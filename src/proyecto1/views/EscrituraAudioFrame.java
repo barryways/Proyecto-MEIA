@@ -4,17 +4,30 @@
  */
 package proyecto1.views;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import structures.ArbolBinario;
+import structures.SongNode;
+
 /**
  *
  * @author claud
  */
 public class EscrituraAudioFrame extends javax.swing.JFrame {
 
+    private SongNode cancion;
+    private ArbolBinario arbolBinario;
+
     /**
      * Creates new form BusquedaAudioFrame
      */
-    public EscrituraAudioFrame() {
+    public EscrituraAudioFrame(String pista, ArbolBinario arbol) {
         initComponents();
+        // Dividir el texto usando el guion como delimitador
+        String[] partes = pista.split("-");
+        //llega como pista =titulo-artista
+        arbolBinario = arbol;
+        cancion = arbolBinario.search(partes[0], partes[1]);
     }
 
     /**
@@ -28,7 +41,7 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableCancion = new javax.swing.JTable();
         jButtonGuardarAudio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -36,18 +49,23 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Editar/Escribir Datos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCancion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Título", "Artista", "Album", "Año", "Género", "Duración", "Tamaño", "Fecha"
+                "Nombre", "Titulo", "Artista", "Album", "Año", "Genero", "Imagen", "Duracion", "Letra", "Banda", "Legal Inf."
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableCancion);
 
         jButtonGuardarAudio.setText("Guardar");
         jButtonGuardarAudio.addActionListener(new java.awt.event.ActionListener() {
@@ -66,12 +84,12 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
                         .addGap(273, 273, 273)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(236, 236, 236)
+                        .addComponent(jButtonGuardarAudio, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(309, 309, 309)
-                        .addComponent(jButtonGuardarAudio)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGap(39, 39, 39)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 869, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(608, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,18 +97,56 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
                 .addComponent(jButtonGuardarAudio)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public void llenarDatosGrid(SongNode cancion) {
+        // Obtener el modelo de la tabla existente
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableCancion.getModel();
+
+        // Agregar una nueva fila al modelo de la tabla
+        modeloTabla.addRow(new Object[]{
+            cancion.getPath(),
+            cancion.getTitle(),
+            cancion.getArtist(),
+            cancion.getAlbum(),
+            cancion.getYear(),
+            cancion.getGenre(),
+            cancion.getImagePath(),
+            cancion.getDuration(),
+            cancion.getLyricsPath(),
+            cancion.getBand(),
+            cancion.getLegalInformation()
+        });
+
+        // Notificar a la tabla que se han realizado cambios en el modelo
+        modeloTabla.fireTableDataChanged();
+
+    }
 
     private void jButtonGuardarAudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarAudioActionPerformed
-       
-        
+        int numRows = jTableCancion.getRowCount();
+        if (numRows > 0) {
+            String album = (String) jTableCancion.getValueAt(0, 3);
+            String año = (String) jTableCancion.getValueAt(0, 4);
+            String genero = (String) jTableCancion.getValueAt(0, 5);
+            String imagen = (String) jTableCancion.getValueAt(0, 6);
+            String duracion = (String) jTableCancion.getValueAt(0, 7);
+            String letra = (String) jTableCancion.getValueAt(0, 8);
+            String banda = (String) jTableCancion.getValueAt(0, 9);
+            String legalInf = (String) jTableCancion.getValueAt(0, 10);
+            arbolBinario.edit(cancion.getTitle(), cancion.getArtist(), cancion.getPath(), cancion.getTitle(), cancion.getArtist(), banda, legalInf, album, año, genero, imagen, duracion, letra);
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay datos para poderlos editar");
+
+        }
+
     }//GEN-LAST:event_jButtonGuardarAudioActionPerformed
 
     /**
@@ -124,7 +180,7 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EscrituraAudioFrame().setVisible(true);
+                new EscrituraAudioFrame("", null).setVisible(true);
             }
         });
     }
@@ -133,6 +189,6 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonGuardarAudio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableCancion;
     // End of variables declaration//GEN-END:variables
 }

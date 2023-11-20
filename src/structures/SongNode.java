@@ -9,6 +9,7 @@ package structures;
  * @author jmanc
  */
 public class SongNode {
+    private int no_registro;
     private String path; // Nombre (path completo)
     private String title; // Título
     private String artist; // Artista
@@ -38,9 +39,17 @@ public class SongNode {
         this.lyricsPath = lyricsPath;
         this.left = null;
         this.right = null;
+        this.no_registro = 0;
     }
 
     // Getters y Setters
+    public int getNoRegistro(){
+        return no_registro;
+    }
+    public void setNoRegistro(int No_registro){
+        this.no_registro = No_registro;
+    }
+    
     public String getBand(){
         return band; 
     }

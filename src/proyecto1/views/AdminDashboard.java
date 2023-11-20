@@ -43,15 +43,16 @@ import java.time.ZonedDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import structures.ArbolBinario; 
+import structures.ArbolBinario;
+import structures.SongNode;
 
 /**
  *
  * @author carlo
  */
 public class AdminDashboard extends javax.swing.JFrame {
-        private ArbolBinario arbolBinario;
 
+    private ArbolBinario arbolBinario;
 
     /**
      * Creates new form AdminDashboard
@@ -60,10 +61,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         initComponents();
         DefaultListModel<String> modeloLista = new DefaultListModel<>();
         DefaultListModel<String> modeloListaContactos = new DefaultListModel<>();
+        DefaultListModel<String> modeloListaMusica = new DefaultListModel<>();
         jListBuscados.setModel(modeloLista);
         jListContactosBuscados.setModel(modeloListaContactos);
+        jListBusquedaAudio.setModel(modeloListaMusica);
         arbolBinario = new ArbolBinario();
-
 
     }
 
@@ -175,10 +177,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         jTextFieldTitulo = new javax.swing.JTextField();
         jTextFieldAlbum = new javax.swing.JTextField();
         jButtonBuscarPista = new javax.swing.JButton();
-        jButtonBuscarAlbum = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jListBusquedaAudio = new javax.swing.JList<>();
         jButtonEscritura = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -283,7 +285,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jButtonBackup))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         jPanelAudio.addTab("General", jPanelGeneral);
@@ -375,7 +377,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jBtnEditar)
                         .addGap(18, 18, 18)
                         .addComponent(jBtnEliminar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(26, 26, 26))
         );
@@ -483,7 +485,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addComponent(btnAgregarContacto)
                 .addGap(18, 18, 18)
                 .addComponent(btnEditContactos)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         jPanelAudio.addTab("Contactos", JPanelContactos);
@@ -594,7 +596,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jButtonActualizarListaUsuario)
                     .addComponent(jButtonEliminarListaUsuarios)
                     .addComponent(jButtonIngresarUsuariosLista))
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
 
         jPanelAudio.addTab("Lista de Usuarios", jPanelListaUsuario);
@@ -758,7 +760,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jButtonActualizarLista)
                     .addComponent(jButtonEliminarLista)
                     .addComponent(jButtonBuscarContactosLista))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         jPanelAudio.addTab("Envio Correo", jPanelListaDistribución);
@@ -782,21 +784,20 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(jListCarpetaAudio);
 
-        jLabel16.setText("Búsqueda por título:");
+        jLabel16.setText("Título:");
 
-        jLabel17.setText("Búsqueda por álbum:");
+        jLabel17.setText("Artista:");
+
+        jTextFieldTitulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldTituloActionPerformed(evt);
+            }
+        });
 
         jButtonBuscarPista.setText("Buscar pista");
         jButtonBuscarPista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBuscarPistaActionPerformed(evt);
-            }
-        });
-
-        jButtonBuscarAlbum.setText("Buscar álbum");
-        jButtonBuscarAlbum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBuscarAlbumActionPerformed(evt);
             }
         });
 
@@ -814,16 +815,13 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("Busqueda");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jButtonBuscarPista)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonBuscarAlbum)
-                .addGap(171, 171, 171))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -831,25 +829,35 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel14))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane7)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel15)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonBuscarAudio))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel17)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldAlbum, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                            .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane7)
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel15)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jButtonBuscarAudio))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(13, 13, 13)
+                                            .addComponent(jLabel16)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jTextFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(72, 72, 72)
+                                            .addComponent(jLabel17)
+                                            .addGap(39, 39, 39)
+                                            .addComponent(jTextFieldAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(0, 0, Short.MAX_VALUE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(288, 288, 288)
-                        .addComponent(jButtonEscritura)))
-                .addContainerGap(63, Short.MAX_VALUE))
+                        .addGap(303, 303, 303)
+                        .addComponent(jButtonBuscarPista)))
+                .addGap(63, 63, 63))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButtonEscritura)
+                .addGap(304, 304, 304))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -862,21 +870,21 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jButtonBuscarAudio))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17)
-                    .addComponent(jTextFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel18)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonBuscarPista)
-                    .addComponent(jButtonBuscarAlbum))
-                .addGap(18, 18, 18)
+                    .addComponent(jTextFieldAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonBuscarPista)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonEscritura)
-                .addGap(21, 21, 21))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanelAudio.addTab("Archivos de Audio", jPanel1);
@@ -1090,9 +1098,9 @@ public class AdminDashboard extends javax.swing.JFrame {
                 modeloListaContactos.clear();
                 modeloListaContactos.addElement("No se encontraron datos");
             }
-        }else{
-             modeloListaContactos.clear();
-             modeloListaContactos.addElement("No se encontraron datos");
+        } else {
+            modeloListaContactos.clear();
+            modeloListaContactos.addElement("No se encontraron datos");
         }
     }//GEN-LAST:event_btnBuscarUsuarioActionPerformed
 
@@ -1159,7 +1167,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 LocalDate fechaActual = LocalDate.now();
                 DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 String fechaFormateada = fechaActual.format(formato);
-                
+
                 contacto.setUsuario(nombreUsuario);
                 contacto.setContacto(nombreContacto);
                 contacto.setFechaTransaccion(fechaFormateada);
@@ -1167,8 +1175,8 @@ public class AdminDashboard extends javax.swing.JFrame {
                 contacto.setStatus(1);
 
                 UserController.registerNewContact(contacto);
-                JOptionPane.showMessageDialog(this, "Se agrego el nuevo contacto "+nombreContacto);
-                
+                JOptionPane.showMessageDialog(this, "Se agrego el nuevo contacto " + nombreContacto);
+
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró el nombre de usuario en el elemento seleccionado.");
             }
@@ -1178,29 +1186,29 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarContactoActionPerformed
 
     private void saveContactToFile(Contactos contacto) {
-    try {
-        String filePath = "C:/MEIA/contactos.txt";
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
+        try {
+            String filePath = "C:/MEIA/contactos.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
 
-        // Construye la cadena de datos del contacto
-        String contactData = String.format("%s|%s|%s|%s|%s|%d",
-            contacto.getUsuario(),
-            contacto.getContacto(),
-            contacto.getFechaTransaccion(),
-            contacto.getUsuarioTransaccion(),
-            contacto.getStatus());
+            // Construye la cadena de datos del contacto
+            String contactData = String.format("%s|%s|%s|%s|%s|%d",
+                    contacto.getUsuario(),
+                    contacto.getContacto(),
+                    contacto.getFechaTransaccion(),
+                    contacto.getUsuarioTransaccion(),
+                    contacto.getStatus());
 
-        // Escribe la cadena en el archivo
-        writer.write(contactData);
-        writer.newLine();
-        writer.close();
-    } catch (IOException e) {
-        e.printStackTrace();
+            // Escribe la cadena en el archivo
+            writer.write(contactData);
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    }
-    
+
     private void btnEditContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditContactosActionPerformed
-         String textoUsuario = jLabelUsuario.getText();
+        String textoUsuario = jLabelUsuario.getText();
 
         // Comprueba si el texto comienza con "Usuario: "
         if (textoUsuario.startsWith("Usuario: ")) {
@@ -1216,39 +1224,39 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditContactosActionPerformed
 
     private void jButtonCrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearListaActionPerformed
-    // Obtiene el texto de los campos de texto
-    String nombreLista = jTextFieldNombreLista.getText();
-    String descripcion = DescripcionList.getText();
-    if(!"".equals(nombreLista)){
-          // Llama al método para registrar la lista de distribución y obtener el nombre de usuario
-    String usuario = asociarUsuarioALista(nombreLista, descripcion);
+        // Obtiene el texto de los campos de texto
+        String nombreLista = jTextFieldNombreLista.getText();
+        String descripcion = DescripcionList.getText();
+        if (!"".equals(nombreLista)) {
+            // Llama al método para registrar la lista de distribución y obtener el nombre de usuario
+            String usuario = asociarUsuarioALista(nombreLista, descripcion);
 
-    if (usuario != null) {
-        registrarListaDistribucion(nombreLista, usuario, descripcion);
-        
-        // Crear el archivo .txt vacío en la ruta "C:\MEIA\ListasDistribucion"
-        String rutaArchivo = "C:\\MEIA\\ListasDistribucion\\" + nombreLista + ".txt";
-        try {
-            File archivoLista = new File(rutaArchivo);
-            if (archivoLista.createNewFile()) {
-                JOptionPane.showMessageDialog(this, "Lista creada con éxito.");
-                
+            if (usuario != null) {
+                registrarListaDistribucion(nombreLista, usuario, descripcion);
+
+                // Crear el archivo .txt vacío en la ruta "C:\MEIA\ListasDistribucion"
+                String rutaArchivo = "C:\\MEIA\\ListasDistribucion\\" + nombreLista + ".txt";
+                try {
+                    File archivoLista = new File(rutaArchivo);
+                    if (archivoLista.createNewFile()) {
+                        JOptionPane.showMessageDialog(this, "Lista creada con éxito.");
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se pudo crear el archivo de la lista.");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error al crear el archivo de la lista.");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "No se pudo crear el archivo de la lista.");
+                // Maneja el caso en el que no se pueda obtener el nombre del usuario
+                JOptionPane.showMessageDialog(this, "No se pudo obtener el nombre del usuario.");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al crear el archivo de la lista.");
-        }
-    } else {
-        // Maneja el caso en el que no se pueda obtener el nombre del usuario
-        JOptionPane.showMessageDialog(this, "No se pudo obtener el nombre del usuario.");
-    } 
-    }else{
-      JOptionPane.showMessageDialog(this, "Ingrese un nombre para la lista");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre para la lista");
 
-    }
-  
+        }
+
     }//GEN-LAST:event_jButtonCrearListaActionPerformed
 
     private void jButtonActualizarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarListaActionPerformed
@@ -1259,481 +1267,497 @@ public class AdminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         String valorBuscado = jTextFieldDistribucion.getText();  // Obtiene el valor del jTextFieldDistribucion
 
-    DefaultListModel<String> model = new DefaultListModel<>();  // Crea un modelo para el jListContactosLista
+        DefaultListModel<String> model = new DefaultListModel<>();  // Crea un modelo para el jListContactosLista
 
-    // Lee el archivo "C:\MEIA\lista.txt" y agrega los registros que cumplen con las condiciones al modelo
-    try (BufferedReader reader = new BufferedReader(new FileReader("C:/MEIA/lista.txt"))) {
-        String linea;
-        while ((linea = reader.readLine()) != null) {
-            String[] partes = linea.split("\\|");
-            if (partes.length >= 6 && partes[1].equals(valorBuscado) && partes[5].equals("1")) {
-                model.addElement(linea);
+        // Lee el archivo "C:\MEIA\lista.txt" y agrega los registros que cumplen con las condiciones al modelo
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:/MEIA/lista.txt"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split("\\|");
+                if (partes.length >= 6 && partes[1].equals(valorBuscado) && partes[5].equals("1")) {
+                    model.addElement(linea);
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
 
-    // Asigna el modelo al jListContactosLista para mostrar los registros que cumplen con las condiciones
-    jListContactosLista.setModel(model);
+        // Asigna el modelo al jListContactosLista para mostrar los registros que cumplen con las condiciones
+        jListContactosLista.setModel(model);
     }//GEN-LAST:event_jButtonBuscarListaActionPerformed
 
     private void jButtonEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarListaActionPerformed
         // TODO add your handling code here:
         // Obtiene el valor ingresado en el jTextFieldNombreLista
-    String nombreLista = jTextFieldNombreLista.getText();
-    
-    // Crea la ruta del archivo a eliminar en "C:\MEIA\ListasDistribucion"
-    String rutaArchivo = "C:/MEIA/ListasDistribucion/" + nombreLista + ".txt";
+        String nombreLista = jTextFieldNombreLista.getText();
 
-    // Verifica si el archivo existe antes de eliminarlo
-    File archivo = new File(rutaArchivo);
-    if (archivo.exists() && archivo.isFile()) {
-        // Elimina el archivo si existe
-        if (archivo.delete()) {
-            // Actualiza el sexto valor en el archivo "lista.txt"
-            actualizarValorLista2(nombreLista);
+        // Crea la ruta del archivo a eliminar en "C:\MEIA\ListasDistribucion"
+        String rutaArchivo = "C:/MEIA/ListasDistribucion/" + nombreLista + ".txt";
 
-            // Muestra un mensaje de éxito
-            JOptionPane.showMessageDialog(this, "Lista eliminada con éxito.");
+        // Verifica si el archivo existe antes de eliminarlo
+        File archivo = new File(rutaArchivo);
+        if (archivo.exists() && archivo.isFile()) {
+            // Elimina el archivo si existe
+            if (archivo.delete()) {
+                // Actualiza el sexto valor en el archivo "lista.txt"
+                actualizarValorLista2(nombreLista);
+
+                // Muestra un mensaje de éxito
+                JOptionPane.showMessageDialog(this, "Lista eliminada con éxito.");
+            } else {
+                // EN el caso en que no se pudo eliminar el archivo
+                JOptionPane.showMessageDialog(this, "Error al eliminar la lista.");
+            }
         } else {
-            // EN el caso en que no se pudo eliminar el archivo
-            JOptionPane.showMessageDialog(this, "Error al eliminar la lista.");
+            // EN el caso en que el archivo no existe
+            JOptionPane.showMessageDialog(this, "La lista no existe.");
         }
-    } else {
-        // EN el caso en que el archivo no existe
-        JOptionPane.showMessageDialog(this, "La lista no existe.");
-    }
     }//GEN-LAST:event_jButtonEliminarListaActionPerformed
 
     private void actualizarValorLista2(String nombreLista) {
-    String rutaLista = "C:/MEIA/lista.txt";
-    List<String> lineas = new ArrayList<>();
-    try (BufferedReader reader = new BufferedReader(new FileReader(rutaLista))) {
-        String linea;
-        while ((linea = reader.readLine()) != null) {
-            String[] partes = linea.split("\\|");
-            if (partes.length >= 1 && partes[0].equals(nombreLista)) {
-                partes[5] = "0";
-                linea = String.join("|", partes);
+        String rutaLista = "C:/MEIA/lista.txt";
+        List<String> lineas = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(rutaLista))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split("\\|");
+                if (partes.length >= 1 && partes[0].equals(nombreLista)) {
+                    partes[5] = "0";
+                    linea = String.join("|", partes);
+                }
+                lineas.add(linea);
             }
-            lineas.add(linea);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaLista))) {
+            for (String l : lineas) {
+                writer.write(l);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaLista))) {
-        for (String l : lineas) {
-            writer.write(l);
-            writer.newLine();
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-    
     private void jButtonBuscarListaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarListaUsuarioActionPerformed
-    // Obtiene el usuario proporcionado en el jTextFieldListaUsuario
-    String usuario = jTextFieldListaUsuario.getText();
+        // Obtiene el usuario proporcionado en el jTextFieldListaUsuario
+        String usuario = jTextFieldListaUsuario.getText();
 
-    // Crea una instancia de ListaController
-    ListaController listaController = new ListaController();
+        // Crea una instancia de ListaController
+        ListaController listaController = new ListaController();
 
-    // Llama al método para buscar usuarios asociados al usuario proporcionado
-    List<String> usuariosAsociados = listaController.buscarUsuariosAsociados(usuario);
+        // Llama al método para buscar usuarios asociados al usuario proporcionado
+        List<String> usuariosAsociados = listaController.buscarUsuariosAsociados(usuario);
 
-    // Hace un clear al jListUsuariosListaUsuarios
-    DefaultListModel<String> model = new DefaultListModel<>();
-    jListUsuariosListaUsuarios.setModel(model);
+        // Hace un clear al jListUsuariosListaUsuarios
+        DefaultListModel<String> model = new DefaultListModel<>();
+        jListUsuariosListaUsuarios.setModel(model);
 
-    // Agrega los usuarios asociados encontrados al jListUsuariosListaUsuarios
-    for (String usuarioAsociado : usuariosAsociados) {
-        model.addElement(usuarioAsociado);
-    }
+        // Agrega los usuarios asociados encontrados al jListUsuariosListaUsuarios
+        for (String usuarioAsociado : usuariosAsociados) {
+            model.addElement(usuarioAsociado);
+        }
     }//GEN-LAST:event_jButtonBuscarListaUsuarioActionPerformed
 
     private void jButtonActualizarListaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarListaUsuarioActionPerformed
         // Obtiene el usuario proporcionado en el jTextFieldListaUsuario
-    String usuario = jTextFieldListaUsuario.getText();
+        String usuario = jTextFieldListaUsuario.getText();
 
-    // Crea una instancia de ListaController
-    ListaController listaController = new ListaController(); 
+        // Crea una instancia de ListaController
+        ListaController listaController = new ListaController();
 
-    // Llama al método para buscar usuarios asociados al usuario proporcionado
-    List<String> usuariosAsociados = listaController.buscarUsuariosAsociados(usuario);
+        // Llama al método para buscar usuarios asociados al usuario proporcionado
+        List<String> usuariosAsociados = listaController.buscarUsuariosAsociados(usuario);
 
-    // Limpia el jListUsuariosListaUsuarios
-    DefaultListModel<String> model = new DefaultListModel<>();
-    jListUsuariosListaUsuarios.setModel(model);
+        // Limpia el jListUsuariosListaUsuarios
+        DefaultListModel<String> model = new DefaultListModel<>();
+        jListUsuariosListaUsuarios.setModel(model);
 
-    // Agrega los usuarios asociados encontrados al jListUsuariosListaUsuarios
-    for (String usuarioAsociado : usuariosAsociados) {
-        model.addElement(usuarioAsociado);
-    }
-
-    
-    String selectedUser = jListUsuariosListaUsuarios.getSelectedValue(); // Esto obtiene el usuario asociado seleccionado
-
-    if (selectedUser != null) {
-        String[] partes = selectedUser.split("\\|");
-        String nombreLista = partes[3]; // Obtiene el valor del nombre de la lista del usuario seleccionado
-        String usuarioAsociado = partes[4]; // Obtiene el valor del usuario asociado del usuario seleccionado
-
-        
-
-        // Refresca el jListUsuariosListaUsuarios para mostrar los cambios si es necesario.
-        model.clear();
-        List<String> updatedUsuariosAsociados = listaController.buscarUsuariosAsociados(usuario);
-        for (String updatedUsuarioAsociado : updatedUsuariosAsociados) {
-            model.addElement(updatedUsuarioAsociado);
+        // Agrega los usuarios asociados encontrados al jListUsuariosListaUsuarios
+        for (String usuarioAsociado : usuariosAsociados) {
+            model.addElement(usuarioAsociado);
         }
-    }
+
+        String selectedUser = jListUsuariosListaUsuarios.getSelectedValue(); // Esto obtiene el usuario asociado seleccionado
+
+        if (selectedUser != null) {
+            String[] partes = selectedUser.split("\\|");
+            String nombreLista = partes[3]; // Obtiene el valor del nombre de la lista del usuario seleccionado
+            String usuarioAsociado = partes[4]; // Obtiene el valor del usuario asociado del usuario seleccionado
+
+            // Refresca el jListUsuariosListaUsuarios para mostrar los cambios si es necesario.
+            model.clear();
+            List<String> updatedUsuariosAsociados = listaController.buscarUsuariosAsociados(usuario);
+            for (String updatedUsuarioAsociado : updatedUsuariosAsociados) {
+                model.addElement(updatedUsuarioAsociado);
+            }
+        }
     }//GEN-LAST:event_jButtonActualizarListaUsuarioActionPerformed
 
     private void jButtonEliminarListaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarListaUsuariosActionPerformed
-    
-            // Obtén los valores de usuarioBuscado y nombreLista
-    String usuarioBuscado = jTextFieldListaUsuario.getText();
-    String nombreLista = jTextFieldBuscarListaUsuario.getText();
-    String bloquePath = "C:\\MEIA\\ListaUsuario\\Bloque.txt";
-    String listaUsuarioPath = "C:\\MEIA\\Lista_usuario.txt";
 
-    eliminarListaUsuarios(listaUsuarioPath, bloquePath, usuarioBuscado, nombreLista);
+        // Obtén los valores de usuarioBuscado y nombreLista
+        String usuarioBuscado = jTextFieldListaUsuario.getText();
+        String nombreLista = jTextFieldBuscarListaUsuario.getText();
+        String bloquePath = "C:\\MEIA\\ListaUsuario\\Bloque.txt";
+        String listaUsuarioPath = "C:\\MEIA\\Lista_usuario.txt";
+
+        eliminarListaUsuarios(listaUsuarioPath, bloquePath, usuarioBuscado, nombreLista);
     }//GEN-LAST:event_jButtonEliminarListaUsuariosActionPerformed
 
-    
-    
+
     private void jButtonBuscarContactosListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarContactosListaActionPerformed
         // TODO add your handling code here:
         String valorBuscado = jTextFieldDistribucion.getText();  // Obtiene el valor del jTextFieldDistribucion
 
-    DefaultListModel<String> model = new DefaultListModel<>();  
+        DefaultListModel<String> model = new DefaultListModel<>();
 
-    // Lee el archivo "C:\MEIA\contactos.txt" 
-    try (BufferedReader reader = new BufferedReader(new FileReader("C:/MEIA/contactos.txt"))) {
-        String linea;
-        while ((linea = reader.readLine()) != null) {
-            String[] partes = linea.split("\\|");
-            if (partes.length >= 5 && partes[3].equals(valorBuscado) && partes[4].equals("1")) {
-                model.addElement(linea);
+        // Lee el archivo "C:\MEIA\contactos.txt" 
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:/MEIA/contactos.txt"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split("\\|");
+                if (partes.length >= 5 && partes[3].equals(valorBuscado) && partes[4].equals("1")) {
+                    model.addElement(linea);
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
 
-    // Asigna el modelo al jListDistribucion para que se muetsren
-    jListDistribucion.setModel(model);
+        // Asigna el modelo al jListDistribucion para que se muetsren
+        jListDistribucion.setModel(model);
 
     }//GEN-LAST:event_jButtonBuscarContactosListaActionPerformed
 
     ArrayList<String> lines = new ArrayList<>();
 
-    
+
     private void jButtonAgregarDistribucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarDistribucionActionPerformed
-String nombreLista = jTextFieldNombreLista.getText().trim();
-String valorDistribucion = jTextFieldDistribucion.getText().trim();
+        String nombreLista = jTextFieldNombreLista.getText().trim();
+        String valorDistribucion = jTextFieldDistribucion.getText().trim();
 
 // Validación de la entrada del usuario
-if (nombreLista.isEmpty() || valorDistribucion.isEmpty()) {
-    JOptionPane.showMessageDialog(this, "El nombre de la lista y el valor de distribución no pueden estar vacíos.");
-    return;
-}
-if (nombreLista.matches(".*[\\/:*?\"<>|].*")) {
-    JOptionPane.showMessageDialog(this, "El nombre de la lista contiene caracteres inválidos.");
-    return;
-}
+        if (nombreLista.isEmpty() || valorDistribucion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El nombre de la lista y el valor de distribución no pueden estar vacíos.");
+            return;
+        }
+        if (nombreLista.matches(".*[\\/:*?\"<>|].*")) {
+            JOptionPane.showMessageDialog(this, "El nombre de la lista contiene caracteres inválidos.");
+            return;
+        }
 
 // Crea la ruta del archivo correspondiente en "C:\MEIA\ListasDistribucion"
-String rutaDirectorio = "C:/MEIA/ListasDistribucion";
-String rutaArchivo = rutaDirectorio + "/" + nombreLista + ".txt";
+        String rutaDirectorio = "C:/MEIA/ListasDistribucion";
+        String rutaArchivo = rutaDirectorio + "/" + nombreLista + ".txt";
 
-File directorio = new File(rutaDirectorio);
+        File directorio = new File(rutaDirectorio);
 
 // Verifica si el directorio existe y si no, intenta crearlo
-if (!directorio.exists()) {
-    if (!directorio.mkdirs()) {
-        JOptionPane.showMessageDialog(this, "No se pudo crear el directorio para las listas de distribución.");
-        return;
-    }
-}
+        if (!directorio.exists()) {
+            if (!directorio.mkdirs()) {
+                JOptionPane.showMessageDialog(this, "No se pudo crear el directorio para las listas de distribución.");
+                return;
+            }
+        }
 
-try {
-    // Agrega el valor de distribución al archivo correspondiente
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
-        writer.write(valorDistribucion);
-        writer.newLine();
-    } 
+        try {
+            // Agrega el valor de distribución al archivo correspondiente
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
+                writer.write(valorDistribucion);
+                writer.newLine();
+            }
 
-    actualizarValorLista(nombreLista);
+            actualizarValorLista(nombreLista);
 
-    JOptionPane.showMessageDialog(this, "Usuario agregado con éxito.");
-} catch (IOException e) {
-    e.printStackTrace();
-    JOptionPane.showMessageDialog(this, "Error al agregar el usuario.");
-}
-    
+            JOptionPane.showMessageDialog(this, "Usuario agregado con éxito.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al agregar el usuario.");
+        }
+
     }//GEN-LAST:event_jButtonAgregarDistribucionActionPerformed
 
     private void jButtonIngresarUsuariosListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngresarUsuariosListaActionPerformed
-    // Obtiene los valores de los campos de texto
-    String nombreLista = jTextFieldBuscarListaUsuario.getText();
-    String descripcion = jTextFieldListaUsuario.getText();
+        // Obtiene los valores de los campos de texto
+        String nombreLista = jTextFieldBuscarListaUsuario.getText();
+        String descripcion = jTextFieldListaUsuario.getText();
 
-    // Lee el contenido actual del archivo "Bloque.txt"
-    String rutaBloque = "C:\\MEIA\\ListaUsuario\\Bloque.txt";
-    String contenidoBloque = "";
-    try {
-        BufferedReader bloqueReader = new BufferedReader(new FileReader(rutaBloque));
-        String linea;
-        while ((linea = bloqueReader.readLine()) != null) {
-            contenidoBloque += linea + "\n";
+        // Lee el contenido actual del archivo "Bloque.txt"
+        String rutaBloque = "C:\\MEIA\\ListaUsuario\\Bloque.txt";
+        String contenidoBloque = "";
+        try {
+            BufferedReader bloqueReader = new BufferedReader(new FileReader(rutaBloque));
+            String linea;
+            while ((linea = bloqueReader.readLine()) != null) {
+                contenidoBloque += linea + "\n";
+            }
+            bloqueReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo Bloque.txt.");
+            return;
         }
-        bloqueReader.close();
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al leer el archivo Bloque.txt.");
-        return;
-    }
 
-    // Crea un nuevo registro usando los valores de los campos
-    String nuevoRegistro = nombreLista + "|" + obtenerNombreUsuario() + "|" + obtenerNombreUsuario() + "|Descripcion|" + LocalDate.now() + "|1";
+        // Crea un nuevo registro usando los valores de los campos
+        String nuevoRegistro = nombreLista + "|" + obtenerNombreUsuario() + "|" + obtenerNombreUsuario() + "|Descripcion|" + LocalDate.now() + "|1";
 
-    // Escribe el nuevo registro en "Bloque.txt"
-    try {
-        BufferedWriter bloqueWriter = new BufferedWriter(new FileWriter(rutaBloque, true));
-        bloqueWriter.write(nuevoRegistro);
-        bloqueWriter.newLine();
-        bloqueWriter.close();
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al escribir en el archivo Bloque.txt.");
-        return;
-    }
-
-    // Lee el contenido actual del archivo "Lista_usuario.txt"
-    String rutaListaUsuario = "C:\\MEIA\\Lista_usuario.txt";
-    String contenidoListaUsuario = "";
-    try {
-        BufferedReader listaUsuarioReader = new BufferedReader(new FileReader(rutaListaUsuario));
-        String linea;
-        while ((linea = listaUsuarioReader.readLine()) != null) {
-            contenidoListaUsuario += linea + "\n";
+        // Escribe el nuevo registro en "Bloque.txt"
+        try {
+            BufferedWriter bloqueWriter = new BufferedWriter(new FileWriter(rutaBloque, true));
+            bloqueWriter.write(nuevoRegistro);
+            bloqueWriter.newLine();
+            bloqueWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al escribir en el archivo Bloque.txt.");
+            return;
         }
-        listaUsuarioReader.close();
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al leer el archivo Lista_usuario.txt.");
-        return;
-    }
 
-    // Busca el registro adecuado y suma 1 al primer valor
-    String usuario = obtenerNombreUsuario();
-    String nuevoContenidoListaUsuario = "";
-    String[] lineas = contenidoListaUsuario.split("\n");
-    for (String linea : lineas) {
-        String[] partes = linea.split("\\|");
-        if (partes.length > 2 && partes[2].equals(usuario)) {
-            // Encontramos el registro, suma 1 al primer valor
-            int primerValor = Integer.parseInt(partes[0]) + 1;
-            partes[0] = String.valueOf(primerValor);
+        // Lee el contenido actual del archivo "Lista_usuario.txt"
+        String rutaListaUsuario = "C:\\MEIA\\Lista_usuario.txt";
+        String contenidoListaUsuario = "";
+        try {
+            BufferedReader listaUsuarioReader = new BufferedReader(new FileReader(rutaListaUsuario));
+            String linea;
+            while ((linea = listaUsuarioReader.readLine()) != null) {
+                contenidoListaUsuario += linea + "\n";
+            }
+            listaUsuarioReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo Lista_usuario.txt.");
+            return;
         }
-        nuevoContenidoListaUsuario += String.join("|", partes) + "\n";
-    }
 
-    // Escribe el contenido modificado de "Lista_usuario.txt"
-    try {
-        BufferedWriter listaUsuarioWriter = new BufferedWriter(new FileWriter(rutaListaUsuario));
-        listaUsuarioWriter.write(nuevoContenidoListaUsuario);
-        listaUsuarioWriter.close();
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al escribir en el archivo Lista_usuario.txt.");
-        return;
-    }
+        // Busca el registro adecuado y suma 1 al primer valor
+        String usuario = obtenerNombreUsuario();
+        String nuevoContenidoListaUsuario = "";
+        String[] lineas = contenidoListaUsuario.split("\n");
+        for (String linea : lineas) {
+            String[] partes = linea.split("\\|");
+            if (partes.length > 2 && partes[2].equals(usuario)) {
+                // Encontramos el registro, suma 1 al primer valor
+                int primerValor = Integer.parseInt(partes[0]) + 1;
+                partes[0] = String.valueOf(primerValor);
+            }
+            nuevoContenidoListaUsuario += String.join("|", partes) + "\n";
+        }
 
-    JOptionPane.showMessageDialog(this, "Usuario agregado con éxito.");
+        // Escribe el contenido modificado de "Lista_usuario.txt"
+        try {
+            BufferedWriter listaUsuarioWriter = new BufferedWriter(new FileWriter(rutaListaUsuario));
+            listaUsuarioWriter.write(nuevoContenidoListaUsuario);
+            listaUsuarioWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al escribir en el archivo Lista_usuario.txt.");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Usuario agregado con éxito.");
     }//GEN-LAST:event_jButtonIngresarUsuariosListaActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 // Crea una instancia de ListaController
-    ListaController listaController = new ListaController();
+        ListaController listaController = new ListaController();
 
-    // Llama al método para ordenar el archivo de lista de usuarios
-    listaController.ordenarArchivoListaUsuarios();
+        // Llama al método para ordenar el archivo de lista de usuarios
+        listaController.ordenarArchivoListaUsuarios();
 
-    String usuario = jTextFieldListaUsuario.getText();
+        String usuario = jTextFieldListaUsuario.getText();
 
-    // Llama al método para buscar usuarios asociados al usuario proporcionado
-    List<String> usuariosAsociados = listaController.buscarUsuariosAsociados(usuario);
+        // Llama al método para buscar usuarios asociados al usuario proporcionado
+        List<String> usuariosAsociados = listaController.buscarUsuariosAsociados(usuario);
 
-    // Hace un clear al jListUsuariosListaUsuarios y lo actualiza con la lista ordenada
-    DefaultListModel<String> model = new DefaultListModel<>();
-    for (String usuarioAsociado : usuariosAsociados) {
-        model.addElement(usuarioAsociado);
-    }
-    jListUsuariosListaUsuarios.setModel(model);
+        // Hace un clear al jListUsuariosListaUsuarios y lo actualiza con la lista ordenada
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for (String usuarioAsociado : usuariosAsociados) {
+            model.addElement(usuarioAsociado);
+        }
+        jListUsuariosListaUsuarios.setModel(model);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButtonBuscarAudioActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-       JFileChooser chooser = new JFileChooser();
-    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    int result = chooser.showOpenDialog(this);
+    private void jButtonBuscarAudioActionPerformed(java.awt.event.ActionEvent evt) {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = chooser.showOpenDialog(this);
 
-    if (result == JFileChooser.APPROVE_OPTION) {
-        File selectedFolder = chooser.getSelectedFile();
-        File[] files = selectedFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".mp3"));
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFolder = chooser.getSelectedFile();
+            File[] files = selectedFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".mp3"));
 
-        if (files != null && files.length > 0) {
-            DefaultListModel<String> model = new DefaultListModel<>();
-            for (File file : files) {
-                try {
-                    RandomAccessFile raf = new RandomAccessFile(file, "r");
-                    if (raf.length() > 10) { // Verificar si el archivo es lo suficientemente grande
-                        byte[] header = new byte[10];
-                        raf.readFully(header);
-                        String headerTag = new String(header, 0, 3);
+            if (files != null && files.length > 0) {
+                DefaultListModel<String> model = new DefaultListModel<>();
+                for (File file : files) {
+                    try {
+                        RandomAccessFile raf = new RandomAccessFile(file, "r");
+                        if (raf.length() > 10) { // Verificar si el archivo es lo suficientemente grande
+                            byte[] header = new byte[10];
+                            raf.readFully(header);
+                            String headerTag = new String(header, 0, 3);
 
-                        if (headerTag.equals("ID3")) {
-                            int size = calculateTagSize(header, 6);
-                            int bytesRead = 0;
-                             String title = ""; 
-                                String artist = ""; 
-                                String album = ""; 
+                            if (headerTag.equals("ID3")) {
+                                int size = calculateTagSize(header, 6);
+                                int bytesRead = 0;
+                                String title = "";
+                                String artist = "";
+                                String album = "";
                                 String year = "";
-                                String genre = ""; 
-                                String duration = ""; 
-                                String band = ""; 
-                                String legalInformation = ""; 
-                                String imagePath = ""; 
-                                String lyrics = ""; 
-                            while (bytesRead < size) { // Recorre todos los frames hasta alcanzar el tamaño total del tag ID3v2
-        byte[] frameHeader = new byte[10];
-        raf.readFully(frameHeader);
-        bytesRead += 10;
+                                String genre = "";
+                                String duration = "";
+                                String band = "";
+                                String legalInformation = "";
+                                String imagePath = "";
+                                String lyrics = "";
+                                while (bytesRead < size) { // Recorre todos los frames hasta alcanzar el tamaño total del tag ID3v2
+                                    byte[] frameHeader = new byte[10];
+                                    raf.readFully(frameHeader);
+                                    bytesRead += 10;
 
-        String frameID = new String(frameHeader, 0, 4);
-        int frameSize = calculateTagSize(frameHeader, 4);
-        bytesRead += frameSize;
+                                    String frameID = new String(frameHeader, 0, 4);
+                                    int frameSize = calculateTagSize(frameHeader, 4);
+                                    bytesRead += frameSize;
 
-        if (bytesRead + frameSize <= size) {
-            byte[] frameData = new byte[frameSize];
-            raf.readFully(frameData);
-              
-               
-            // Título
-            switch (frameID) {
-                case "TIT2" -> {
-                    title = new String(frameData, "ISO-8859-1").trim();
-                    System.out.println("Título: " + title);
-                }
-                case "TPE1" -> {
-                    artist = new String(frameData, "ISO-8859-1").trim();
-                    System.out.println("Artista: " + artist);
-                }
-                case "TALB" -> {
-                    album = new String(frameData, "ISO-8859-1").trim();
-                    System.out.println("Álbum: " + album);
-                }
-                case "TDRC", "TYER" -> {
-                    year = new String(frameData, "ISO-8859-1").trim();
-                    System.out.println("Año: " + year);
-                }
-                case "TCON" -> {
-                    genre = new String(frameData, "ISO-8859-1").trim();
-                    System.out.println("Género: " + genre);
-                }
-                case "TLEN" -> {
-                    duration = new String(frameData, "ISO-8859-1").trim();
-                    System.out.println("Duración: " + duration);
-                }
-                case "TPE2" ->{
-                    band = new String(frameData, "ISO-8859-1");
-                    System.out.println("Banda Album: "+ band); 
-                }
-                case "TCOP" ->{
-                    legalInformation = new String(frameData, "ISO-8859-1");
-                    System.out.println("Información legal: "+ legalInformation); 
-                }
-                case "USLT" -> {
-                String encoding = frameData[0] == 0x01 ? "UTF-16" : "ISO-8859-1"; 
-                String language = new String(frameData, 1, 3);
-                int lyricsStart = 4;
-                 lyrics = new String(frameData, lyricsStart, frameData.length - lyricsStart, encoding).trim();
-                System.out.println("Letra: " + lyrics);
-                }
-                default -> {
-                }
-            }
-           
-        }
-    } 
-                            
-                           if (duration.isEmpty()) {
-                                long bitrate = 128000; 
-                                long audioSize = raf.length() - size; 
-                                long durationInSeconds = (audioSize * 8) / bitrate;
-                                System.out.println("Duración estimada (en segundos): " + durationInSeconds);
+                                    if (bytesRead + frameSize <= size) {
+                                        byte[] frameData = new byte[frameSize];
+                                        raf.readFully(frameData);
+
+                                        // Título
+                                        switch (frameID) {
+                                            case "TIT2" -> {
+                                                title = new String(frameData, "ISO-8859-1").trim();
+                                                System.out.println("Título: " + title);
+                                            }
+                                            case "TPE1" -> {
+                                                artist = new String(frameData, "ISO-8859-1").trim();
+                                                System.out.println("Artista: " + artist);
+                                            }
+                                            case "TALB" -> {
+                                                album = new String(frameData, "ISO-8859-1").trim();
+                                                System.out.println("Álbum: " + album);
+                                            }
+                                            case "TDRC", "TYER" -> {
+                                                year = new String(frameData, "ISO-8859-1").trim();
+                                                System.out.println("Año: " + year);
+                                            }
+                                            case "TCON" -> {
+                                                genre = new String(frameData, "ISO-8859-1").trim();
+                                                System.out.println("Género: " + genre);
+                                            }
+                                            case "TLEN" -> {
+                                                duration = new String(frameData, "ISO-8859-1").trim();
+                                                System.out.println("Duración: " + duration);
+                                            }
+                                            case "TPE2" -> {
+                                                band = new String(frameData, "ISO-8859-1");
+                                                System.out.println("Banda Album: " + band);
+                                            }
+                                            case "TCOP" -> {
+                                                legalInformation = new String(frameData, "ISO-8859-1");
+                                                System.out.println("Información legal: " + legalInformation);
+                                            }
+                                            case "USLT" -> {
+                                                String encoding = frameData[0] == 0x01 ? "UTF-16" : "ISO-8859-1";
+                                                String language = new String(frameData, 1, 3);
+                                                int lyricsStart = 4;
+                                                lyrics = new String(frameData, lyricsStart, frameData.length - lyricsStart, encoding).trim();
+                                                System.out.println("Letra: " + lyrics);
+                                            }
+                                            default -> {
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                                if (duration.isEmpty()) {
+                                    long bitrate = 128000;
+                                    long audioSize = raf.length() - size;
+                                    long durationInSeconds = (audioSize * 8) / bitrate;
+                                    System.out.println("Duración estimada (en segundos): " + durationInSeconds);
+                                }
+                                if (title.isEmpty()) {
+                                    title = "Desconocido";
+                                }
+                                if (artist.isEmpty()) {
+                                    artist = "Desconocido";
+                                }
+                                arbolBinario.insert(file.getPath(), title, artist, band, legalInformation, album, year, genre, imagePath, duration, lyrics);
+
+                                model.clear();
+                                arbolBinario.inOrderTraversal(node -> {
+                                    String displayText = node.getTitle() + " - " + node.getArtist();
+                                    model.addElement(displayText);
+                                });
+
+                                jListCarpetaAudio.setModel(model);
                             }
-                           if(title.isEmpty()){
-                               title = "Desconocido"; 
-                           }
-                           if(artist.isEmpty()){
-                               artist = "Desconocido"; 
-                           }
-                            arbolBinario.insert(file.getPath(), title, artist,band ,legalInformation,album, year, genre, imagePath, duration, lyrics);
-
-                            model.clear();
-                            arbolBinario.inOrderTraversal(node -> {
-                                String displayText = node.getTitle() + " - " + node.getArtist();
-                                model.addElement(displayText);
-                            });
-
-                            jListCarpetaAudio.setModel(model);
                         }
+                        raf.close();
+                    } catch (IOException e) {
+                        e.printStackTrace(); // Manejar excepciones
                     }
-                    raf.close();
-                } catch (IOException e) {
-                    e.printStackTrace(); // Manejar excepciones
                 }
+                jListCarpetaAudio.setModel(model);
+                arbolBinario.writeToFile();
+            } else {
+                JOptionPane.showMessageDialog(this, "La carpeta seleccionada está vacía o no contiene archivos MP3.");
             }
-            jListCarpetaAudio.setModel(model);
-        } else {
-            JOptionPane.showMessageDialog(this, "La carpeta seleccionada está vacía o no contiene archivos MP3.");
         }
     }
-}
 
-private int calculateTagSize(byte[] header, int start) {
-    int size = 0;
-    for (int i = start; i < start + 4; i++) {
-        size = (size << 7) + (header[i] & 0x7F);
+    private int calculateTagSize(byte[] header, int start) {
+        int size = 0;
+        for (int i = start; i < start + 4; i++) {
+            size = (size << 7) + (header[i] & 0x7F);
+        }
+        return size;
     }
-    return size;
-}                                     
 
     private void jButtonEscrituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscrituraActionPerformed
-            EscrituraAudioFrame escrituraFrame = new EscrituraAudioFrame(); // Crea una instancia del nuevo Frame
-    escrituraFrame.setVisible(true); // Muestra el nuevo Frame
-    dispose(); // Cierra el Frame actual si es necesario, cambia "dispose()" por "setVisible(false)" si no deseas cerrarlo
+        String seleccionado = jListBusquedaAudio.getSelectedValue();
+        
+        // Dividir el texto usando el guion como delimitador
+        String[] partes = seleccionado.split("-");
+        SongNode cancion = arbolBinario.search(partes[0], partes[1]);
+        EscrituraAudioFrame escrituraFrame = new EscrituraAudioFrame(seleccionado, arbolBinario);// Crea una instancia del nuevo Frame
+        escrituraFrame.llenarDatosGrid(cancion);
+        escrituraFrame.setVisible(true); // Muestra el nuevo Frame
+        //dispose(); // Cierra el Frame actual si es necesario, cambia "dispose()" por "setVisible(false)" si no deseas cerrarlo
 
     }//GEN-LAST:event_jButtonEscrituraActionPerformed
 
     private void jButtonBuscarPistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPistaActionPerformed
         // TODO add your handling code here:
+        String titulo = jTextFieldTitulo.getText();
+        String artista = jTextFieldAlbum.getText();
+
+        SongNode pista = arbolBinario.search(titulo, artista);
+        if (pista != null) {
+            String valorLista = pista.getTitle() + "-"+pista.getArtist() ;
+            DefaultListModel<String> modeloMusica = (DefaultListModel<String>) jListBusquedaAudio.getModel();
+            modeloMusica.clear();
+            modeloMusica.addElement(valorLista);
+        } else {
+
+            JOptionPane.showMessageDialog(this, "No se encontró la pista, puede que no exista o este mal escrita");
+        }
+
+
     }//GEN-LAST:event_jButtonBuscarPistaActionPerformed
 
-    private void jButtonBuscarAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarAlbumActionPerformed
+    private void jTextFieldTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTituloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonBuscarAlbumActionPerformed
-    
+    }//GEN-LAST:event_jTextFieldTituloActionPerformed
+
     private final String bloqueFilePath = "C:/MEIA/ListaUsuario/Bloque.txt";
     private final String listaUsuarioFilePath = "C:/MEIA/Lista_usuario.txt";
 
     public boolean insertarRegistroBloque(String registroBloque) {
-        try (FileWriter writer = new FileWriter(bloqueFilePath, true);
-             BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
+        try (FileWriter writer = new FileWriter(bloqueFilePath, true); BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
             // Agrega el nuevo registro al archivo "Bloque.txt"
             bufferedWriter.write(registroBloque);
             bufferedWriter.newLine();
@@ -1745,81 +1769,80 @@ private int calculateTagSize(byte[] header, int start) {
     }
 
     public boolean actualizarListaUsuario(String nombreLista) {
-    List<String> lineas = new ArrayList<>();
-    boolean actualizado = false;
+        List<String> lineas = new ArrayList<>();
+        boolean actualizado = false;
 
-    try (BufferedReader reader = new BufferedReader(new FileReader(listaUsuarioFilePath))) {
-        String linea;
-        while ((linea = reader.readLine()) != null) {
-            String[] partes = linea.split("\\|");
-            if (partes.length >= 5 && partes[3].equals(nombreLista)) {
-                try {
-                    int quintoValor = Integer.parseInt(partes[4]);
-                    quintoValor++; // Incrementar el quinto valor en 1
-                    partes[4] = String.valueOf(quintoValor);
-                    linea = String.join("|", partes);
-                    actualizado = true;
-                } catch (NumberFormatException ex) {
-                    
-                    ex.printStackTrace();
-                    return false;
+        try (BufferedReader reader = new BufferedReader(new FileReader(listaUsuarioFilePath))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split("\\|");
+                if (partes.length >= 5 && partes[3].equals(nombreLista)) {
+                    try {
+                        int quintoValor = Integer.parseInt(partes[4]);
+                        quintoValor++; // Incrementar el quinto valor en 1
+                        partes[4] = String.valueOf(quintoValor);
+                        linea = String.join("|", partes);
+                        actualizado = true;
+                    } catch (NumberFormatException ex) {
+
+                        ex.printStackTrace();
+                        return false;
+                    }
+                }
+                lineas.add(linea);
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(listaUsuarioFilePath))) {
+                for (String l : lineas) {
+                    writer.write(l);
+                    writer.newLine();
                 }
             }
-            lineas.add(linea);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(listaUsuarioFilePath))) {
+        return actualizado;
+    }
+
+    private void actualizarValorLista(String nombreLista) {
+        String rutaLista = "C:/MEIA/lista.txt";
+        List<String> lineas = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(rutaLista))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] partes = linea.split("\\|");
+                if (partes.length >= 1 && partes[0].equals(nombreLista)) {
+                    try {
+                        int valor = Integer.parseInt(partes[3]);
+                        valor++;
+                        partes[3] = Integer.toString(valor);
+                        linea = String.join("|", partes);
+                    } catch (NumberFormatException ex) {
+                        System.err.println("Error al convertir valor en línea: " + linea);
+                        ex.printStackTrace();
+                    }
+                }
+                lineas.add(linea);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaLista))) {
             for (String l : lineas) {
                 writer.write(l);
                 writer.newLine();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-        return false;
     }
 
-    return actualizado;
-    }
-   
-    private void actualizarValorLista(String nombreLista) {
-    String rutaLista = "C:/MEIA/lista.txt";
-    List<String> lineas = new ArrayList<>();
-    
-    try (BufferedReader reader = new BufferedReader(new FileReader(rutaLista))) {
-        String linea;
-        while ((linea = reader.readLine()) != null) {
-            String[] partes = linea.split("\\|");
-            if (partes.length >= 1 && partes[0].equals(nombreLista)) {
-                try {
-                    int valor = Integer.parseInt(partes[3]);
-                    valor++;
-                    partes[3] = Integer.toString(valor);
-                    linea = String.join("|", partes);
-                } catch (NumberFormatException ex) {
-                    System.err.println("Error al convertir valor en línea: " + linea);
-                    ex.printStackTrace();
-                }
-            }
-            lineas.add(linea);
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaLista))) {
-        for (String l : lineas) {
-            writer.write(l);
-            writer.newLine();
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-
-    
-    private void registrarListaDistribucion(String nombreLista, String usuario, String descripcion){
-        String path = "C:/MEIA/lista.txt"; 
+    private void registrarListaDistribucion(String nombreLista, String usuario, String descripcion) {
+        String path = "C:/MEIA/lista.txt";
         ListaController listaController = new ListaController();
         ListaDistribucion lista = new ListaDistribucion();
         lista.setNombreLista(nombreLista);
@@ -1828,90 +1851,86 @@ private int calculateTagSize(byte[] header, int start) {
         lista.setNumeroUsuarios(0);
         lista.setFechaCreacion(new Date());
         lista.setEstatus(1);
-        
+
         listaController.registrarLista(lista, path);
-        
-        
+
     }
- private String asociarUsuarioALista(String nombreLista, String descripcion) {
-    String path = "C:/MEIA/Lista_usuario.txt";
-    ListaUsuario listaUsuario = new ListaUsuario();
-    ListaController controlador = new ListaController();
 
-    String usuario = obtenerNombreUsuario(); 
-    if (usuario != null) {
-        listaUsuario.setNombre_lista(nombreLista);
-        listaUsuario.setUsuario(usuario);
-        listaUsuario.setUsuario_asociado(usuario);
-        listaUsuario.setFecha_creacion(new Date());
-        listaUsuario.setStatus(1);
+    private String asociarUsuarioALista(String nombreLista, String descripcion) {
+        String path = "C:/MEIA/Lista_usuario.txt";
+        ListaUsuario listaUsuario = new ListaUsuario();
+        ListaController controlador = new ListaController();
 
-        controlador.asociarUsuario(listaUsuario, path);
+        String usuario = obtenerNombreUsuario();
+        if (usuario != null) {
+            listaUsuario.setNombre_lista(nombreLista);
+            listaUsuario.setUsuario(usuario);
+            listaUsuario.setUsuario_asociado(usuario);
+            listaUsuario.setFecha_creacion(new Date());
+            listaUsuario.setStatus(1);
 
-        // Crea el archivo "Bloque.txt" en la ruta "C:\MEIA\ListaUsuario"
-        String rutaBloque = "C:\\MEIA\\ListaUsuario\\Bloque.txt";
-        File archivoBloque = new File(rutaBloque);
-        File directorio = archivoBloque.getParentFile();
+            controlador.asociarUsuario(listaUsuario, path);
 
-        if (!directorio.exists()) {
-            directorio.mkdirs(); 
-        }
+            // Crea el archivo "Bloque.txt" en la ruta "C:\MEIA\ListaUsuario"
+            String rutaBloque = "C:\\MEIA\\ListaUsuario\\Bloque.txt";
+            File archivoBloque = new File(rutaBloque);
+            File directorio = archivoBloque.getParentFile();
 
-        if (!directorio.isDirectory()) {
-            JOptionPane.showMessageDialog(this, "La ruta especificada no es un directorio.");
-            return usuario;
-        }
-
-        try {
-            if (!archivoBloque.exists()) {
-                if (archivoBloque.createNewFile()) {
-                    FileWriter writer = new FileWriter(archivoBloque);
-                    writer.write(listaUsuario.getNombre_lista() + "|" + listaUsuario.getUsuario() + "|" + listaUsuario.getUsuario_asociado() + "|Descripcion|" + descripcion + "|" + listaUsuario.getFecha_creacion().toString() + "|" + listaUsuario.getStatus());
-                    writer.close();
-                } else {
-                    FileWriter writer = new FileWriter(archivoBloque);
-                    writer.write(listaUsuario.getNombre_lista() + "|" + listaUsuario.getUsuario() + "|" + listaUsuario.getUsuario_asociado() + "|Descripcion|" + descripcion + "|" + listaUsuario.getFecha_creacion().toString() + "|" + listaUsuario.getStatus());
-                    writer.close();
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "El archivo Bloque.txt ya existe.");
+            if (!directorio.exists()) {
+                directorio.mkdirs();
             }
+
+            if (!directorio.isDirectory()) {
+                JOptionPane.showMessageDialog(this, "La ruta especificada no es un directorio.");
+                return usuario;
+            }
+
+            try {
+                if (!archivoBloque.exists()) {
+                    if (archivoBloque.createNewFile()) {
+                        FileWriter writer = new FileWriter(archivoBloque);
+                        writer.write(listaUsuario.getNombre_lista() + "|" + listaUsuario.getUsuario() + "|" + listaUsuario.getUsuario_asociado() + "|Descripcion|" + descripcion + "|" + listaUsuario.getFecha_creacion().toString() + "|" + listaUsuario.getStatus());
+                        writer.close();
+                    } else {
+                        FileWriter writer = new FileWriter(archivoBloque);
+                        writer.write(listaUsuario.getNombre_lista() + "|" + listaUsuario.getUsuario() + "|" + listaUsuario.getUsuario_asociado() + "|Descripcion|" + descripcion + "|" + listaUsuario.getFecha_creacion().toString() + "|" + listaUsuario.getStatus());
+                        writer.close();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "El archivo Bloque.txt ya existe.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al crear el archivo Bloque.txt.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo asociar el usuario a la lista.");
+        }
+
+        return usuario;
+    }
+
+    public String obtenerNombreUsuario() {
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader("C:\\MEIA\\usuario.txt"));
+            String line = br.readLine();
+            br.close();
+
+            if (line != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length > 0) {
+                    return parts[0];
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al crear el archivo Bloque.txt.");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "No se pudo asociar el usuario a la lista.");
+
+        return "UsuarioDesconocido";
     }
 
-    return usuario;
-}
-
-
-    
-    public String obtenerNombreUsuario(){
-       try {
-           
-           BufferedReader br = new BufferedReader(new FileReader("C:\\MEIA\\usuario.txt"));
-           String line = br.readLine();
-           br.close();
-           
-           if (line != null)
-           {
-               String[] parts = line.split("\\|");
-               if (parts.length > 0)
-               {
-                   return parts[0];
-               }
-           }
-           
-       } catch (IOException e){
-           e.printStackTrace();
-       } 
-       
-       return "UsuarioDesconocido";
-    }
-    
     private boolean isValidEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
@@ -1942,76 +1961,68 @@ private int calculateTagSize(byte[] header, int start) {
         }
         return extension;
     }
-    
-    
+
     private void eliminarListaUsuarios(String listaUsuarioPath, String bloquePath, String usuarioBuscado, String nombreLista) {
-    try {
-        // Lista para almacenar las líneas del archivo Bloque.txt
-        List<String> bloqueLines = new ArrayList<>();
-        // Lista para almacenar las líneas del archivo Lista_usuario.txt
-        List<String> listaUsuarioLines = new ArrayList<>();
+        try {
+            // Lista para almacenar las líneas del archivo Bloque.txt
+            List<String> bloqueLines = new ArrayList<>();
+            // Lista para almacenar las líneas del archivo Lista_usuario.txt
+            List<String> listaUsuarioLines = new ArrayList<>();
 
-        // Lee el archivo Bloque.txt
-        BufferedReader bloqueReader = new BufferedReader(new FileReader(bloquePath));
-        String bloqueLine;
-        while ((bloqueLine = bloqueReader.readLine()) != null) {
-            String[] bloqueParts = bloqueLine.split("\\|");
-            if (bloqueParts.length >= 2 && bloqueParts[1].equals(usuarioBuscado)) {
-                // Cambiar el sexto valor a 0 (inactivo)
-                bloqueParts[5] = "0";
-                bloqueLine = String.join("|", bloqueParts);
+            // Lee el archivo Bloque.txt
+            BufferedReader bloqueReader = new BufferedReader(new FileReader(bloquePath));
+            String bloqueLine;
+            while ((bloqueLine = bloqueReader.readLine()) != null) {
+                String[] bloqueParts = bloqueLine.split("\\|");
+                if (bloqueParts.length >= 2 && bloqueParts[1].equals(usuarioBuscado)) {
+                    // Cambiar el sexto valor a 0 (inactivo)
+                    bloqueParts[5] = "0";
+                    bloqueLine = String.join("|", bloqueParts);
+                }
+                bloqueLines.add(bloqueLine);
             }
-            bloqueLines.add(bloqueLine);
-        }
-        bloqueReader.close();
+            bloqueReader.close();
 
-        // Escribir las líneas actualizadas en el archivo Bloque.txt
-        BufferedWriter bloqueWriter = new BufferedWriter(new FileWriter(bloquePath));
-        for (String line : bloqueLines) {
-            bloqueWriter.write(line);
-            bloqueWriter.newLine();
-        }
-        bloqueWriter.close();
-
-        // Leer el archivo Lista_usuario.txt
-        BufferedReader listaUsuarioReader = new BufferedReader(new FileReader(listaUsuarioPath));
-        String listaUsuarioLine;
-        while ((listaUsuarioLine = listaUsuarioReader.readLine()) != null) {
-            String[] listaUsuarioParts = listaUsuarioLine.split("\\|");
-            if (listaUsuarioParts.length >= 4 && listaUsuarioParts[3].equals(nombreLista)) {
-                // Cambiar el octavo valor a 0 (inactivo)
-                listaUsuarioParts[7] = "0";
-                listaUsuarioLine = String.join("|", listaUsuarioParts);
+            // Escribir las líneas actualizadas en el archivo Bloque.txt
+            BufferedWriter bloqueWriter = new BufferedWriter(new FileWriter(bloquePath));
+            for (String line : bloqueLines) {
+                bloqueWriter.write(line);
+                bloqueWriter.newLine();
             }
-            listaUsuarioLines.add(listaUsuarioLine);
-        }
-        listaUsuarioReader.close();
+            bloqueWriter.close();
 
-        // Escribe las líneas actualizadas en el archivo Lista_usuario.txt
-        BufferedWriter listaUsuarioWriter = new BufferedWriter(new FileWriter(listaUsuarioPath));
-        for (String line : listaUsuarioLines) {
-            listaUsuarioWriter.write(line);
-            listaUsuarioWriter.newLine();
-        }
-        listaUsuarioWriter.close();
+            // Leer el archivo Lista_usuario.txt
+            BufferedReader listaUsuarioReader = new BufferedReader(new FileReader(listaUsuarioPath));
+            String listaUsuarioLine;
+            while ((listaUsuarioLine = listaUsuarioReader.readLine()) != null) {
+                String[] listaUsuarioParts = listaUsuarioLine.split("\\|");
+                if (listaUsuarioParts.length >= 4 && listaUsuarioParts[3].equals(nombreLista)) {
+                    // Cambiar el octavo valor a 0 (inactivo)
+                    listaUsuarioParts[7] = "0";
+                    listaUsuarioLine = String.join("|", listaUsuarioParts);
+                }
+                listaUsuarioLines.add(listaUsuarioLine);
+            }
+            listaUsuarioReader.close();
 
-        JOptionPane.showMessageDialog(this, "Eliminado con éxito.");
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al eliminar.");
+            // Escribe las líneas actualizadas en el archivo Lista_usuario.txt
+            BufferedWriter listaUsuarioWriter = new BufferedWriter(new FileWriter(listaUsuarioPath));
+            for (String line : listaUsuarioLines) {
+                listaUsuarioWriter.write(line);
+                listaUsuarioWriter.newLine();
+            }
+            listaUsuarioWriter.close();
+
+            JOptionPane.showMessageDialog(this, "Eliminado con éxito.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al eliminar.");
+        }
     }
-}
- 
 
-
-    
-    
     ZonedDateTime fechaActual = ZonedDateTime.now(ZoneId.of("America/Guatemala"));
     DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss yyyy", Locale.ENGLISH);
     String fechaFormateada = fechaActual.format(formatoFecha);
-
-
-
 
     /**
      * @param args the command line arguments
@@ -2071,7 +2082,6 @@ private int calculateTagSize(byte[] header, int start) {
     private javax.swing.JButton jButtonActualizarListaUsuario;
     private javax.swing.JButton jButtonAgregarDistribucion;
     private javax.swing.JButton jButtonBackup;
-    private javax.swing.JButton jButtonBuscarAlbum;
     private javax.swing.JButton jButtonBuscarAudio;
     private javax.swing.JButton jButtonBuscarContactosLista;
     private javax.swing.JButton jButtonBuscarLista;
@@ -2091,6 +2101,7 @@ private int calculateTagSize(byte[] header, int start) {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
