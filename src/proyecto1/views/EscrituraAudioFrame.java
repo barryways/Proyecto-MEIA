@@ -81,26 +81,26 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(273, 273, 273)
-                        .addComponent(jLabel1))
+                        .addGap(39, 39, 39)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1436, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(236, 236, 236)
+                        .addGap(632, 632, 632)
                         .addComponent(jButtonGuardarAudio, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 869, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(608, Short.MAX_VALUE))
+                        .addGap(669, 669, 669)
+                        .addComponent(jLabel1)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(33, 33, 33)
                 .addComponent(jButtonGuardarAudio)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,7 +141,7 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
             String banda = (String) jTableCancion.getValueAt(0, 9);
             String legalInf = (String) jTableCancion.getValueAt(0, 10);
             arbolBinario.edit(cancion.getTitle(), cancion.getArtist(), cancion.getPath(), cancion.getTitle(), cancion.getArtist(), banda, legalInf, album, año, genero, imagen, duracion, letra);
-            
+            JOptionPane.showMessageDialog(this, "Se completo con exito la edicion");
         } else {
             JOptionPane.showMessageDialog(this, "No hay datos para poderlos editar");
 

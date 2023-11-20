@@ -4,10 +4,16 @@
  */
 package structures;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.function.Consumer;
+import javax.imageio.ImageIO;
 import structures.SongNode;
 
 /**
@@ -166,12 +172,86 @@ public class ArbolBinario {
                             + node.getDuration() + "|"
                             + node.getLyricsPath());
                     writer.newLine();
+                    String nombreGenerico = node.getArtist() + "-" + node.getTitle();
+                    if (node.getImagePath() != "") {
+                        this.copiarImagen(node.getImagePath(), nombreGenerico);
+                    } else {
+                        this.copiarImagen("C:\\MEIA\\imagenes\\NoImagen.jpg", nombreGenerico);
+                    }
+                    if (node.getLyricsPath() != "") {
+                        this.copiarLetras(node.getImagePath(), nombreGenerico);
+                    } else {
+                        this.copiarLetras("C:\\MEIA\\lyrics\\NoLetra.txt", nombreGenerico);
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void copiarImagen(String rutaOriginal, String nombreCopia) {
+        try {
+            String carpetaDestino = "C:\\MEIA\\imagenes\\";
+            // Lee la imagen original
+            BufferedImage imagenOriginal = ImageIO.read(new File(rutaOriginal));
+
+            // Asegúrate de que la carpeta de destino exista, si no, créala
+            File carpetaDestinoFile = new File(carpetaDestino);
+            if (!carpetaDestinoFile.exists()) {
+                carpetaDestinoFile.mkdirs();
+            }
+
+            // Obtiene la extensión del archivo de la imagen original
+            String extension = obtenerExtension(rutaOriginal);
+
+            // Crea la ruta completa para la copia
+            String rutaCopia = carpetaDestino + nombreCopia + "-copia" + "." + extension;
+
+            // Escribe la copia en la carpeta de destino
+            ImageIO.write(imagenOriginal, extension, new File(rutaCopia));
+
+            System.out.println("Imagen copiada con éxito en: " + rutaCopia);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void copiarLetras(String rutaOriginal, String nombreCopia) {
+        try {
+            String carpetaDestino = "C:\\MEIA\\lyrics\\";
+            // Asegúrate de que la carpeta de destino exista, si no, créala
+            File carpetaDestinoFile = new File(carpetaDestino);
+            if (!carpetaDestinoFile.exists()) {
+                carpetaDestinoFile.mkdirs();
+            }
+
+            // Crea la ruta completa para la copia
+            String rutaCopia = carpetaDestino + nombreCopia + "-copia";
+
+            // Usa la clase Files para copiar el archivo
+            Path rutaOriginalPath = new File(rutaOriginal).toPath();
+            Path rutaCopiaPath = new File(rutaCopia).toPath();
+
+            Files.copy(rutaOriginalPath, rutaCopiaPath, StandardCopyOption.REPLACE_EXISTING);
+
+            System.out.println("Archivo copiado con éxito en: " + rutaCopia);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método para obtener la extensión del archivo a partir de la ruta
+    private static String obtenerExtension(String rutaArchivo) {
+        int index = rutaArchivo.lastIndexOf('.');
+        if (index > 0 && index < rutaArchivo.length() - 1) {
+            return rutaArchivo.substring(index + 1).toLowerCase();
+        }
+        return "";
+    }
+
 }
