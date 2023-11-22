@@ -1,20 +1,29 @@
 package structures;
+import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.HashMap; 
+import java.util.List;
+import java.util.Map; 
 public class AVLTree {
     private AVLNode root;
-
+//Actua como un indice en el árbol, donde las claves son los titulos de las pistas
+    //Y los valores son los nodos del AVL
+   private Map<String, AVLNode> indexPorTitulo; 
     public AVLTree() {
         root = null;
+        indexPorTitulo = new HashMap<>();
     }
 
     public AVLNode getRoot() {
         return root;
+        
     }
 
     // Insertar un nodo
     public void insert(String path, String title, String artist, String band, String legalInformation, String album, String year, String genre, String imagePath, String duration, String lyricsPath) {
         AVLNode newNode = new AVLNode(path, title, artist, band, legalInformation, album, year, genre, imagePath, duration, lyricsPath);
         root = insertRec(root, newNode);
+    indexPorTitulo.put(title, newNode);
     }
 
     private AVLNode insertRec(AVLNode node, AVLNode newNode) {
@@ -203,38 +212,57 @@ public class AVLTree {
             return 0;
         return getHeight(N.getLeft()) - getHeight(N.getRight());
     }
-
-    public AVLNode search(String title, String album) {
-        return searchRec(root, title, album);
+     public AVLNode searchByTitle(String title) {
+        return indexPorTitulo.get(title);
     }
 
- private AVLNode searchRec(AVLNode node, String title, String album) {
+    public AVLNode search(String title, String album) {
+        List<AVLNode> matches = new ArrayList<>();
+        searchSequential(root, title, album, matches);
+        return matches.isEmpty() ? null : matches.get(0); // Devuelve el primer resultado o null
+    }
+
+
+ private AVLNode searchRec(AVLNode node, String title, String artista) {
     if (node == null) {
         return null;
     }
 //Busqueda por titulo y album devuelve conicidencias si encuentra por titulo o por album. 
     boolean titleMatches = title.isEmpty() || title.equals(node.getTitle());
-    boolean albumMatches = album.isEmpty() || album.equals(node.getAlbum());
-    System.out.println("ESTE ES EL ALBUM A BUSCAR: " +album);
-        System.out.println("ESTE ES EL ALBUM DEL NODO : " +node.getAlbum());
+    boolean albumMatches = artista.isEmpty() || artista.equals(node.getArtist());
+    System.out.println("ESTE ES EL ALBUM A BUSCAR: " +artista);
+        System.out.println("ESTE ES EL ARTISTA DEL NODO : " +node.getAlbum());
 
     if (titleMatches && albumMatches) {
         return node;
     }
 
-    String nodeKey = (title.isEmpty() ? "" : node.getTitle()) + (album.isEmpty() ? "" : node.getAlbum());
-    String searchKey = (title.isEmpty() ? "" : title) + (album.isEmpty() ? "" : album);
+    String nodeKey = (title.isEmpty() ? "" : node.getTitle()) + (artista.isEmpty() ? "" : node.getArtist());
+    String searchKey = (title.isEmpty() ? "" : title) + (artista.isEmpty() ? "" : artista);
 
     int comparisonResult = searchKey.compareTo(nodeKey);
     if (comparisonResult < 0) {
-        return searchRec(node.getLeft(), title, album);
+        return searchRec(node.getLeft(), title, artista);
     } else if (comparisonResult > 0) {
-        return searchRec(node.getRight(), title, album);
+        return searchRec(node.getRight(), title, artista);
     } else {
         return node;
     }
 }
 
+ private void searchSequential(AVLNode node, String title, String album, List<AVLNode> matches) {
+        if (node != null) {
+            boolean titleMatches = title.isEmpty() || node.getTitle().equalsIgnoreCase(title);
+            boolean albumMatches = album.isEmpty() || node.getAlbum().equalsIgnoreCase(album);
+
+            if (titleMatches && albumMatches) {
+                matches.add(node);
+            }
+
+            searchSequential(node.getLeft(), title, album, matches);
+            searchSequential(node.getRight(), title, album, matches);
+        }
+    }
 
     // Recorrido In-Order
     public void inOrderTraversal(Consumer<AVLNode> action) {
@@ -261,7 +289,37 @@ public class AVLTree {
             preOrderTraversalRec(node.getRight(), action);
         }
     }
+public void edit(String originalTitle, String originalArtist, String newPath, String newTitle, String newArtist, String newBand, String newLegalInformation, String newAlbum, String newYear, String newGenre, String newImagePath, String newDuration, String newLyricsPath) {
+        // Primero, buscar el nodo que vamos a editar
+        AVLNode nodeToEdit = search(originalTitle, originalArtist);
+        
+        if (nodeToEdit != null) {
+            // Si el título y artista no han cambiado, actualizamos la información directamente
+            if (nodeToEdit.getTitle().equals(newTitle) && nodeToEdit.getArtist().equals(newArtist)) {
+                updateNodeInfo(nodeToEdit, newPath, newTitle, newArtist, newBand, newLegalInformation, newAlbum, newYear, newGenre, newImagePath, newDuration, newLyricsPath);
+            } else {
+                // Si el título o artista han cambiado, necesitamos eliminar y reinsertar el nodo
+                delete(originalTitle, originalArtist);
+                insert(newPath, newTitle, newArtist, newBand, newLegalInformation, newAlbum, newYear, newGenre, newImagePath, newDuration, newLyricsPath);
+            }
+        } else {
+            System.out.println("Nodo no encontrado para editar");
+        }
+    }
 
+    private void updateNodeInfo(AVLNode node, String path, String title, String artist, String band, String legalInformation, String album, String year, String genre, String imagePath, String duration, String lyricsPath) {
+        node.setPath(path);
+        node.setTitle(title);
+        node.setArtist(artist);
+        node.setBand(band);
+        node.setLegalInformation(legalInformation);
+        node.setAlbum(album);
+        node.setYear(year);
+        node.setGenre(genre);
+        node.setImagePath(imagePath);
+        node.setDuration(duration);
+        node.setLyricsPath(lyricsPath);
+    }
     // Recorrido Post-Order
     public void postOrderTraversal(Consumer<AVLNode> action) {
         postOrderTraversalRec(root, action);

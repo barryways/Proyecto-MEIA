@@ -8,6 +8,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import structures.ArbolBinario;
 import structures.SongNode;
+import structures.AVLNode; 
+import structures.AVLTree; 
+
 
 /**
  *
@@ -17,17 +20,19 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
 
     private SongNode cancion;
     private ArbolBinario arbolBinario;
+    private AVLTree arbolAvl; 
+    
 
     /**
      * Creates new form BusquedaAudioFrame
      */
-    public EscrituraAudioFrame(String pista, ArbolBinario arbol) {
+    public EscrituraAudioFrame(String pista, AVLTree arbol) {
         initComponents();
         // Dividir el texto usando el guion como delimitador
         String[] partes = pista.split("-");
         //llega como pista =titulo-artista
-        arbolBinario = arbol;
-        cancion = arbolBinario.search(partes[0], partes[1]);
+        arbolAvl = arbol;
+        cancion = arbolAvl.search(partes[0], partes[1]);
     }
 
     /**
@@ -105,7 +110,7 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void llenarDatosGrid(SongNode cancion) {
+    public void llenarDatosGrid(AVLNode cancion) {
         // Obtener el modelo de la tabla existente
         DefaultTableModel modeloTabla = (DefaultTableModel) jTableCancion.getModel();
 
@@ -140,7 +145,7 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
             String letra = (String) jTableCancion.getValueAt(0, 8);
             String banda = (String) jTableCancion.getValueAt(0, 9);
             String legalInf = (String) jTableCancion.getValueAt(0, 10);
-            arbolBinario.edit(cancion.getTitle(), cancion.getArtist(), cancion.getPath(), cancion.getTitle(), cancion.getArtist(), banda, legalInf, album, año, genero, imagen, duracion, letra);
+            arbolAvl.edit(cancion.getTitle(), cancion.getArtist(), cancion.getPath(), cancion.getTitle(), cancion.getArtist(), banda, legalInf, album, año, genero, imagen, duracion, letra);
             JOptionPane.showMessageDialog(this, "Se completo con exito la edicion");
         } else {
             JOptionPane.showMessageDialog(this, "No hay datos para poderlos editar");

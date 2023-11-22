@@ -44,7 +44,9 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import structures.ArbolBinario;
+import structures.AVLTree; 
 import structures.SongNode;
+import structures.AVLNode; 
 
 /**
  *
@@ -53,6 +55,7 @@ import structures.SongNode;
 public class AdminDashboard extends javax.swing.JFrame {
 
     private ArbolBinario arbolBinario;
+    private AVLTree arbolAVL; 
 
     /**
      * Creates new form AdminDashboard
@@ -66,6 +69,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jListContactosBuscados.setModel(modeloListaContactos);
         jListBusquedaAudio.setModel(modeloListaMusica);
         arbolBinario = new ArbolBinario();
+        arbolAVL = new AVLTree();
 
     }
 
@@ -1685,10 +1689,10 @@ public class AdminDashboard extends javax.swing.JFrame {
                                 if (artist.isEmpty()) {
                                     artist = "Desconocido";
                                 }
-                                arbolBinario.insert(file.getPath(), title, artist, band, legalInformation, album, year, genre, imagePath, duration, lyrics);
+                                arbolAVL.insert(file.getPath(), title, artist, band, legalInformation, album, year, genre, imagePath, duration, lyrics);
 
                                 model.clear();
-                                arbolBinario.inOrderTraversal(node -> {
+                                arbolAVL.inOrderTraversal(node -> {
                                     String displayText = node.getTitle() + " - " + node.getArtist();
                                     model.addElement(displayText);
                                 });
@@ -1719,32 +1723,49 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jButtonEscrituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscrituraActionPerformed
         String seleccionado = jListBusquedaAudio.getSelectedValue();
-        
+                System.out.println("ESTE ES EL VALOR SELECCIONADO: " +seleccionado );
+
         // Dividir el texto usando el guion como delimitador
         String[] partes = seleccionado.split("-");
-        SongNode cancion = arbolBinario.search(partes[0], partes[1]);
-        EscrituraAudioFrame escrituraFrame = new EscrituraAudioFrame(seleccionado, arbolBinario);// Crea una instancia del nuevo Frame
-        escrituraFrame.llenarDatosGrid(cancion);
-        escrituraFrame.setVisible(true); // Muestra el nuevo Frame
+        System.out.println("ESTA ES LA BUSQUEDA PARA EDICIÓN : "+ partes[0] + " " + partes[1]);
+        AVLNode cancion = arbolAVL.search(partes[0], partes[1]);
+        EscrituraAudioFrame escrituraFrame = new EscrituraAudioFrame(seleccionado, arbolAVL);// Crea una instancia del nuevo Frame
+       if(cancion != null){
+            escrituraFrame.llenarDatosGrid(cancion);
+        escrituraFrame.setVisible(true);
+       }
+        // Muestra el nuevo Frame
         //dispose(); // Cierra el Frame actual si es necesario, cambia "dispose()" por "setVisible(false)" si no deseas cerrarlo
 
     }//GEN-LAST:event_jButtonEscrituraActionPerformed
 
     private void jButtonBuscarPistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPistaActionPerformed
         // TODO add your handling code here:
-        String titulo = jTextFieldTitulo.getText();
-        String artista = jTextFieldAlbum.getText();
+      String titulo = jTextFieldTitulo.getText().trim();
+    String album = jTextFieldAlbum.getText().trim();
 
-        SongNode pista = arbolBinario.search(titulo, artista);
+    DefaultListModel<String> modeloMusica = (DefaultListModel<String>) jListBusquedaAudio.getModel();
+    modeloMusica.clear();
+
+    if (!album.isEmpty()) {
+        // Búsqueda secuencial por título y álbum
+        AVLNode pista = arbolAVL.search(titulo, album);
         if (pista != null) {
-            String valorLista = pista.getTitle() + "-"+pista.getArtist() ;
-            DefaultListModel<String> modeloMusica = (DefaultListModel<String>) jListBusquedaAudio.getModel();
-            modeloMusica.clear();
-            modeloMusica.addElement(valorLista);
-        } else {
-
-            JOptionPane.showMessageDialog(this, "No se encontró la pista, puede que no exista o este mal escrita");
+            modeloMusica.addElement(pista.getTitle() + " - " + pista.getArtist());
         }
+    } else {
+        // Búsqueda por índice (título solamente)
+        AVLNode pista = arbolAVL.searchByTitle(titulo);
+        if (pista != null) {
+            modeloMusica.addElement(pista.getTitle() + " - " + pista.getArtist());
+        }
+    }
+
+    if (modeloMusica.isEmpty()) {
+        modeloMusica.addElement("Pista no encontrada.");
+    }
+
+    jListBusquedaAudio.setModel(modeloMusica);
 
 
     }//GEN-LAST:event_jButtonBuscarPistaActionPerformed
