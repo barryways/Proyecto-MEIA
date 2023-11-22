@@ -20,6 +20,8 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
     private SongNode cancion;
     private ArbolBinario arbolBinario;
     private AVLTree arbolAvl;
+    private String albumOriginal;
+    private String tituloOriginal;
 
     /**
      * Creates new form BusquedaAudioFrame
@@ -32,9 +34,13 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
         arbolAvl = arbol;
         if (partes[1].equals("  ")) {
             cancion = arbolAvl.searchByTitle(partes[0].trim());
+            albumOriginal = "";
+            tituloOriginal = partes[0].trim();
 
         } else {
-            cancion = arbolAvl.search(partes[0].trim(), partes[1]);
+            cancion = arbolAvl.search(partes[0].trim(), partes[1].trim());
+            albumOriginal = partes[1].trim();
+            tituloOriginal = partes[0].trim();
         }
         //cancion = arbolAvl.search(partes[0].trim(), partes[1]);
     }
@@ -149,7 +155,7 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
             String letra = (String) jTableCancion.getValueAt(0, 8);
             String banda = (String) jTableCancion.getValueAt(0, 9);
             String legalInf = (String) jTableCancion.getValueAt(0, 10);
-            arbolAvl.edit(cancion.getTitle(), cancion.getArtist(), cancion.getPath(), cancion.getTitle(), cancion.getArtist(), banda, legalInf, album, año, genero, imagen, duracion, letra);
+            arbolAvl.edit(tituloOriginal, albumOriginal, cancion.getPath(), cancion.getTitle(), cancion.getArtist(), banda, legalInf, album, año, genero, imagen, duracion, letra);
             JOptionPane.showMessageDialog(this, "Se completo con exito la edicion");
         } else {
             JOptionPane.showMessageDialog(this, "No hay datos para poderlos editar");

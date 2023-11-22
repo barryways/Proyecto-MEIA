@@ -1707,6 +1707,8 @@ public class AdminDashboard extends javax.swing.JFrame {
                 }
                 jListCarpetaAudio.setModel(model);
                 arbolAVL.writeToFile();
+                arbolAVL.writeToFileIndizado();
+                arbolAVL.writeToFileSecuencial();
             } else {
                 JOptionPane.showMessageDialog(this, "La carpeta seleccionada está vacía o no contiene archivos MP3.");
             }
@@ -1765,6 +1767,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         if (!album.isEmpty()) {
             // Búsqueda secuencial por título y álbum
+            
             AVLNode pista = arbolAVL.search(titulo, album);
             if (pista != null) {
                 modeloMusica.addElement(pista.getTitle() + " - " + pista.getArtist());

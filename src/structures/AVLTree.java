@@ -21,10 +21,11 @@ public class AVLTree {
 //Actua como un indice en el árbol, donde las claves son los titulos de las pistas
     //Y los valores son los nodos del AVL
     private Map<String, AVLNode> indexPorTitulo;
-
+    private int no_registro=1;
     public AVLTree() {
         root = null;
         indexPorTitulo = new HashMap<>();
+        
     }
 
     public AVLNode getRoot() {
@@ -35,6 +36,7 @@ public class AVLTree {
     // Insertar un nodo
     public void insert(String path, String title, String artist, String band, String legalInformation, String album, String year, String genre, String imagePath, String duration, String lyricsPath) {
         AVLNode newNode = new AVLNode(path, title, artist, band, legalInformation, album, year, genre, imagePath, duration, lyricsPath);
+        newNode.setNoRegistro(no_registro++);
         root = insertRec(root, newNode);
         indexPorTitulo.put(title, newNode);
     }
@@ -307,12 +309,16 @@ public class AVLTree {
             // Si el título y artista no han cambiado, actualizamos la información directamente
             if (nodeToEdit.getTitle().equals(newTitle) && nodeToEdit.getArtist().equals(newArtist)) {
                 updateNodeInfo(nodeToEdit, newPath, newTitle, newArtist, newBand, newLegalInformation, newAlbum, newYear, newGenre, newImagePath, newDuration, newLyricsPath);
-            writeToFile();
+                writeToFile();
+                writeToFileIndizado();
+                writeToFileSecuencial();
             } else {
                 // Si el título o artista han cambiado, necesitamos eliminar y reinsertar el nodo
                 delete(originalTitle, originalArtist);
                 insert(newPath, newTitle, newArtist, newBand, newLegalInformation, newAlbum, newYear, newGenre, newImagePath, newDuration, newLyricsPath);
-           writeToFile();
+                writeToFile();
+                writeToFileIndizado();
+                writeToFileSecuencial();
             }
         } else {
             System.out.println("Nodo no encontrado para editar");
@@ -345,8 +351,8 @@ public class AVLTree {
             action.accept(node);
         }
     }
-    
-        public void writeToFile() {
+
+    public void writeToFile() {
         String filePath = "C:\\MEIA\\binario.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             inOrderTraversal(node -> {
@@ -378,7 +384,7 @@ public class AVLTree {
                     } else {
                         this.copiarLetras("C:\\MEIA\\lyrics\\NoLetra.txt", nombreGenerico);
                     }
-
+                    System.out.println("El archivo se tuvo que haber escrito con exito");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -447,5 +453,110 @@ public class AVLTree {
             return rutaArchivo.substring(index + 1).toLowerCase();
         }
         return "";
+    }
+
+    public void writeToFileSecuencial() {
+        String filePath = "C:\\MEIA\\secuencialBinarioMaestro.txt";
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            no_registro = 1;
+            inOrderTraversal(node -> {
+                try {
+                    // Escribe los datos del nodo en el archivo
+                    writer.write(no_registro + "|"
+                            + node.getPath() + "|"
+                            + node.getTitle() + "|"
+                            + node.getArtist() + "|"
+                            + node.getBand() + "|"
+                            + node.getLegalInformation() + "|"
+                            + node.getAlbum() + "|"
+                            + node.getYear() + "|"
+                            + node.getGenre() + "|"
+                            + node.getImagePath() + "|"
+                            + node.getDuration() + "|"
+                            + node.getLyricsPath() +"| Aactivo"
+                    );
+                    writer.newLine();
+               descriptores(node.getArtist(), no_registro, 8,no_registro, 0, 1);
+                    no_registro++;
+                    System.out.println("El archivo se tuvo que haber escrito con exito");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeToFileIndizado() {
+        String filePath = "C:\\MEIA\\secuencialIndizadoArbolMaestro.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            no_registro = 1;
+            inOrderTraversal(node -> {
+                try {
+                    // Escribe los datos del nodo en el archivo
+                    writer.write(no_registro
+                            + node.getPath() + "|"
+                            + node.getTitle() + "|"
+                            + node.getArtist() + "|"
+                            + node.getBand() + "|"
+                            + node.getLegalInformation() + "|"
+                            + node.getAlbum() + "|"
+                            + node.getYear() + "|"
+                            + node.getGenre() + "|"
+                            + node.getImagePath() + "|"
+                            + node.getDuration() + "|"
+                            + node.getLyricsPath() +"| Activo"
+                            
+                    );
+                    writer.newLine();
+
+                    System.out.println("El archivo se tuvo que haber escrito con exito");
+               descriptores(node.getArtist(), no_registro, 8,no_registro, 0, 2);
+               no_registro ++;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void descriptores(String UsuarioMod, int no_registros, int max_registros, int Activos, int Inactivos, int tipo_desc){
+        String filePath = "";
+        if(tipo_desc == 1){
+         filePath = "C:\\MEIA\\secuencialIndizadoArbolDesc.txt";   
+        }
+        else{
+          filePath = "C:\\MEIA\\secuencialArbolDesc.txt";  
+        }
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            no_registro = 1;
+            inOrderTraversal(node -> {
+                try {
+                    // Escribe los datos del nodo en el archivo
+                    writer.write(
+                            "Usuario Mod: "+UsuarioMod +
+                            "\nNo_Registros :" +no_registros+
+                            "\nmax registros : "+ max_registros+
+                            "\nactivos: "+Activos+
+                            "\ninactivos: "+Inactivos
+                    );
+                    writer.newLine();
+
+                    System.out.println("El archivo se tuvo que haber escrito con exito");
+               no_registro ++;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
