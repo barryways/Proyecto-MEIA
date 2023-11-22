@@ -44,9 +44,9 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import structures.ArbolBinario;
-import structures.AVLTree; 
+import structures.AVLTree;
 import structures.SongNode;
-import structures.AVLNode; 
+import structures.AVLNode;
 
 /**
  *
@@ -55,7 +55,7 @@ import structures.AVLNode;
 public class AdminDashboard extends javax.swing.JFrame {
 
     private ArbolBinario arbolBinario;
-    private AVLTree arbolAVL; 
+    private AVLTree arbolAVL;
 
     /**
      * Creates new form AdminDashboard
@@ -1693,7 +1693,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
                                 model.clear();
                                 arbolAVL.inOrderTraversal(node -> {
-                                    String displayText = node.getTitle() + " - " + node.getArtist();
+                                    String displayText = node.getTitle() + " - " + node.getArtist() + " - " + node.getAlbum();
                                     model.addElement(displayText);
                                 });
 
@@ -1706,7 +1706,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     }
                 }
                 jListCarpetaAudio.setModel(model);
-                arbolBinario.writeToFile();
+                arbolAVL.writeToFile();
             } else {
                 JOptionPane.showMessageDialog(this, "La carpeta seleccionada está vacía o no contiene archivos MP3.");
             }
@@ -1723,17 +1723,33 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jButtonEscrituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscrituraActionPerformed
         String seleccionado = jListBusquedaAudio.getSelectedValue();
-                System.out.println("ESTE ES EL VALOR SELECCIONADO: " +seleccionado );
+        System.out.println("ESTE ES EL VALOR SELECCIONADO: " + seleccionado);
 
+        
+       /* partes[0] = titulo
+                partes[1] = album
+                        partes [2] = artista;*/
         // Dividir el texto usando el guion como delimitador
         String[] partes = seleccionado.split("-");
-        System.out.println("ESTA ES LA BUSQUEDA PARA EDICIÓN : "+ partes[0] + " " + partes[1]);
-        AVLNode cancion = arbolAVL.search(partes[0], partes[1]);
+        System.out.println("ESTA ES LA BUSQUEDA PARA EDICIÓN : \"" + partes[0] + "\" - \"" + partes[1]);
+        AVLNode cancion = null;
+        System.out.println("Esto es partes 1 \"" + partes[1] + "\"");
+        System.out.println("Esto es partes 0 \"" + partes[0] + "\"");
+        if (partes[1].equals("  ")) {
+            cancion = arbolAVL.searchByTitle(partes[0].trim());
+
+        } else {
+            cancion = arbolAVL.search(partes[0].trim(), partes[1]);
+        }
+
         EscrituraAudioFrame escrituraFrame = new EscrituraAudioFrame(seleccionado, arbolAVL);// Crea una instancia del nuevo Frame
-       if(cancion != null){
+        if (cancion != null) {
             escrituraFrame.llenarDatosGrid(cancion);
-        escrituraFrame.setVisible(true);
-       }
+            escrituraFrame.setVisible(true);
+        } else {
+
+            JOptionPane.showMessageDialog(this, "No se pudo establecer una edicion con el dato ue solicitaste.");
+        }
         // Muestra el nuevo Frame
         //dispose(); // Cierra el Frame actual si es necesario, cambia "dispose()" por "setVisible(false)" si no deseas cerrarlo
 
@@ -1741,31 +1757,31 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jButtonBuscarPistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPistaActionPerformed
         // TODO add your handling code here:
-      String titulo = jTextFieldTitulo.getText().trim();
-    String album = jTextFieldAlbum.getText().trim();
+        String titulo = jTextFieldTitulo.getText().trim();
+        String album = jTextFieldAlbum.getText().trim();
 
-    DefaultListModel<String> modeloMusica = (DefaultListModel<String>) jListBusquedaAudio.getModel();
-    modeloMusica.clear();
+        DefaultListModel<String> modeloMusica = (DefaultListModel<String>) jListBusquedaAudio.getModel();
+        modeloMusica.clear();
 
-    if (!album.isEmpty()) {
-        // Búsqueda secuencial por título y álbum
-        AVLNode pista = arbolAVL.search(titulo, album);
-        if (pista != null) {
-            modeloMusica.addElement(pista.getTitle() + " - " + pista.getArtist());
+        if (!album.isEmpty()) {
+            // Búsqueda secuencial por título y álbum
+            AVLNode pista = arbolAVL.search(titulo, album);
+            if (pista != null) {
+                modeloMusica.addElement(pista.getTitle() + " - " + pista.getArtist());
+            }
+        } else {
+            // Búsqueda por índice (título solamente)
+            AVLNode pista = arbolAVL.searchByTitle(titulo);
+            if (pista != null) {
+                modeloMusica.addElement(pista.getTitle() + " - " + pista.getAlbum() + " - " + pista.getArtist());
+            }
         }
-    } else {
-        // Búsqueda por índice (título solamente)
-        AVLNode pista = arbolAVL.searchByTitle(titulo);
-        if (pista != null) {
-            modeloMusica.addElement(pista.getTitle() + " - " + pista.getArtist());
+
+        if (modeloMusica.isEmpty()) {
+            modeloMusica.addElement("Pista no encontrada.");
         }
-    }
 
-    if (modeloMusica.isEmpty()) {
-        modeloMusica.addElement("Pista no encontrada.");
-    }
-
-    jListBusquedaAudio.setModel(modeloMusica);
+        jListBusquedaAudio.setModel(modeloMusica);
 
 
     }//GEN-LAST:event_jButtonBuscarPistaActionPerformed

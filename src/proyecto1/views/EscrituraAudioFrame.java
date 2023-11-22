@@ -8,9 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import structures.ArbolBinario;
 import structures.SongNode;
-import structures.AVLNode; 
-import structures.AVLTree; 
-
+import structures.AVLNode;
+import structures.AVLTree;
 
 /**
  *
@@ -20,8 +19,7 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
 
     private SongNode cancion;
     private ArbolBinario arbolBinario;
-    private AVLTree arbolAvl; 
-    
+    private AVLTree arbolAvl;
 
     /**
      * Creates new form BusquedaAudioFrame
@@ -32,7 +30,13 @@ public class EscrituraAudioFrame extends javax.swing.JFrame {
         String[] partes = pista.split("-");
         //llega como pista =titulo-artista
         arbolAvl = arbol;
-        cancion = arbolAvl.search(partes[0], partes[1]);
+        if (partes[1].equals("  ")) {
+            cancion = arbolAvl.searchByTitle(partes[0].trim());
+
+        } else {
+            cancion = arbolAvl.search(partes[0].trim(), partes[1]);
+        }
+        //cancion = arbolAvl.search(partes[0].trim(), partes[1]);
     }
 
     /**
