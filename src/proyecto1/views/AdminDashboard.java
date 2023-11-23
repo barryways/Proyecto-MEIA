@@ -1741,7 +1741,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             cancion = arbolAVL.searchByTitle(partes[0].trim());
 
         } else {
-            cancion = arbolAVL.search(partes[0].trim(), partes[1]);
+            cancion = arbolAVL.search(partes[0].trim(), partes[1].trim());
         }
 
         EscrituraAudioFrame escrituraFrame = new EscrituraAudioFrame(seleccionado, arbolAVL);// Crea una instancia del nuevo Frame
@@ -1770,7 +1770,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             
             AVLNode pista = arbolAVL.search(titulo, album);
             if (pista != null) {
-                modeloMusica.addElement(pista.getTitle() + " - " + pista.getArtist());
+                modeloMusica.addElement(pista.getTitle() + " - " + pista.getAlbum() + " - " + pista.getArtist());
             }
         } else {
             // Búsqueda por índice (título solamente)
